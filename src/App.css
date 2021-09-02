@@ -1,0 +1,84 @@
+
+html{
+  scroll-behavior: smooth;
+}
+/* body {
+  margin: 0;
+  padding: 0;
+  font-family:sans-serif;
+  background-color: #040714;
+  color: #f9f9f9;
+} */
+body {
+  /* background: rgb(166,192,254); */
+  /* background: linear-gradient(150deg, rgba(166,192,254,1) 0%, rgba(246,128,132,1) 100%); */
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: white;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+
+}
+
+a{
+  color: #f9f9f9;
+  text-decoration: none;
+}
+
+
+@media only screen and (min-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+}
+@media only screen and (min-width: 480px) and (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+@media only screen and (max-width: 479px) {
+  body {
+      font-size: 13px;
+  }
+}
+
+
+#loader {
+  position: absolute;
+  z-index: 1;
+  margin: auto;
+  border: 3px solid #faf8f8;
+  border-radius: 50%;
+  border-top: 4px solid #161616;
+  width: 30px;
+  height: 30px;
+  -webkit-animation: spin 0.7s linear infinite;
+  animation: spin 0.7s linear infinite;
+  margin: 10% 0 0 47%;
+}
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+@media only screen and (max-width: 768px) {
+    #loaderhome{
+      margin:10% 0 47% 0;
+    }
+  }
+
+/* .AuthDiv{
+  align-items: center;
+  justify-content: center;
+    width:100%;
+
+} */
+

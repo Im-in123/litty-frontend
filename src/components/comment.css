@@ -1,0 +1,252 @@
+
+h1 {
+    text-align: center;
+    font-family: Tahoma, Arial, sans-serif;
+    color: #06D85F;
+    margin: 80px 0;
+  }
+  
+  .box {
+    width: 40%;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.2);
+    padding: 35px;
+    border: 2px solid #fff;
+    border-radius: 20px/50px;
+    background-clip: padding-box;
+    text-align: center;
+  }
+  
+  .button {
+    font-size: 1em;
+    padding: 10px;
+    color: #fff;
+    border: 2px solid #06D85F;
+    border-radius: 20px/50px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease-out;
+  }
+  .button:hover {
+    background: #06D85F;
+  }
+  
+  .overlay {
+    position: fixed;
+
+    /* position: absolute; */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+    z-index:1;
+
+    /* height:100vh;
+    width:100vw;
+     */
+  }
+  .overlay:target {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .popup {
+    margin: 70px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 80%;
+    position: relative;
+    /* transition: all 5s ease-in-out; */
+    /* height: 70% !important; */
+
+  }
+  
+  .popup h2 {
+    margin-top: 0;
+    color: #333;
+    font-family: Tahoma, Arial, sans-serif;
+  }
+  .popup .close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    /* transition: all 200ms; */
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .popup .close:hover {
+    color: #06D85F;
+  }
+  .popup .contenta {
+    max-height: 60vh !important;
+    overflow: auto;
+  }
+  
+  @media screen and (max-width: 768px){
+    .box{
+      width: 70%;
+    }
+    .popup{
+      margin-top:15vh;
+      width: 99% !important;
+      height: 80vh;
+      /* overflow: hidden; */
+      
+    }
+    .popup .contenta {
+      max-height: 60%;
+      height: 50%;
+      overflow: auto;
+      /* height: 60vh; */
+      /* overflow: hidden; */
+    }
+  }
+  
+
+.comments-wrapper {
+    padding: 20px;
+ }
+ 
+ .comments-wrapper :last-child {
+    border: 0;
+ }
+ 
+ .comment {
+    animation-duration: 0.3s;
+    animation-name: fadeIn;
+    display: flex;
+    align-items: flex-start;
+    /* border-bottom: 1px solid #e6e6e6; */
+    padding: 10px 5px;
+ }
+ 
+ .comment-avatar img{
+  width: 25px;
+  height: 25px;
+  border-radius: 100px;
+}
+  
+.comment .comment-user-data {
+  max-width: 90%;
+  overflow: hidden;
+}
+
+.comment-user-data .username{
+  color:black;
+  padding: 5px;
+  font-weight: bold;
+}
+.comment-text {
+  color: #2f2f2f;
+  font-size: 0.9rem;
+  word-break: break-all;
+}
+.comment-span{
+  padding:5px;
+}
+.comment-rtext{
+  color: grey;
+  padding:6px;
+  padding-left: 15px;
+  font-size:12px;
+}
+
+.comment-rtext:hover{
+  color:black;
+  cursor: pointer;
+}
+
+.reply-username{
+color:black;
+font-weight: bold;
+font-size:0.8rem;
+}
+.reply-comment{
+  font-size: 0.9rem;
+  color: #2f2f2f;
+  padding:5px;
+
+}
+.repto{
+  color:grey;
+  font-size: 12px;
+  padding-left: 3px;
+  padding-right: 10px;
+}
+.replytag{
+  color:burlywood; 
+  padding-left: 10px;
+  font-size: 00.9rem;
+}
+
+.replytag:hover{
+ cursor: pointer;
+}
+.comment-input {
+  padding: 10px 20px;
+  border-top: 1px solid #e7e7e7;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+
+.comment-input .user-avatar,
+.comment .user-avatar {
+  width: 35px;
+  height: 35px;
+}
+
+.comment-input form {
+  width: 93%;
+  display: inherit;
+  justify-content: inherit;
+}
+
+.comment-input form .submit-button {
+  width: auto;
+  cursor: pointer;
+  padding: 0 15px;
+  border: 0;
+  background: transparent;
+}
+
+.comment-input form .submit-button::before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f3be";
+  color: #9a85d2;
+  font-size: 18px;
+}
+
+.comment-input form .submit-button:hover {
+  background: rgba(182, 167, 222, 0.4);
+}
+
+.comment-input input {
+  padding: 10px;
+  width: 85%;
+  border: 0;
+  outline: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .comment-avatar{
+    width: 20px;
+    height: 20px;
+  }
+  .comment-avatar img{
+    width: 20px;
+    height: 20px;
+    border-radius: 100px;
+  }
+ 
+}

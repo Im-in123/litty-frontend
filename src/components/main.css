@@ -1,0 +1,302 @@
+@import url("https://use.fontawesome.com/releases/v5.7.2/css/all.css");
+
+body {
+   /* background: #e2e5ee; */
+   background: #0d0d0e;
+   background:black;
+/* background:whitesmoke; */
+/* background-color: rgb(0, 0, 0); */
+/* background: linear-gradient(150deg, rgba(166,192,254,1) 0%, rgba(246,128,132,1) 100%); */
+/* background:whitesmoke; */
+
+   font-family: "Segoe UI";
+   margin: 0;
+   padding: 0;
+}
+
+.scroll-indicator {
+   border-bottom: 5px solid #8075a4;
+}
+
+
+.feed-wrapper {
+   display: flex;
+   justify-content: space-between;
+}
+@media only screen and (max-width: 768px) {
+  
+   
+   .feed-wrapper {
+      justify-content: center;
+   }
+}
+
+
+.post-wall {
+   overflow: hidden;
+}
+
+.post {
+   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+   width: 600px;
+   height: auto;
+   margin: 15px auto;
+   background: #fff;
+   position: relative;
+   animation-name: fadeIn;
+   animation-duration: 1s;
+}
+
+@keyframes fadeIn {
+   from {
+      opacity: 0;
+   }
+   to {
+      opacity: 100;
+   }
+}
+
+
+.user-info {
+   padding: 10px;
+   display: flex;
+   justify-content: flex-start;
+   padding: 10px 5px 10px 15px;
+}
+
+.user-avatar {
+   width: 40px;
+   height: 40px;
+   border-radius: 100px;
+   overflow: hidden;
+}
+
+.user-avatar img {
+   width: inherit;
+   height: inherit;
+}
+
+.user-data {
+   margin-left: 10px;
+}
+
+
+
+.post-content {
+   width: 100%;
+   max-height: 700px;
+   overflow: hidden;
+   min-height: 300px;
+}
+
+
+.post-content img {
+   width: inherit;
+}
+
+.post-info {
+   padding: 10px;
+   display: flex;
+   justify-content: space-around;
+   text-align: center;
+   background-color: black;
+
+}
+
+.post-info .views {
+   display: flex;
+   justify-content: center;
+   text-decoration: none;
+   color: grey;
+   padding: 5px 0;
+   text-align: center;
+   padding: 5px 0;
+   width: 140px;
+}
+
+.post-info .icon {
+   /* margin-right: 10px; */
+   
+}
+
+.post-info a {
+   display: flex;
+   width: 140px;
+   justify-content: center;
+   text-decoration: none;
+   /* color: #604d92; */
+   color:black;
+   color: salmon;
+   /* color:rgb(248, 138, 156); */
+   padding: 5px 0;
+}
+.post-info .count{
+      color:white;
+}
+.likes .icon{
+  color:red;
+}
+
+.post-info a .icon {
+   margin-right: 10px;
+}
+.post-date {
+   color: #616770;
+   font-size: 10px;
+   /* padding: 10px 20px; */
+   padding-left: 15px;
+   background: black;
+   border-bottom: 1px solid #e7e7e7;
+
+}
+.post-wrapper{
+   background:black;
+}
+
+
+.post-info a:hover {
+   background: rgba(182, 167, 222, 0.4);
+}
+
+@media only screen and (max-width: 768px) {
+   .post {
+         width: 100% !important;
+      }
+      .post-content {
+      width: 100%;
+      max-height: 68vh;
+      overflow: hidden;
+      /* min-height: 50vh; */
+   }
+   .post-info a {
+      display: flex;
+      width: 100px;
+      justify-content: center;
+      text-decoration: none;
+      /* color: #604d92; */
+      padding: 5px 0;
+   }
+
+  
+   .post-content img {
+      width: inherit;
+      height: 50vh;
+   }
+   .user-avatar {
+      width: 30px;
+      height: 30px;
+      border-radius: 100px;
+      overflow: hidden;
+   }
+  
+}
+
+.caption {
+   padding: 10px 15px;
+   /* border-top: 1px solid #e7e7e7; */
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background: black;
+}
+
+.caption p{
+   color:white;
+}
+
+.caption a{
+   color:white;
+}
+
+.slideshow-container {
+   max-width: 1000px;
+   position: relative;
+   margin: auto;
+ }
+ 
+ /* varsayılan olarak görselleri gizliyoruz */
+ .mySlides {
+   display: none;
+ }
+ 
+ /* sonraki ve önceki butonları */
+ .prev, .next {
+   cursor: pointer;
+   position: absolute;
+   top: 50%;
+   width: auto;
+   margin-top: -22px;
+   padding: 16px;
+   color: white;
+   font-weight: bold;
+   font-size: 18px;
+   transition: 0.6s ease;
+   border-radius: 0 3px 3px 0;
+   user-select: none;
+ }
+ 
+ /* sonraki butonunun pozisyonu */
+ .next {
+   right: 0;
+   border-radius: 3px 0 0 3px;
+ }
+ 
+ /* üzerine gelince hafif bir efekt verelim */
+ .prev:hover, .next:hover {
+   background-color: rgba(0,0,0,0.8);
+ }
+ 
+ /* görsel başlığı */
+ .text {
+   color: #f2f2f2;
+   font-size: 15px;
+   padding: 8px 12px;
+   position: absolute;
+   bottom: 8px;
+   width: 100%;
+   text-align: center;
+ }
+ 
+ /* görsel numaraları */
+ .numbertext {
+   color: #f2f2f2;
+   font-size: 12px;
+   padding: 8px 12px;
+   position: absolute;
+   top: 0;
+ }
+ 
+ /* nokta navigasyonu */
+ .dot {
+   cursor: pointer;
+   height: 15px;
+   width: 15px;
+   margin: 0 2px;
+   background-color: #bbb;
+   border-radius: 50%;
+   display: inline-block;
+   transition: background-color 0.6s ease;
+ }
+ 
+ .active, .dot:hover {
+   background-color: #717171;
+ }
+ 
+ /* geçiş animasyonu */
+ .fade {
+   -webkit-animation-name: fade;
+   -webkit-animation-duration: 1.5s;
+   animation-name: fade;
+   animation-duration: 1.5s;
+ }
+ 
+ @-webkit-keyframes fade {
+   from {opacity: .4} 
+   to {opacity: 1}
+ }
+ 
+ @keyframes fade {
+   from {opacity: .4} 
+   to {opacity: 1}
+ }
+

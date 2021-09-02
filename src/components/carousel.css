@@ -1,0 +1,121 @@
+* {
+  box-sizing:border-box;
+  font-family: Arial;
+}
+
+/* slideshow taşıyıcı */
+.slideshow-container {
+  max-width: 1000px;
+  position: relative;
+  margin: auto;
+}
+
+/* varsayılan olarak görselleri gizliyoruz */
+.mySlides {
+  display: none;
+}
+
+.iimm{
+  height:100%;
+  max-height: 337px;
+  max-width: 600px;
+}
+
+
+/* sonraki ve önceki butonları */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+}
+
+/* sonraki butonunun pozisyonu */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* üzerine gelince hafif bir efekt verelim */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* görsel başlığı */
+.text {
+  color: #f2f2f2;
+  font-size: 15px;
+  padding: 8px 12px;
+  position: absolute;
+  bottom: 8px;
+  width: 100%;
+  text-align: center;
+}
+
+/* görsel numaraları */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+
+/* nokta navigasyonu */
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  /* background-color: rgb(155, 149, 149); */
+  /* background-color: rgb(224, 154, 222); */
+  background-color: rgb(240, 212, 175);
+
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  /* background-color: #717171; */
+  /* background-color: orchid; */
+  background-color: burlywood;
+
+
+}
+
+/* geçiş animasyonu */
+.fade {
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@keyframes fade {
+  from {opacity: .4} 
+  to {opacity: 1}
+}
+
+@media only screen and (max-width: 768px) {
+
+  .iimm{
+    
+     min-width:100vw !important;
+     height: 333.5px !important;
+  }
+}
