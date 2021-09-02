@@ -159,7 +159,8 @@ const SendLike =async(e)=>{
                setLikeIconStyle("far")
                setActiontype("unlike")
             }else{
-                 alert(res.data)
+               //   alert(res.data)
+               console.log("needs checking")
               }
             //   alert("success")
               
