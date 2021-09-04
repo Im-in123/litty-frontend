@@ -409,8 +409,8 @@ const LoadComment = (props) =>{
                  });
                
                  if(result){
-                    console.log("getReply results",result.data)
-                    setReplyData(result.data)
+                    console.log("getReply results",result.data.results)
+                    setReplyData(result.data.results)
          
                  }
             }
