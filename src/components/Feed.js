@@ -14,32 +14,37 @@ import { VerifyFunc } from "../customs/others";
 
 
 let post =[];
+let goneNext = false;
 
 const Feed = (props) =>{
     // const {state:{commentTrigger}, dispatch} = useContext(store)
     const [fetching, setFetching] = useState(true)
     const [error, setError] = useState(false)
-    const [postList, setPostList] = useState(false)
+    const [postList, setPostList] = useState([])
     const {state:{userDetail}, dispatch} = useContext(store)
     const {state:{postTrigger}} = useContext(store)
+    const [nextPage, setNextPage] = useState(1)
+    const [canGoNext, setCanGoNext] = useState(false)
+    const [shouldHandleScroll, setShouldHandleScroll] = useState(false)
 
 
     useEffect(() =>{
         VerifyFunc(userDetail)
 
-        getPostContent()
+        getPostContent(1)
      return () => {
           };
      }, [postTrigger])
    
      
-  const getPostContent = async(extra ='') =>{
+  const getPostContent = async(page) =>{
     setFetching(true)
-  
+    setCanGoNext(false)
     const token = await getToken();
+
     const res = await axiosHandler({
        method:"get",
-       url: POST_URL+extra,
+       url:  POST_URL + `?page=${page ? page : nextPage}`,
        token
      }).catch((e) => {
       console.log("Error in Feed::::",e);
@@ -47,18 +52,37 @@ const Feed = (props) =>{
      });
   
      if(res){
-        console.log(" Feed::::", res.data);
-        setPostList(res.data)
+        console.log(" Feed::::", res.data.results);
+        setPostList(...postList,res.data.results)
         post = res.data
+        if(post.next){
+            setCanGoNext(true)
+            setNextPage(nextPage + 1)
+            // setTimeout(() => setShouldHandleScroll(true), 1000)
+            setShouldHandleScroll(true)
+
+        }
      
 
      }
-     setFetching(false)
      console.log("PostList:::", postList)
      console.log("post:::", post)
+     setFetching(false)
+   
 
     }
-
+    const handleScroll = (e) => {
+        alert("m")
+        const b = document.getElementById("main-feed")
+        console.log("handle b::", b)
+        // if(!shouldHandleScroll)return;
+        if(b.scrollHeight <= 100){
+          if(canGoNext && !goneNext){
+            goneNext = true;
+            getPostContent()
+          }
+        }
+      }
     if(fetching){
         return(
             <div id="feed">
@@ -76,10 +100,11 @@ const Feed = (props) =>{
             </div>
         </div>
         )
+    
     }
          return (
-<>
-            {post.map((item,key)=>
+<div id="main-feed" onScroll={handleScroll}>
+            {postList.map((item,key)=>
 
             <div id="feed" key={key}>
                 <div className="content-wrapper feed-wrapper">
@@ -98,7 +123,7 @@ const Feed = (props) =>{
             </div>
            )}
  
-          </>
+          </div>
          )
 
         

@@ -263,7 +263,7 @@ try {
         </div>
         <form>
            <input name="comment" type="text" maxLength="200" id={`placeholder${postComment}`} placeholder={placeholder} value={commentData.comment || "" } onChange={onChange} required/>
-           <button className="submit-button" type="submit"  onClick={handleSubmit}  disabled={loading}> {loading? "submiting..":props.post_id}
+           <button className="submit-button" type="submit"  onClick={handleSubmit}  disabled={loading}> {loading? "submiting..":""}
                         </button></form>
         </div>
     )
@@ -324,22 +324,11 @@ const LoadComment = (props) =>{
                  });
                
                  if(result){
-                        console.log("getComments results::::",result.data)
-                        setCommentList(result.data)
+                        console.log("getComments results::::",result.data.results)
+                        setCommentList(result.data.results)
                         setFetching(false)
                         setRender(true)
-                        
-                        const g= result.data
-                        // for (var i in g){
-                        //     console.log("i:::", g[i])
-                        //     console.log("reply", g[i].comment)
-                        //     const g1 = g[i].reply
-                        //     for(var b in g1){
-                        //         console.log("b:::", g1[b])
-                        //         console.log("reply1", g1[b].comment)
-                        //     }
 
-                        // }
 
                  }
         }
@@ -347,7 +336,7 @@ const LoadComment = (props) =>{
         
         if(fetching){
                 return(<>
-                       return <div class="contenta" id={"append"+props.post_id}><CommentCard/></div>
+                        <div class="contenta" id={"append"+props.post_id}><CommentCard/></div>
                 </>)
         };
     
@@ -379,7 +368,7 @@ const LoadComment = (props) =>{
                 })}
                 </div>
                 </>):(<>
-                        return <div class="contenta" id={"append"+props.post_id}><CommentCard/></div>
+                         <div class="contenta" id={"append"+props.post_id}><CommentCard/></div>
                 </>)}
 
             </>);
@@ -398,17 +387,6 @@ const LoadComment = (props) =>{
         const [temp, setTemp] = useState([])  
 
 
-        //  useEffect(()=>{
-        //        setReplyData({...replyData, newComment})
-        //         }
-           
-        // , [newComment])
-
-// useEffect(()=>{
-//                 setReplyData({...replyData, newReply})
-//         }
-   
-// , [newReply])
 
         const getReply =  async(e,comment_id) =>{
                 e.preventDefault()
@@ -433,12 +411,7 @@ const LoadComment = (props) =>{
                  if(result){
                     console.log("getReply results",result.data)
                     setReplyData(result.data)
-                //     setLoading(false)
-                //     setCommentData({post_id:props.id}) 
-                //     alert("comment submitted");
-                    // let container = document.querySelector("#append"+postComment)
-                    // container.innerHTML= content
-                //     dispatch({type:CommentTriggerAction,payload:result.data});
+         
                  }
             }
             const SendReply =  async(comment_id, who) =>{
@@ -458,27 +431,7 @@ const LoadComment = (props) =>{
                 // setLoading(true)
                 const token = await getToken();
                 dispatch({type:bogusTriggerAction,payload:{placeholder:placeholderText,comment_id:comment_id, postComment:postComment, type:"comment-reply"}});
-                // dispatch({type:bogusTriggerAction,payload:null})
-                // const result = await axiosHandler({
-                //    method:"post",
-                //    url: REPLY_URL,
-                //    token,
-                //    data:data
-                //  }).catch((e) => {
-                //     console.log("SendReply error::::",e.response.data);
-                // //     setLoading(false)
-                //  });
-               
-                //  if(result){
-                //     console.log("getReply results",result.data)
-                //     setReplyData(result.data)
-                // //     setLoading(false)
-                // //     setCommentData({post_id:props.id}) 
-                // //     alert("comment submitted");
-                //     // let container = document.querySelector("#append"+postComment)
-                //     // container.innerHTML= content
-                // //     dispatch({type:CommentTriggerAction,payload:result.data});
-                //  }
+              
             }
          if(props.data){
                 
@@ -629,28 +582,4 @@ const Reply =(props)=>{
 
 
 
-// const Reply =(props)=>{
-        
-//         if (props.data){ 
-//                 console.log("Reply props::",props.data)
-//                 let reply = props.data
-//                 return (
-//                         <> 
- 
-//              <p className="reply-main" key={reply.id}> {!reply.to? (
-//                  <p><span className="reply-username">{reply.author.username}</span> <span  className="reply-comment">{reply.comment}</span></p>       
-//                          ):(
-// <p><span className="reply-username">{reply.author.username}</span> <span className="repto">replied</span><span className="reply-username">{reply.author.username}</span><span  className="reply-comment">{reply.comment}</span></p>               )
-//         } </p>
-
-                       
-               
-//                         </>
-//                 )
-//         }else{
-//                 return(<>
-//                 </>)
-//         }
-
-// }
 

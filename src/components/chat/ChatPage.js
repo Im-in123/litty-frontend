@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import "./chatpage.css"
-import { BASE_URL1, CHAT_LIST_URL, GET_FOLLOWING_CHAT, OTHER_PROFILE_URL, POST_URL} from '../../urls';
+import { BASE_URL1, BASE_URL2, CHAT_LIST_URL, GET_FOLLOWING_CHAT, OTHER_PROFILE_URL, POST_URL} from '../../urls';
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 import { postTriggerAction } from "../../stateManagement/actions";
@@ -67,8 +67,8 @@ const ChatPage =(props)=>{
         } catch (error) {
           console.log(error)
         }
-        let ws_scheme = window.location.protocol === "https:" ? "wss":"ws"
-        const url = ws_scheme + '://127.0.0.1:8000/ws/chat/'+guessKey+'/';
+        let ws_scheme = window.location.protocol === "https:" ? "wss://":"ws://"
+        const url = ws_scheme + BASE_URL2 +'/ws/chat/'+guessKey+'/';
         console.log("url:::", url)
         setLoading(false)
 
@@ -85,21 +85,16 @@ const ChatPage =(props)=>{
      
 
      return () => {
+        try {
+          WebSocketInstance.hardclose()
+          console.log("secondary close leaving")
+        } catch (error) {
+          console.log(error)
+        }
           };
      }, [activeChatUser])
      
-    // useEffect(() =>{
-    //     try {
-    //       document.getElementsByClassName("head")[0].addEventListener('click', clicker);
-
-    //     } catch (error) {
-    //       console.log(error)
-    //       // alert("v")
-    //     }
-
-    //  return () => {
-    //       };
-    //  }, [loading])
+    
 
    const clicker =(e)=>{
     document.getElementsByClassName("friends_list")[0].classList.toggle("active");
@@ -173,9 +168,9 @@ const getChatList = async(extra="") =>{
    });
 
    if(res){
-      console.log(" getChatList::::", res.data);
+      console.log(" getChatList::::", res.data.results);
       
-      setChatList(res.data)
+      setChatList(res.data.results)
       // post = res.data
     
    }

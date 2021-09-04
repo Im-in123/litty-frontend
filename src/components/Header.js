@@ -76,7 +76,8 @@ import "./header.css";
                      </div>}
                      {!userDetail && 
                      <div className="diva"><Link to="/signup">
-                     <img src="" alt="SIGNUP"/></Link>
+                     SIGNUP
+                     </Link>
                  </div>
                      }
                     </div>

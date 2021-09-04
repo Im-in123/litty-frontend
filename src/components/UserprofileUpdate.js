@@ -105,10 +105,10 @@ const UserProfileUpdate =(props)=>{
 </div>
    <form onSubmit={propicSubmit}>
    <h1 class="title">Modify your profile</h1>
- <label style={{color:"black", margin:"4px"}} for="propic">upload pic</label>
- <input style={{color:"black", margin:"4px"}} type="file" required={true} id="propic" />
+ <label style={{color:"white", margin:"4px"}} for="propic">upload pic</label>
+ <input style={{color:"blue", margin:"4px"}} type="file" required={true} id="propic" />
  <div class="button-container">
-    <button class="button" type="submit" >Add profile picture</button>
+    <button class="buttonp" type="submit" >Add profile picture</button>
 </div>
  </form>
 

@@ -1,11 +1,15 @@
-// export const BASE_URL ="http://192.168.43.77:8000/"; 
 // export const BASE_URL = "http://127.0.0.1:8000/";
+// export const BASE_URL ="http://192.168.43.77:8000/"; 
 export const BASE_URL = "https://litty-server.herokuapp.com/";
 
 
 // export const BASE_URL1 ="http://192.168.43.77:8000"; 
 // export const BASE_URL1 = "http://127.0.0.1:8000";
 export const BASE_URL1 ="https://litty-server.herokuapp.com"; 
+
+// export const BASE_URL2 = "127.0.0.1:8000";
+// export const BASE_URL2 = "192.168.43.77:8000";
+export const BASE_URL2 = "litty-server.herokuapp.com";
 
 
 

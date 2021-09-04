@@ -106,7 +106,7 @@
   ================== */
 
 
-main {
+/* main {
    margin: 0;
    width: 100%;
    color: hsl(var(--text-primary));
@@ -115,7 +115,7 @@ main {
    -webkit-font-smoothing: antialiased;
    scroll-behavior: smooth;
    box-sizing: border-box;
-}
+} */
 
 /* ================
    2.1 Typography
@@ -418,9 +418,11 @@ p {
    cursor: pointer;
 }
 .profile-page-item-image {
-   max-height: 100%;
+   max-height: 160px;
    min-width: 100%;
-   object-fit: cover;
+   /* object-fit: cover; */
+   object-fit: fill;
+
    vertical-align: bottom;
 }
 

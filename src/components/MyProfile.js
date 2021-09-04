@@ -49,8 +49,8 @@ const MyProfile = (props)=> {
       
          if(res){
             console.log(" MyPost::::", res.data);
-            setMyPost(res.data)
-            post = res.data
+            setMyPost(res.data.results)
+            post = res.data.results
           
          }
          setFetching(false)
@@ -117,7 +117,7 @@ const MyProfile = (props)=> {
                                             <Griddy image={item.image}/>
 
                          )} */}
-                           {post.map((item,key)=>
+                           {myPost.map((item,key)=>
                         <Link to={`/post-detail/`+ item.id}>
                                     <Griddy image={item.image}/>
                                      </Link> 

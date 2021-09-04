@@ -15,6 +15,8 @@ let post = [];
 let otherUser=[];
 const OtherProfile = (props)=> {
     const [fetching, setFetching] = useState(true)
+    const [followFetching, setFollowFetching] = useState(true)
+
     const [error, setError] = useState(false)
     const [myPost, setMyPost] = useState(false)
     const {state:{userDetail}, dispatch} = useContext(store)
@@ -82,8 +84,8 @@ const OtherProfile = (props)=> {
       
          if(res){
             console.log(" MyPost::::", res.data);
-            // setMyPost(res.data)
-            post = res.data
+            setMyPost(res.data.results)
+            post = res.data.results
             setFetching(false)
             
          }
@@ -127,6 +129,8 @@ const OtherProfile = (props)=> {
             });
           
             if (res){
+              setFollowLoading(false)
+
               console.log("handleFollow:::",res.data)
               const rr1  = res.data["data"]
               console.log("rr2:::::", rr1)
@@ -147,7 +151,6 @@ const OtherProfile = (props)=> {
               }
             }
             setFollowError(false)
-            setFollowLoading(false)
           }
 
 
@@ -181,11 +184,14 @@ const OtherProfile = (props)=> {
                           <div class="phi-info-right flexbox-right">
                             <div className="buttons-fm">
                               <button type="button" class="btn-primary-gray button btn-primary flexbox"  onClick={followHandler}>
-                                <ion-icon name="heart-outline"></ion-icon> <span id="follow-btn">Follow</span><div class="btn-secondary"></div>
+                                <ion-icon name="heart-outline"></ion-icon> 
+                                <span id="follow-btn">{followLoading ? "...":"Follow"}
+                                  </span>
+                              
                               </button>
                               <Link to={`/chatpage/`+ otherUser.user.username}> <button onClick={()=> dispatch({type:activeChatUserAction,payload:{username:otherUser.user.username,img:BASE_URL1+otherUser.profile_picture, timeout:otherUser.user.id}})
 } type="button" class="btn-primary-gray button btn-primary flexbox">
-                                <ion-icon name="heart-outline"></ion-icon> Message <div class="btn-secondary"></div>
+                                <ion-icon name="heart-outline"></ion-icon> Message
                               </button></Link>
                             </div>
                           </div>
@@ -203,7 +209,7 @@ const OtherProfile = (props)=> {
                                           <Griddy image={item.image}/>
 
                        )} */}
-                         {post.map((item,key)=>
+                         {myPost.map((item,key)=>
                       <Link to={`/post-detail/`+ item.id}>
                                   <Griddy image={item.image}/>
                                    </Link> 

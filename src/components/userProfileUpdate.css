@@ -16,7 +16,7 @@
     display: block;
 } */
 .container1 {
-	background: #fff;
+	background: black;
 	width: 100%;
 	padding: 1rem;
 }
@@ -25,7 +25,7 @@
 	font-size: 24px;
 	line-height: 28px;
 	font-weight: bold;
-	color: #374151;
+	color: #e5e9ee;
 	padding-bottom: 11px;
 	border-bottom: 1px solid #d7dbdf;
 }
@@ -113,6 +113,24 @@
 	content: "\2713";
 	background: #5850eb;
 	border-color: #5850eb;
+}
+
+.buttonp {
+	font-weight: bold;
+	line-height: 19px;
+	background: #5850eb;
+	border: none;
+	/* padding: 15px 25px; */
+	border-radius: 6px;
+	color: white;
+	width: 50%;
+	/* margin-top: 24px; */
+}
+.buttonp:hover {
+	background: #6e67ee;
+}
+.buttonp:focus {
+	background: #4239e8;
 }
 
 .button {
