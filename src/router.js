@@ -15,6 +15,9 @@ import Verify from "./components/Verify";
 import PostCreate from "./components/Create/PostCreate";
 import Search from "./components/Search/Search";
 import ChatPage from "./components/chat/ChatPage";
+import Notification from "./components/Notification/Notification";
+
+
 const Router = (props) => {
   return (
     
@@ -41,6 +44,7 @@ const Router = (props) => {
                       <Route path="/verify" component={Verify} exact />
                       <Route path="/create" component={PostCreate} exact />
                       <Route path="/search" component={Search} exact />
+                      <Route path="/notification" component={Notification } exact />
                       <Route path="/chatpage/:username" component={ChatPage} exact />
 
 

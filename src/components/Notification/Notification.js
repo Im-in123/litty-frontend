@@ -2,12 +2,12 @@
 
 import React, { useState, useEffect, useLayoutEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
-import "./search.css"
+import "./notification.css"
 import { POST_URL} from '../../urls';
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 
- const Search =(props) =>{
+ const Notitfication =(props) =>{
     const [postData, setPostData] = useState({})
     const {state:{userDetail}, dispatch} = useContext(store)
 
@@ -20,18 +20,12 @@ import { axiosHandler, getToken } from "../../helper";
      return(
     
         <main>
-        <div class="containerSearch">
-           <div class="search-box">
-              <input type="text" class="search-input" placeholder="Search.."/>
-        
-              <button class="search-button">
-                <i class="fas fa-search"></i>
-              </button>
-           </div>
+        <div class="containerNotification">
+           <h3>Notifications</h3>
         </div>
         </main>
     
      )
  }
- export default Search
+ export default Notitfication;
    

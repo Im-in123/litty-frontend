@@ -18,15 +18,19 @@ body {
    border-bottom: 5px solid #8075a4;
 }
 
-.main-feed{
-   background:black;
-
+#main-feed{
+   height: calc(100vh - 5rem);
+   overflow:auto;
+   overflow-x:hidden;
 }
+
+
 
 .feed-wrapper {
    display: flex;
    justify-content: space-between;
 }
+
 @media only screen and (max-width: 768px) {
   
    

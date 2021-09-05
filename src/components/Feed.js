@@ -15,7 +15,7 @@ import { VerifyFunc } from "../customs/others";
 
 let post =[];
 let goneNext = false;
-
+let bb
 const Feed = (props) =>{
     // const {state:{commentTrigger}, dispatch} = useContext(store)
     const [fetching, setFetching] = useState(true)
@@ -26,6 +26,7 @@ const Feed = (props) =>{
     const [nextPage, setNextPage] = useState(1)
     const [canGoNext, setCanGoNext] = useState(false)
     const [shouldHandleScroll, setShouldHandleScroll] = useState(false)
+    const [evl, setEvl] = useState(false)
 
 
     useEffect(() =>{
@@ -36,9 +37,43 @@ const Feed = (props) =>{
           };
      }, [postTrigger])
    
-     
+
+     useEffect(() =>{
+        try {
+           bb = document.getElementById("main-feed")
+             bb.addEventListener('scroll', autoFetch)
+         } catch (error) {
+             alert("bb")
+             console.log(error)
+         }
+        
+     return () => {
+        window.removeEventListener('scroll', autoFetch);
+
+          };
+     }, [evl])
+       
+    const autoFetch =()=>{
+        if(!shouldHandleScroll)return;
+        // console.log(bb)
+
+        // console.log(bb.scrollHeight,bb.offsetHeight, bb.scrollTop)
+        // if(bb.scrollTop >= 2000){
+        //     console.log("a little close to final")
+        // }
+
+        if(bb.offsetHeight + bb.scrollTop >= bb.scrollHeight-300){
+            console.log("finally")
+            if(canGoNext && !goneNext){
+                goneNext = true;
+                getPostContent()
+            }
+
+        }
+    }
   const getPostContent = async(page) =>{
-    setFetching(true)
+      
+    // setFetching(true)
     setCanGoNext(false)
     const token = await getToken();
 
@@ -53,24 +88,44 @@ const Feed = (props) =>{
   
      if(res){
         console.log(" Feed::::", res.data.results);
-        setPostList(...postList,res.data.results)
-        post = res.data
-        if(post.next){
+        console.log("post:::", res.data)
+
+        // if(page){
+
+        // }
+        if(post.length >0){       
+             setPostList([...postList, ...res.data.results])
+            post =   [...post, ...res.data.results]
+
+        }else{
+            post = res.data.results
+            setPostList(res.data.results)
+
+        }
+        let p1  = res.data
+
+        if(p1.next){
             setCanGoNext(true)
             setNextPage(nextPage + 1)
             // setTimeout(() => setShouldHandleScroll(true), 1000)
             setShouldHandleScroll(true)
-
+        }else{
+            setShouldHandleScroll(false)
         }
      
 
      }
+    //  setScroll()
+
      console.log("PostList:::", postList)
      console.log("post:::", post)
+    
      setFetching(false)
-   
-
+     setEvl(true)
     }
+    // window.onscroll = function(){
+    // }
+  
     const handleScroll = (e) => {
         alert("m")
         const b = document.getElementById("main-feed")
@@ -85,6 +140,7 @@ const Feed = (props) =>{
       }
     if(fetching){
         return(
+            <div id="main-feed" >
             <div id="feed">
             <div className="content-wrapper feed-wrapper">
                  <div className="post-wall">
@@ -99,12 +155,16 @@ const Feed = (props) =>{
                 </div>
             </div>
         </div>
+        </div>
         )
     
     }
          return (
-<div id="main-feed" onScroll={handleScroll}>
-            {postList.map((item,key)=>
+             
+<div id="main-feed"
+    //  style={{overflow:"scroll", height:"100vh"}} 
+     >
+            {post && postList.map((item,key)=>
 
             <div id="feed" key={key}>
                 <div className="content-wrapper feed-wrapper">

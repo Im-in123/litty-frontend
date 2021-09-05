@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useEffect, useState} from "react";
 import "./signup.css";
 import { checkAuthState, tokenName } from "../customs/authController";
 import { SIGNUP_URL, LOGIN_URL } from "../urls";
@@ -28,7 +28,10 @@ const Login = (props) =>{
     const [showLoginPassword, setShowLoginPassword] = useState(false);
     const [loginError, setLoginError] = useState();
 
-  
+    useEffect(() => {
+      alert("Login with free account-> username:guest and password:guest")
+    }, [])
+
     const onSubmitLogin = async (e) => {
         e.preventDefault();
         setLoading(true);

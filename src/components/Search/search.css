@@ -8,7 +8,7 @@
   .search-input{
     width: 100%;
     padding: 10px;
-    border: 4px solid #111d5e;
+    border: 1px solid white;
     border-radius:10px 0 0 10px ;
     border-right: none;
     outline: none;
@@ -22,20 +22,23 @@
   width: 40px;
   outline: none;
   cursor: pointer;
-  border: 4px solid #111d5e;
+  border: 1px solid white;
    border-radius: 0 10px 10px 0 ;
   border-left: none;
   background: none;
   font-size: 20px;
-  border-left: 4px solid #111d5e;
+  border-left: 1px solid white;
   
   
   }
-  .container{
+  .containerSearch{
     width: 35%;
     position: absolute;
     left: 40%;
-    top: 40%;
+    top: 20%;
     transform: translate(-50% , -50%);
   }
   
+  .search-button i{
+    color:white;
+  }

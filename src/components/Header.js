@@ -54,7 +54,7 @@ import "./header.css";
                                 <Link to="/create">    <img src="/images/add_white.svg" alt="add" /> </Link>
                                 </div>
                                 
-                                <div className="diva"><Link to="/create">
+                                <div className="diva"><Link to="/notification">
                                     <img src="/images/message_white.svg" alt="inbox" /></Link>
                                 </div>
                                

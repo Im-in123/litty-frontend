@@ -1,0 +1,10 @@
+
+  .containerNotification{
+    width: 35%;
+    position: absolute;
+    left: 40%;
+    top: 20%;
+    transform: translate(-50% , -50%);
+  }
+  
+ 
