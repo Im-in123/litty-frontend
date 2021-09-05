@@ -28,6 +28,9 @@ const Feed = (props) =>{
     const [shouldHandleScroll, setShouldHandleScroll] = useState(false)
     const [evl, setEvl] = useState(false)
 
+    useEffect(() => {
+        alert("Please note:This site is still under development.Images are deleted after dyno restart. Hence some post dont have images.")
+      }, [])
 
     useEffect(() =>{
         VerifyFunc(userDetail)
