@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext} from "react";
 import { store } from "../stateManagement/store";
 import { CommentTriggerAction, postCommentAction } from "../stateManagement/actions";
 import Comment from "./Comment";
-import { LIKE_URL} from "../urls";
+import { LIKE_URL, SAVED_URL} from "../urls";
 import { axiosHandler, getToken } from "../helper";
 import { Link } from "react-router-dom";
 
@@ -14,6 +14,11 @@ import { Link } from "react-router-dom";
     const {state:{userDetail}} = useContext(store)
     const [likesend, setLikeSend] = useState(false);
     const [plink, setPlink] = useState("");
+    const [isSaved, setIsSaved] = useState(false);
+    const [isLiked1, setIsLiked1] = useState(false);
+   let changed= false
+    let  likeCount
+   let likevalue
 
 
 
@@ -46,12 +51,14 @@ import { Link } from "react-router-dom";
                // console.log("likeeeeeeeee:::::::", isliked)
                // actiontype="like";
                setActiontype("like")
+               setIsLiked1(true)
                // alert(actiontype)
                break;
             }else{
                isliked= null;
                // actiontype="unlike"; 
                setActiontype("unlike")
+               setIsLiked1(false)
 
             }
             // setLikeIconStyle(isliked ? "fas" : "far")
@@ -70,6 +77,14 @@ import { Link } from "react-router-dom";
 
       }
       setLikeIconStyle(isliked ? "fas" : "far")
+
+      for(var g in userDetail.saved){
+         if(userDetail.saved[g] ===props.id){
+            setIsSaved(true)
+         }
+      }
+      
+
       setLoading(false)
 
   }, [])
@@ -84,31 +99,29 @@ import { Link } from "react-router-dom";
    }
  
 }
-  const likeHandler =(e)=>{
-   //   e.preventDefault();
   
-   SendLike()
-     
-  }
   const togglecomments =(e)=>{
    e.preventDefault();
    
 }
 
-const SendLike =async(e)=>{
-   if(likesend){
-      return
-   }
-   else{
-      setLikeSend(true)
-      let  likeCount = document.querySelector("#likecount"+props.id)
-      let likevalue= likeCount.textContent
-      console.log("likecount and value:::", likeCount, likevalue)
+const likeHandler =async(e)=>{
+  
    
-      if(actiontype==="like"){
-         setLikeIconStyle("far")
+      setIsLiked1(!isLiked1)
+      
+      if(!changed){
+         likeCount = document.querySelector("#likecount"+props.id)
+        likevalue= likeCount.textContent
+         console.log("likecount and value:::", likeCount, likevalue)
+         // var up =
+         // var down=
+         changed =true
+      }
+      
+      if(isLiked1){
+
          if(likevalue===""){
-            // alert("empty string")
             likevalue= 0
          }
          if(likevalue ===0){
@@ -122,20 +135,25 @@ const SendLike =async(e)=>{
          }
          likeCount.textContent = likevalue
 
-   
-       }else if(actiontype==="unlike"){
-         setLikeIconStyle("fas")
         
+   
+       }else if(!isliked){
+
          if(likevalue===""){
-            // alert("empty string")
             likevalue= 0
          }
          likevalue =parseInt(likevalue) + 1
          likeCount.textContent= likevalue
-   
+
       }else{
          alert("unknown actiontype:::",actiontype)
       }
+     
+       if(likesend){
+          console.log("like passed")
+         return
+      }
+      setLikeSend(true)
       let like_data  = {"post_id":props.id}
       const token = await getToken();
       const result = await axiosHandler({
@@ -152,25 +170,65 @@ const SendLike =async(e)=>{
               console.log("SendLike results::::", result.data)
               let res= result.data
               if(res.data ==="success-added"){
-               setLikeIconStyle("fas")
-               setActiontype("like")
+
+               setIsLiked1(true)
    
               }else if(res.data==="success-removed"){
-               setLikeIconStyle("far")
-               setActiontype("unlike")
+    
+               setIsLiked1(false)
+
             }else{
-               //   alert(res.data)
                console.log("needs checking")
               }
-            //   alert("success")
-              
-   
        }
-   }
+
    setLikeSend(false)
 
 }
 
+const saveHandler =async(e)=>{
+      setIsSaved(!isSaved)
+   
+      let save_data  = {"post_id":props.id, user_id:userDetail.user.id}
+      const token = await getToken();
+      const result = await axiosHandler({
+         method:"post",
+         url: SAVED_URL, 
+         token,
+         data: save_data
+        
+       }).catch((e) => {
+          console.log("Save error::::", e);
+       });
+     
+       if(result){
+              console.log("Save results::::", result.data)
+              let res= result.data
+              if(res.success==="added"){
+               //   setIsSaved(true)
+              }
+              if(res.success==="removed"){
+               // setIsSaved(false)
+            }
+            //   if(res.data ==="success-added"){
+            //    setLikeIconStyle("fas")
+            //    setActiontype("like")
+   
+            //   }else if(res.data==="success-removed"){
+            //    setLikeIconStyle("far")
+            //    setActiontype("unlike")
+            // }else{
+            //    //   alert(res.data)
+            //    console.log("needs checking")
+            //   }
+            // //   alert("success")
+              
+   
+      //  }
+   }
+   setLikeSend(false)
+
+}
 
 if (loading){
    return(<>
@@ -190,7 +248,8 @@ if (loading){
             </div>
             <div className="share" id="##">
                   <a href="#">
-                     <div className="icon"><i className="far fa-save"></i></div>
+                     <div className="icon">
+                        <i className="far fa-save"></i></div>
                   </a>
                </div>
          </div>
@@ -212,14 +271,32 @@ if (loading){
             <div className="post-info">
                <div className="likes"  onClick={(e)=>likeHandler()}>
                   <a onClick={(e)=>e.preventDefault()}>
-                  {loading?(<>
-                     <div className="icon"><i className="far fa-heart"></i></div>
-                     <div id={"likecount"+props.id} className="count">{like_count}</div>
-         </>):(<>
-            <div className="icon"><i className={`${likeIconStyle} fa-heart`}></i></div>
-                              <div id={"likecount"+props.id} className="count">{like_count}</div>
-         </>)}
-                           
+                  {/* {loading?(<>
+                     <div className="icon">
+                        <i className="far fa-heart"></i>
+                     </div>
+                     <div id={"likecount"+props.id} className="count">
+                        {like_count}
+                     </div>
+               </>):(<>
+                  <div className="icon">
+                     <i className={`${likeIconStyle} fa-heart`}></i>
+                  </div>
+                  <div id={"likecount"+props.id} className="count">
+                     {like_count}
+                  </div>
+               </>)} */}
+               
+               <div className="icon">
+               {isLiked1?
+                     <i className="fas fa-heart"></i>
+                     :
+                     <i className="far fa-heart"></i>
+               }
+                  </div>
+                  <div id={"likecount"+props.id} className="count">
+                     {like_count && like_count}
+                  </div>          
                   </a>
                </div>           
   
@@ -229,9 +306,17 @@ if (loading){
                      <div className="count">{comment_count}</div>
                   </a>
                </div>
-               <div className="share" id="##">
-                  <a href="#">
-                     <div className="icon"><i className="far fa-save"></i></div>
+               <div className="share" id="##"  onClick={(e)=>saveHandler()}>
+               <a onClick={(e)=>e.preventDefault()}>
+               <div className="icon">
+                    {isSaved? 
+                    <i className="fas fa-save"></i> 
+                    :
+                    <i className="far fa-save"></i> 
+                    }
+                        {/* <i className= {`${isSaved} fa-save`}></i> */}
+                        
+                        </div>
                   </a>
                </div>
             </div>

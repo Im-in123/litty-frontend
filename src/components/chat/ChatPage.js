@@ -32,7 +32,11 @@ const ChatPage =(props)=>{
 
     const [activeu, setActiveU] = useState(false)
 
-
+    useEffect(() =>{
+  alert("Chat features has been disabled for the moment. u know, credit card bills. lol")
+   return () => {
+        };
+   }, [])
     useEffect(() =>{
       getOtherProfile(props)
 

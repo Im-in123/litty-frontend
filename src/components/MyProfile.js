@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { axiosHandler, getToken } from "../helper";
 import { store } from "../stateManagement/store";
-import { BASE_URL, BASE_URL1, POST_URL } from '../urls';
+import { BASE_URL, BASE_URL1, POST_URL, SAVED_URL } from '../urls';
 import UserInfo from "./UserInfo";
 import PostContent from "./PostContent";
 import PostInfo from "./PostInfo";
@@ -11,14 +11,23 @@ import Comment from "./Comment";
 
 
 let post = [];
+let saved = [];
 
 const MyProfile = (props)=> {
     const [fetching, setFetching] = useState(true)
     const [error, setError] = useState(false)
-    const [myPost, setMyPost] = useState(false)
     const {state:{userDetail}, dispatch} = useContext(store)
     const [followers, setFollowers] = useState(false)
     const [following, setFollowing] = useState(false)
+
+    const [showProfile, setShowProfile] = useState(true)
+    const [showSaved, setShowSaved] = useState(false)
+    const [showLiked, setShowLiked] = useState(false)
+
+    const [myPost, setMyPost] = useState(false)
+    const [mySaved, setMySaved] = useState(false)
+    const [myLiked, setMyLiked] = useState(false)
+
 
 
     useEffect(() =>{
@@ -58,6 +67,50 @@ const MyProfile = (props)=> {
          console.log("post:::", post)
     
         }
+        const getMySaved = async(extra="") =>{
+          // setFetching(true)
+        
+          const token = await getToken();
+          const res = await axiosHandler({
+             method:"get",
+             url: SAVED_URL + extra,
+             token
+           }).catch((e) => {
+            console.log("Error in getMySaved::::",e);
+            setError(true)
+           });
+        
+           if(res){
+              console.log(" getMySaved::::", res.data);
+              setMySaved(res.data.results)
+              saved = res.data.results
+            
+           }
+          //  setFetching(false)
+           console.log("getMySaved:::", mySaved)
+           console.log("getMySaved:::", saved)
+      
+          }
+
+  const toggleProfile=(e)=>{
+            setShowProfile(true)
+            setShowLiked(false)
+            setShowSaved(false)
+            // getMySaved()
+          }
+const toggleSaved =(e)=>{
+          setShowProfile(false)
+          setShowLiked(false)
+          setShowSaved(true)
+          getMySaved()
+        }
+const toggleLiked =(e)=>{
+          setShowProfile(false)
+          setShowLiked(true)
+          setShowSaved(false)
+          // getMySaved()
+        }
+
         if(fetching){
             return(
 <></>
@@ -98,8 +151,10 @@ const MyProfile = (props)=> {
                               <button type="button" class="btn-primary-gray button btn-primary flexbox">
                                 <ion-icon name="heart-outline"></ion-icon> <Link to="/profile-update">Settings</Link> <div class="btn-secondary"></div>
                               </button>
-                              <button type="button" class="btn-primary-gray button btn-primary flexbox">
-                                <ion-icon name="heart-outline"></ion-icon> <Link to="/profile-update">Saved</Link> <div class="btn-secondary"></div>
+                              <button type="button" class="btn-primary-gray button btn-primary flexbox"
+                              
+                              >
+                                <ion-icon name="heart-outline"></ion-icon> Logout<div class="btn-secondary"></div>
                               </button>
                             </div>
                           </div>
@@ -109,23 +164,51 @@ const MyProfile = (props)=> {
                         <img class="profile-header-image" src="https://images.unsplash.com/photo-1616808943301-d80596eff29f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2010&q=80" alt=""/>
                       </div>
                     </section>
-                
+              
                     <section class="profile-page">
-                      <h3>Profile Posts</h3>
+                      <div className="grid-headings">
+                      <h3 onClick={toggleProfile}>Posts</h3> 
+                      <h3 onClick={toggleSaved}>Saved </h3>
+                      <h3 onClick={toggleLiked}>Liked</h3>
+                      </div>
+                      {showProfile &&
                       <div class="profile-page-inner">
                       {/* {post.map((item,key)=>
                                             <Griddy image={item.image}/>
 
                          )} */}
-                           {myPost.map((item,key)=>
+                           {myPost && myPost.map((item,key)=>
                         <Link to={`/post-detail/`+ item.id}>
                                     <Griddy image={item.image}/>
                                      </Link> 
                          )}
                           
                       </div>
-                    </section>
+                }
+                     {showSaved &&
+                   <div class="profile-page-inner">
+                  
+                        {mySaved && mySaved.map((item,key)=>
+                     <Link to={`/post-detail/`+ item.post.id}>
+                                 <Griddy2 post={item.post}/>
+                                  </Link> 
+                      )}
+                       
+                   </div>
+                }
+                {showLiked &&
+                   <div class="profile-page-inner">
+                  
+                        {/* { myLiked && myLiked.map((item,key)=>
+                     <Link to={`/post-detail/`+ item.id}>
+                                 <Griddy image={item.image}/>
+                                  </Link> 
+                      )}
+                        */}
+                   </div>
+                }
                 
+                </section>
                   </div>
                 
                 </main>
@@ -134,6 +217,7 @@ const MyProfile = (props)=> {
   
  
 export const Griddy = (props) =>{
+  console.log("Griddy props::", props)
     if(props.image){
         let image;
         try {
@@ -143,7 +227,7 @@ export const Griddy = (props) =>{
                 <></>
             )
         }
-        console.log("Griddy:::", props.image[0])
+        console.log("Griddyimg:::", props.image[0])
         return (
            <>
                        
@@ -156,6 +240,29 @@ export const Griddy = (props) =>{
      }
     };
 
+    export const Griddy2 = (props) =>{
+      console.log("Griddy2 props::", props)
+        if(props.post){
+            let image;
+            try {
+                image= props.post.image[0]
+            } catch (error) {
+                return(
+                    <></>
+                )
+            }
+            console.log("Griddy2 img:::", props.post.image[0])
+            return (
+               <>
+                           
+       <div class="profile-page-item flexbox" key={image.id}>
+       <img class="profile-page-item-image" src={image.image} alt=""/>
+     </div>
+                         
+               </>
+            );
+         }
+        };
 
 
  export default MyProfile;
