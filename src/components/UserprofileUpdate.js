@@ -100,9 +100,9 @@ const UserProfileUpdate =(props)=>{
         <div className="ProfileMain">
          
  <div class="container1" >
- <div style={{background:""}}>   
+ {/* <div style={{background:""}}>   
       <a href="#" style={{color:"red", textDecoration:"underline"}} onClick={() => logout(props)}>Logout</a>
-</div>
+</div> */}
    <form onSubmit={propicSubmit}>
    <h1 class="title">Modify your profile</h1>
  <label style={{color:"white", margin:"4px"}} for="propic">upload pic</label>

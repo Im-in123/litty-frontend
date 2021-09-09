@@ -8,6 +8,7 @@ import UserInfo from "./UserInfo";
 import PostContent from "./PostContent";
 import PostInfo from "./PostInfo";
 import Comment from "./Comment";
+import { logout } from "../customs/authController";
 
 
 let post = [];
@@ -152,7 +153,7 @@ const toggleLiked =(e)=>{
                                 <ion-icon name="heart-outline"></ion-icon> <Link to="/profile-update">Settings</Link> <div class="btn-secondary"></div>
                               </button>
                               <button type="button" class="btn-primary-gray button btn-primary flexbox"
-                              
+                              onClick={() => logout(props)}
                               >
                                 <ion-icon name="heart-outline"></ion-icon> Logout<div class="btn-secondary"></div>
                               </button>
