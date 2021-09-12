@@ -1,17 +1,20 @@
-import React, {useEffect, useLayoutEffect} from "react";
+import React, {useEffect, useState, useLayoutEffect} from "react";
 import "./carousel.css";
 
 const PostContent = (props)=> {
-    console.log("Post Content props:::",props)
+  const [loading, setLoading] = useState(false);
+
+    // console.log("Post Content props:::",props)
     var slideIndex = 1;
 
 
      useEffect(() =>{
+      
        try {
         showSlides(slideIndex);
 
        } catch (error) {
-         console.log("showslides error:::", error)
+        //  console.log("showslides error:::", error)
        }
      }, [])
    
@@ -43,6 +46,23 @@ const PostContent = (props)=> {
       dots[slideIndex-1].className += " active";
     }
 
+    if(loading){
+      return(
+        <div className="post-content">
+        <div class="slideshow-container">
+         <div class="fade mySlides mySlidesget">
+         <div class="numbertext"></div>
+         <img src="" alt="" className="iimm" style={{width:"100%"}}/>
+          <div class="text">
+          </div>
+        
+        </div>
+        </div>
+        <br/>
+        </div>
+      )
+    }else{
+
     if(props.image){
        let showcount =false
        let count = props.image.length
@@ -54,7 +74,7 @@ const PostContent = (props)=> {
           <div className="post-content">
 <div class="slideshow-container">
   {props.image.map((item,key)=>
- <div class={`fade mySlides mySlidesget${props.id}`}>
+ <div class={`fade mySlides mySlidesget${props.id}`} key={key}>
  <div class="numbertext">{showcount && <>{key+1} / {showcount && count}</>}</div>
  <img src={item.image} alt="" className="iimm" style={{width:"100%"}}/>
  {/* <div class="text">Görsel Başlığı 1</div> */}
@@ -77,7 +97,7 @@ const PostContent = (props)=> {
 {showcount && 
   <div style={{textAlign:"center"}}>
   {props.image.map((item,key)=>
-  <span class={`dot dotget${props.id}`} onClick={(e)=>currentSlide(item.id)}></span> 
+  <span class={`dot dotget${props.id}`} key={key} onClick={(e)=>currentSlide(item.id)}></span> 
 
              )}
 </div>}
@@ -86,6 +106,7 @@ const PostContent = (props)=> {
         
        );
     }
+  }
    };
   
  

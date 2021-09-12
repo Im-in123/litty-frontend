@@ -23,22 +23,34 @@ import { axiosHandler, getToken } from "../../helper";
           };
      }, [])
 
-     useEffect(() =>{
+   //   useEffect(() =>{
+    
+   //    clearTimeout(debouncer);
+   //    if (search !== ""){
+   //     debouncer= setTimeout(() =>{
+   //       let extra = `?keyword=${search}`;
+   //       getUser(extra)
+   //     }, 1700)
+   //    }else{
+   //    //  let extra1 = `?keyword=00000000000`;
+   //    //  getUser(extra1)
+   //    }
+      
+   // }, [search, searchb])
+
+   useEffect(() =>{
     
       clearTimeout(debouncer);
-      if (search !== ""){
+    
        debouncer= setTimeout(() =>{
          let extra = `?keyword=${search}`;
          getUser(extra)
        }, 1700)
-      }else{
-      //  let extra1 = `?keyword=00000000000`;
-      //  getUser(extra1)
-      }
+      
       
    }, [search, searchb])
- 
-     const getUser =  async(extra)=>{
+
+     const getUser =  async(extra="")=>{
       setFetching(true)
 
       const token = await getToken();
@@ -61,8 +73,11 @@ import { axiosHandler, getToken } from "../../helper";
 
 const displayUsers =(item)=>{
    if(item.user){
-      return(
-         <p>{item.user.username}</p>
+      return(<div>
+         <Link to={`/other-profile/`+ item.user.username}>
+            <img src={item.user.user_picture} style={{width:"10px", height:"10px"}}/> <p>{item.user.username}</p>
+
+                                  </Link><br/> <hr/></div>
       )
    }
   
@@ -75,7 +90,7 @@ const displayUsers =(item)=>{
            <div class="search-box">
               <input type="text" 
               class="search-input" 
-              placeholder="Search.."
+              placeholder="start typing to search.."
               value={search} 
                onChange={e => 
                setSearch(e.target.value)}
@@ -86,11 +101,12 @@ const displayUsers =(item)=>{
               </button>
            </div>
 
-           <div>
+           <div><br/>
            {users && users.map((item, key)=>{
                         return displayUsers(item)
                         
                  })} 
+               {users.length<1 ? "Nothing found": "" }
            </div>
 
         </div>

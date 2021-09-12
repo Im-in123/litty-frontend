@@ -33,14 +33,13 @@ const ChatPage =(props)=>{
     const [activeu, setActiveU] = useState(false)
 
     useEffect(() =>{
-  alert("Chat features has been disabled for the moment. u know, credit card bills. lol")
-   return () => {
-        };
-   }, [])
+      alert("Chat features has been disabled for the moment. u know, unnecessary bills from hosting company. lol")
+       return () => {
+            };
+       }, [])
+       
     useEffect(() =>{
       getOtherProfile(props)
-
-
    return () => {
         };
    }, [])
@@ -48,10 +47,11 @@ const ChatPage =(props)=>{
    useEffect(() =>{
    getChatList()
 
-
  return () => {
       };
  }, [])
+
+
 
     useEffect(() =>{
       checkSize()

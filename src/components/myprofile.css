@@ -283,7 +283,7 @@ p {
   ============ */
 
 #main {
-  min-height: 110vh;
+  height: calc(100vh - 5rem);
 }
 
 /* ======================
@@ -302,7 +302,7 @@ p {
   position: relative;
   overflow: hidden;
   z-index: 2;
-  /* height:50vh; */
+  height: 50vh;
 }
 .profile-header-overlay {
   width: 100%;
@@ -392,6 +392,9 @@ p {
 /* Profile Page */
 .profile-page {
   margin: 4em 0;
+  /* height: 50vh; */
+  /* max-height: 450px;
+  overflow: scroll; */
 }
 .profile-page > h3 {
   font-size: var(--paragraph);
@@ -403,6 +406,9 @@ p {
   /* flex-wrap: wrap; */
   grid-gap: 2px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  max-height: 450px;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 .profile-page-item {
   margin: 0;
@@ -529,7 +535,7 @@ p {
     position: relative;
     overflow: hidden;
     z-index: 2;
-    /* height:50vh; */
+    height: 40vh;
   }
   .phi-profile-picture {
     /* min-width: 100%;
@@ -576,6 +582,11 @@ p {
     /* width:100%; */
     width: 112.5px;
     height: 70.5px;
+  }
+  .profile-page-inner {
+    max-height: 355px;
+    overflow: scroll;
+    overflow-x: hidden;
   }
 }
 

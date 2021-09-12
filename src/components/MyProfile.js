@@ -28,7 +28,7 @@ const MyProfile = (props)=> {
     const [myPost, setMyPost] = useState(false)
     const [mySaved, setMySaved] = useState(false)
     const [myLiked, setMyLiked] = useState(false)
-
+    let bb
 
 
     useEffect(() =>{
@@ -42,7 +42,21 @@ const MyProfile = (props)=> {
      return () => {
           };
      }, [])
-   
+
+  //    useEffect(() =>{
+  //     try {
+  //        bb = document.getElementById("main-feed")
+  //          bb.addEventListener('scroll', autoFetch)
+  //      } catch (error) {
+  //         //  alert("bb")
+  //         //  console.log(error)
+  //      }
+      
+  //  return () => {
+  //     window.removeEventListener('scroll', autoFetch);
+
+  //       };
+  //  }, [evl])
     
     const getMyPost = async(extra="") =>{
         setFetching(true)
@@ -114,8 +128,70 @@ const toggleLiked =(e)=>{
 
         if(fetching){
             return(
-<></>
-            )
+              <main id="main" class="flexbox-col-start-center">
+                
+              <div class="view-width">
+            
+                <section class="profile-header">
+                  <div class="profile-header-inner flexbox">
+                    <div class="phi-info-wrapper flexbox">
+                      <div class="phi-info-left flexbox">
+
+                         <div class="phi-profile-picture-wrapper">
+                          <div class="phi-profile-picture-inner flexbox">
+                            <img class="phi-profile-picture" alt=""/>
+                          </div>
+                        </div>
+                        
+                        <div class="phi-profile-username-wrapper flexbox-col-left">
+                          <h3 class="phi-profile-username flexbox"><span class="material-icons-round"></span></h3>
+                          <div className="ps-fm">
+                          <p class="">Followers </p>
+                          <p class="">Following </p>
+                          <p class="">Likes</p>
+                          </div> 
+                          <p class="phi-profile-tagline"></p>
+                          <br></br><br></br>
+                         
+
+                        </div>
+                      </div>
+                      <div class="phi-info-right flexbox-right">
+                        <div className="buttons-fm">
+                          <button type="button" class="btn-primary-gray button btn-primary flexbox">
+                            <ion-icon name="heart-outline"></ion-icon> <Link to="/profile-update">Settings</Link> <div class="btn-secondary"></div>
+                          </button>
+                          <button type="button" class="btn-primary-gray button btn-primary flexbox"
+                         
+                          >
+                            <ion-icon name="heart-outline"></ion-icon> Logout<div class="btn-secondary"></div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="profile-header-overlay"></div>
+                    <img class="profile-header-image" src="https://images.unsplash.com/photo-1616808943301-d80596eff29f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2010&q=80" alt=""/>
+                  </div>
+                </section>
+          
+                <section class="profile-page">
+                  <div className="grid-headings">
+                  <h3 >Posts</h3> 
+                  <h3 >Saved </h3>
+                  <h3 >Liked</h3>
+                  </div>
+                 
+                  <div class="profile-page-inner">
+                  
+                      
+                  </div>
+         
+            
+            </section>
+              </div>
+            
+            </main>            )
         }
              return (
     
@@ -139,7 +215,7 @@ const toggleLiked =(e)=>{
                               <div className="ps-fm">
                               <p class="">Followers {followers}</p>
                               <p class="">Following {following}</p>
-                              <p class="">Likes</p>
+                              <p class="">Likes 2B</p>
                               </div> 
                               <p class="phi-profile-tagline">{userDetail.bio}</p>
                               <br></br><br></br>
@@ -173,7 +249,7 @@ const toggleLiked =(e)=>{
                       <h3 onClick={toggleLiked}>Liked</h3>
                       </div>
                       {showProfile &&
-                      <div class="profile-page-inner">
+                      <div class="profile-page-inner postscroll">
                       {/* {post.map((item,key)=>
                                             <Griddy image={item.image}/>
 
@@ -187,7 +263,7 @@ const toggleLiked =(e)=>{
                       </div>
                 }
                      {showSaved &&
-                   <div class="profile-page-inner">
+                   <div class="profile-page-inner savedscroll" >
                   
                         {mySaved && mySaved.map((item,key)=>
                      <Link to={`/post-detail/`+ item.post.id}>
@@ -198,7 +274,7 @@ const toggleLiked =(e)=>{
                    </div>
                 }
                 {showLiked &&
-                   <div class="profile-page-inner">
+                   <div class="profile-page-inner likedscroll">
                   
                         {/* { myLiked && myLiked.map((item,key)=>
                      <Link to={`/post-detail/`+ item.id}>

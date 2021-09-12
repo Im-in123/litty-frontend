@@ -18,7 +18,7 @@ export const postCommentState = {
 };
 
 export const postTriggerState = {
-  postTrigger: false,
+  postTrigger: 1,
 };
 
 

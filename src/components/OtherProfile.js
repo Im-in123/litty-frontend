@@ -93,24 +93,7 @@ const OtherProfile = (props)=> {
          console.log("post:::", post)
     
         }
-        if(fetching){
-            return(
-                <div id="feed">
-                <div className="content-wrapper feed-wrapper">
-                     <div className="post-wall">
-                        <div className="post">
-                            <div className="post-wrapper">
-                                {/* <UserInfo  />
-                                <PostContent />
-                                <PostInfo/> */}
-                            </div>
-    
-                        </div>
-                    </div>
-                </div>
-            </div>
-            )
-        }
+     
 
         const followHandler =async (e)=>{
           setFollowLoading(true)
@@ -153,6 +136,66 @@ const OtherProfile = (props)=> {
             setFollowError(false)
           }
 
+  if(fetching){
+            return(
+              <main id="main" class="flexbox-col-start-center">
+                
+              <div class="view-width">
+              <section class="profile-header">
+                    <div class="profile-header-inner flexbox">
+                      <div class="phi-info-wrapper flexbox">
+                        <div class="phi-info-left flexbox">
+
+                           <div class="phi-profile-picture-wrapper">
+                            <div class="phi-profile-picture-inner flexbox">
+                              <img class="phi-profile-picture"  alt=""/>
+                            </div>
+                          </div>
+
+                          <div class="phi-profile-username-wrapper flexbox-col-left">
+                            <h3 class="phi-profile-username flexbox"><span class="material-icons-round"></span></h3>
+                            <div className="ps-fm">
+                            <p class="">Followers <span id="followers"></span></p>
+                            <p class="">Following <span id="following"></span></p>
+                            <p class="">Likes</p>
+                            </div>
+                            <p class="phi-profile-tagline">{otherUser.bio}</p><br/>
+                           
+                          </div>
+                        </div>
+                        <div class="phi-info-right flexbox-right">
+                          <div className="buttons-fm">
+                            <button type="button" class="btn-primary-gray button btn-primary flexbox">
+                              <ion-icon name="heart-outline"></ion-icon> 
+                              <span id="follow-btn">Follow
+                                </span>
+                            
+                            </button>
+                            <button type="button" class="btn-primary-gray button btn-primary flexbox">
+                              <ion-icon name="heart-outline"></ion-icon> Message
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="profile-header-overlay"></div>
+                      <img class="profile-header-image" src="https://images.unsplash.com/photo-1616808943301-d80596eff29f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2010&q=80" alt=""/>
+                    </div>
+                  </section>
+            
+                <section class="profile-page">
+                  <h3>Profile Posts</h3>
+                  <div class="profile-page-inner">
+                
+                      
+                  </div>
+                </section>
+            
+              </div>
+            
+            </main>
+            )
+        }
 
    return (
     

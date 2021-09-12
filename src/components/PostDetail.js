@@ -73,7 +73,32 @@ const PostDetail =(props) =>{
      }
 
 if(fetching){
-   return <div className="mypost"></div>
+   return(
+    <div className="content-wrapper feed-wrapper">
+    <div className="post-wall">
+   
+         <div className="post">
+           <div className="post-wrapper">
+             {isAuth && 
+             <div>
+               <button>Edit</button>
+               <button >Delete</button>
+             </div> 
+             }
+             <div>
+             <button>Share</button>
+
+             </div> 
+   
+          </div>
+       </div> 
+     
+    
+   
+     </div>
+    
+</div>
+     )
 
 }
         return(

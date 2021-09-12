@@ -19,10 +19,7 @@ import { Link } from "react-router-dom";
    let changed= false
     let  likeCount
    let likevalue
-
-
-
-   console.log("PostInfo props:::", props)
+   // console.log("PostInfo props:::", props)
    let like = props.like;
    let like_count = like.length; 
    if(like_count===0){

@@ -8,7 +8,7 @@ import { render } from "react-dom/cjs/react-dom.development";
 
 
 const Comment =(props) =>{
-        console.log("Comment props:::", props)
+        // console.log("Comment props:::", props)
     const {state:{userDetail}, dispatch} = useContext(store)
     const {state:{commentTrigger}} = useContext(store)
     const {state: {postComment}} = useContext(store);
@@ -67,7 +67,7 @@ const Comment =(props) =>{
 
 const CommentComp = (props) =>{ 
 
-    console.log("CommentComp props::::", props)
+//     console.log("CommentComp props::::", props)
 //     const [commentData, setCommentData] = useState({post_id:props.post_id, author_id:props.author_id})
   const [commentData, setCommentData] = useState({})
     const [loading, setLoading] = useState(false)
@@ -107,7 +107,7 @@ useEffect(()=>{
                 // dispatch({type:bogusTriggerAction,payload:null})
         
         } catch (error) {
-                console.log(error)
+                // console.log(error)
                 setPlaceholder("Write you comment here...")
         }
 // }

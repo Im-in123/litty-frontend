@@ -17,27 +17,31 @@ const UserInfo =(props)=>  {
    }, [])
 
    const checkname = async()=>{
+      if(props.data){
       if (userDetail.user.username === props.data.username){
          setPlink(`/my-profile/`);
 
       }else{
          setPlink(`/other-profile/`+ props.data.username);
 
-      }
+            }
       setLoading(false)
-  }
+      }
+
+}
+
 if(loading){
    return (
       <div className="user-info">
        
 
          <div className="user-avatar">
-            {/* <img src={props.userAvatar} alt="author"></img> */}
+         <img src="" alt="author"></img>
+
          </div>
         
          <div className="user-data">
             <div className="username">
-               {/* <svg width={props.data.username.toString()} height="10"> */}
             <svg width="10" height="10">
 
                   <rect width="100%" height="100%" style={{ fill: "#dbdbdb" }} />
@@ -53,7 +57,7 @@ if(loading){
 }else{
 
    if(props.data){
-      console.log("UserInfo props:::", props.data)
+      // console.log("UserInfo props:::", props.data)
       let pp
       try {
          pp= props.data.user_picture

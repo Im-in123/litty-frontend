@@ -59,7 +59,7 @@ import { postTriggerAction } from "../../stateManagement/actions";
           headers: { "Content-Type": "multipart/form-data" },
         }).catch((e) => {
           console.log("res:::", e)
-          alert(e)
+          alert("Bad internet connection. Try again!!")
           setLoading(false)
         });
         if (profile) {
