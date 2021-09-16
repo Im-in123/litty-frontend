@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
-import {BASE_URL, BASE_URL1} from '../urls';
+import {BASE_URL, BASE_URL1, LOCAL_CHECK} from '../urls';
 import "./header.css";
  const Header =(props) =>{
     const {state:{userDetail}, dispatch} = useContext(store)
@@ -20,7 +20,7 @@ import "./header.css";
         try {
             // alert(userDetail.profile_picture)
 
-            setPp(BASE_URL1+userDetail.profile_picture)
+            setPp(LOCAL_CHECK? BASE_URL1+userDetail.profile_picture : userDetail.profile_picture )
             setLoading(false)
            } catch (error) {
             //   prompt("Error header",error)

@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { axiosHandler, getToken } from "../helper";
 import { store } from "../stateManagement/store";
-import { BASE_URL, BASE_URL1, POST_URL, SAVED_URL } from '../urls';
+import { BASE_URL, BASE_URL1, LOCAL_CHECK, POST_URL, SAVED_URL } from '../urls';
 import UserInfo from "./UserInfo";
 import PostContent from "./PostContent";
 import PostInfo from "./PostInfo";
@@ -150,7 +150,7 @@ const toggleLiked =(e)=>{
                           <p class="">Following </p>
                           <p class="">Likes</p>
                           </div> 
-                          <p class="phi-profile-tagline"></p>
+                          <p class="phi-profile-tagline">Loading...</p>
                           <br></br><br></br>
                          
 
@@ -206,7 +206,12 @@ const toggleLiked =(e)=>{
 
                              <div class="phi-profile-picture-wrapper">
                               <div class="phi-profile-picture-inner flexbox">
-                                <img class="phi-profile-picture" src={`${BASE_URL1+userDetail.profile_picture}`} alt=""/>
+                                {LOCAL_CHECK? 
+                                 <img class="phi-profile-picture" src={`${BASE_URL1+userDetail.profile_picture}`} alt=""/>
+                                 :
+                                 <img class="phi-profile-picture" src={userDetail.profile_picture_url} alt=""/>
+                                }
+                                
                               </div>
                             </div>
                             
@@ -309,7 +314,7 @@ export const Griddy = (props) =>{
            <>
                        
    <div class="profile-page-item flexbox" key={image.id}>
-   <img class="profile-page-item-image" src={image.image} alt=""/>
+   <img class="profile-page-item-image" src={LOCAL_CHECK? image.image: image.image_url} alt=""/>
  </div>
                      
            </>
@@ -333,7 +338,7 @@ export const Griddy = (props) =>{
                <>
                            
        <div class="profile-page-item flexbox" key={image.id}>
-       <img class="profile-page-item-image" src={image.image} alt=""/>
+       <img class="profile-page-item-image" src={LOCAL_CHECK? image.image: image.image_url} alt=""/>
      </div>
                          
                </>

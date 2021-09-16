@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import "./chatpage.css"
-import { BASE_URL1, BASE_URL2, CHAT_LIST_URL, GET_FOLLOWING_CHAT, OTHER_PROFILE_URL, POST_URL} from '../../urls';
+import { BASE_URL1, BASE_URL2, CHAT_LIST_URL, GET_FOLLOWING_CHAT, LOCAL_CHECK, OTHER_PROFILE_URL, POST_URL} from '../../urls';
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 import { postTriggerAction } from "../../stateManagement/actions";
@@ -255,9 +255,9 @@ const renderUsers = (item) => {
      return (<>
             
         <div className= {item.other.username === activeChatUser.username ? 'friend active fcenter ': 'friend  fcenter'}
-        key={item.other.id} onClick={()=>getChat(item.other.username, item.other.user_picture, item.other.id)}>
+        key={item.other.id} onClick={()=>getChat(item.other.username, LOCAL_CHECK? item.other.user_picture:item.other.user_picture_url, item.other.id)}>
         <div class="avatarbox">
-          <div class="avatar_overlay"><img src={item.other.user_picture}/></div>
+          <div class="avatar_overlay"><img src={LOCAL_CHECK? item.other.user_picture:item.other.user_picture_url}/></div>
         </div>
         <div class="namemsg">
           <p class="b">{item.other.username}</p>

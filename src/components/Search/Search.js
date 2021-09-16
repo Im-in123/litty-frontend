@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useLayoutEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import "./search.css"
-import { POST_URL, PROFILE_URL, USER_SEARCH_URL} from '../../urls';
+import { LOCAL_CHECK, POST_URL, PROFILE_URL, USER_SEARCH_URL} from '../../urls';
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 
@@ -75,7 +75,7 @@ const displayUsers =(item)=>{
    if(item.user){
       return(<div>
          <Link to={`/other-profile/`+ item.user.username}>
-            <img src={item.user.user_picture} style={{width:"10px", height:"10px"}}/> <p>{item.user.username}</p>
+            <img src={LOCAL_CHECK ? item.user.user_picture:item.user.user_picture_url} style={{width:"10px", height:"10px"}}/> <p>{item.user.username}</p>
 
                                   </Link><br/> <hr/></div>
       )

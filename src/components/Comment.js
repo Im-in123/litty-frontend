@@ -2,7 +2,7 @@ import React, { useState, useContext, useEffect} from "react";
 import "./comment.css"
 import { store } from "../stateManagement/store";
 import { axiosHandler, getToken } from "../helper";
-import {BASE_URL, BASE_URL1, COMMENT_URL, REPLY_URL} from '../urls';
+import {BASE_URL, BASE_URL1, COMMENT_URL, LOCAL_CHECK, REPLY_URL} from '../urls';
 import { CommentTriggerAction, bogusTriggerAction, newCommentAction, newReplyAction } from "../stateManagement/actions";
 import { render } from "react-dom/cjs/react-dom.development";
 
@@ -182,7 +182,7 @@ try {
                  let username = document.querySelector("#appendreprep_username"+replyResult.data.postcomment)
                  let to_username = document.querySelector("#appendreprep_to_username"+replyResult.data.postcomment)
                  let img = document.querySelector("#appendreprep_img"+replyResult.data.postcomment)
-                 img.src = BASE_URL1 + replyResult.data.author.user_picture   
+                 img.src = LOCAL_CHECK? BASE_URL1 + replyResult.data.author.user_picture: replyResult.data.author.user_picture_url  
                  comment.innerHTML = ": " +replyResult.data.comment
                  username.innerHTML = replyResult.data.author.username
                  to_username.innerHTML = replyResult.data.to.author.username
@@ -223,7 +223,7 @@ try {
         let comment = document.querySelector("#appendcom_comment"+postComment)
         let username = document.querySelector("#appendcom_username"+postComment)
         let img = document.querySelector("#appendcom_img"+postComment)
-        img.src = result.data.author.user_picture
+        img.src =LOCAL_CHECK? result.data.author.user_picture : result.data.author.user_picture_url
         comment.innerHTML = result.data.comment
         username.innerHTML = result.data.author.username
 
@@ -451,7 +451,7 @@ const LoadComment = (props) =>{
             return(
                 <div className="comment">
                 <div className="comment-avatar">
-                <img src={props.data.author.user_picture} alt="author avatar"></img>
+                <img src={LOCAL_CHECK ? props.data.author.user_picture : props.data.author.user_picture_url} alt="author avatar"></img>
                 </div>
                 <div className="comment-user-data">
                 <div className="username">
@@ -541,7 +541,7 @@ const Reply =(props)=>{
  
              <div className="comment" key={reply.id}> {!reply.to? (<>
                        <div className="comment-avatar">
-                       <img src={reply.author.user_picture} alt="author avatar"></img>
+                       <img src={LOCAL_CHECK? reply.author.user_picture:reply.author.user_picture_url} alt="author avatar"></img>
                        </div>
                  <div className="comment-user-data">
                   <div className="username" style={{fontSize:"0.8rem"}}>
@@ -555,7 +555,7 @@ const Reply =(props)=>{
                 </div>
                   </> ):(<>
                 <div className="comment-avatar">
-                <img src={reply.author.user_picture} alt="author avatar"></img>
+                <img src={LOCAL_CHECK? reply.author.user_picture:reply.author.user_picture_url} alt="author avatar"></img>
                 </div> &nbsp;
                 
 <p>

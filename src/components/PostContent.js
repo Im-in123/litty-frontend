@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useLayoutEffect} from "react";
+import { LOCAL_CHECK } from "../urls";
 import "./carousel.css";
 
 const PostContent = (props)=> {
@@ -76,7 +77,7 @@ const PostContent = (props)=> {
   {props.image.map((item,key)=>
  <div class={`fade mySlides mySlidesget${props.id}`} key={key}>
  <div class="numbertext">{showcount && <>{key+1} / {showcount && count}</>}</div>
- <img src={item.image} alt="" className="iimm" style={{width:"100%"}}/>
+ <img src={LOCAL_CHECK ? item.image: item.image_url} alt="" className="iimm" style={{width:"100%"}}/>
  {/* <div class="text">Görsel Başlığı 1</div> */}
   <div class="text">
   {showcount && <>Görsel Başlığı</>}

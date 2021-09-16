@@ -44,3 +44,6 @@ export const UPDATE_FOLLOW = BASE_URL + "user/update-follow"
 const W1 = "127.0.0.1:8000/ws/chat/"
 export const WEBSOCKET_URL = 'ws://'+ W1 + 'temp/'
 // 'ws://127.0.0.1:8000/ws/chat/123/';
+
+// export const LOCAL_CHECK  = true
+export const LOCAL_CHECK  = false

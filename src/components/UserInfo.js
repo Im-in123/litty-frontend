@@ -1,6 +1,7 @@
 import React,{useEffect, useContext, useState, useLayoutEffect} from "react";
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
+import { LOCAL_CHECK } from "../urls";
 
 
 const UserInfo =(props)=>  {
@@ -60,7 +61,7 @@ if(loading){
       // console.log("UserInfo props:::", props.data)
       let pp
       try {
-         pp= props.data.user_picture
+         pp=LOCAL_CHECK?  props.data.user_picture : props.data.user_picture_url  
     
        } catch (error) {
          pp=""//userDetail.profile_picture.file_upload

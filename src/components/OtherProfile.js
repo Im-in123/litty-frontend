@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link } from "react-router-dom";
 import { axiosHandler, getToken } from "../helper";
 import { store } from "../stateManagement/store";
-import { BASE_URL, BASE_URL1, POST_URL, OTHER_PROFILE_URL, UPDATE_FOLLOW } from '../urls';
+import { BASE_URL, BASE_URL1, POST_URL, OTHER_PROFILE_URL, UPDATE_FOLLOW, LOCAL_CHECK } from '../urls';
 import UserInfo from "./UserInfo";
 import PostContent from "./PostContent";
 import PostInfo from "./PostInfo";
@@ -159,7 +159,7 @@ const OtherProfile = (props)=> {
                             <p class="">Following <span id="following"></span></p>
                             <p class="">Likes</p>
                             </div>
-                            <p class="phi-profile-tagline">{otherUser.bio}</p><br/>
+                            <p class="phi-profile-tagline">Loading...</p><br/>
                            
                           </div>
                         </div>
@@ -209,7 +209,11 @@ const OtherProfile = (props)=> {
 
                              <div class="phi-profile-picture-wrapper">
                               <div class="phi-profile-picture-inner flexbox">
+                              {LOCAL_CHECK ? 
                                 <img class="phi-profile-picture" src={`${BASE_URL1+otherUser.profile_picture}`} alt=""/>
+                                :
+                                 <img class="phi-profile-picture" src={otherUser.profile_picture_url} alt=""/>
+                                }
                               </div>
                             </div>
 
