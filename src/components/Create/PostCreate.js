@@ -102,10 +102,10 @@ import { postTriggerAction } from "../../stateManagement/actions";
         <button type="button" class="btn post-actions__upload attachments--btn">
           <label for="upload-image" class="post-actions__label">
              <i class="fa fa-upload" aria-hidden="true"></i> 
-            upload image
+            add image
           </label>
         </button>
-        <input type="file" id="upload-image" accept="image/*" multiple
+        <input type="file" id="add-image" accept="image/*" multiple
         required = {true}
         />
       </div>
