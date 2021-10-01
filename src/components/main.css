@@ -13,6 +13,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  overflow-x: hidden;
 }
 
 .scroll-indicator {
@@ -23,8 +24,9 @@ body {
   align-items: center;
   height: calc(100vh - 5rem);
   /* overflow: auto; */
-  overflow-x: hidden;
   overflow: scroll;
+  overflow-x: hidden;
+
   /* overflow-y: hidden; */
 
   /* overflow-y: overlay; */
