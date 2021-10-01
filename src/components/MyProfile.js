@@ -217,7 +217,10 @@ const MyProfile = (props) => {
                     )}
                   </div>
                 </div>
-
+                <link
+                  rel="stylesheet"
+                  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+                ></link>
                 <div class="phi-profile-username-wrapper flexbox-col-left">
                   <h3 class="phi-profile-username flexbox">
                     {userDetail.user.username}
