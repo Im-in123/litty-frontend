@@ -21,13 +21,8 @@ body {
 }
 
 #main-feed {
-  background: rgb(184, 113, 113);
-  width: 100vw !important;
   height: calc(100vh - 5rem);
-  overflow: auto;
-  margin: 0;
-  padding: 0;
-  width: calc(100vh - 1rem);
+  /* overflow: auto; */
 
   /* width: 100vw; */
   /* overflow-x: hidden; */
