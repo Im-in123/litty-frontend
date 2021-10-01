@@ -1,107 +1,90 @@
-import React,{useEffect, useContext, useState, useLayoutEffect} from "react";
+import React, { useEffect, useContext, useState, useLayoutEffect } from "react";
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
 import { LOCAL_CHECK } from "../urls";
 
+const UserInfo = (props) => {
+  const {
+    state: { userDetail },
+    dispatch,
+  } = useContext(store);
+  const [plink, setPlink] = useState("");
+  const [loading, setLoading] = useState("true");
 
-const UserInfo =(props)=>  {
-   const {state:{userDetail}, dispatch} = useContext(store);
-   const [plink, setPlink] = useState("");
-   const [loading, setLoading] = useState("true");
+  useEffect(() => {
+    checkname();
 
+    return () => {};
+  }, []);
 
-   useEffect(() =>{
-      checkname()
-
-   return () => {
-        };
-   }, [])
-
-   const checkname = async()=>{
-      if(props.data){
-      if (userDetail.user.username === props.data.username){
-         setPlink(`/my-profile/`);
-
-      }else{
-         setPlink(`/other-profile/`+ props.data.username);
-
-            }
-      setLoading(false)
+  const checkname = async () => {
+    if (props.data) {
+      if (userDetail.user.username === props.data.username) {
+        setPlink(`/my-profile/`);
+      } else {
+        setPlink(`/other-profile/` + props.data.username);
       }
+      setLoading(false);
+    }
+  };
 
-}
-
-if(loading){
-   return (
+  if (loading) {
+    return (
       <div className="user-info">
-       
+        <div className="user-avatar">
+          <img src="" alt="..."></img>
+        </div>
 
-         <div className="user-avatar">
-         <img src="" alt="author"></img>
-
-         </div>
-        
-         <div className="user-data">
-            <div className="username">
+        <div className="user-data">
+          <div className="username">
             <svg width="10" height="10">
+              <rect width="100%" height="100%" style={{ fill: "#dbdbdb" }} />
+            </svg>
+          </div>
 
-                  <rect width="100%" height="100%" style={{ fill: "#dbdbdb" }} />
-               </svg>
-            </div>
-
-            <div className="post-date">
-            </div>
-         </div>
-
+          <div className="post-date"></div>
+        </div>
       </div>
-   );
-}else{
-
-   if(props.data){
+    );
+  } else {
+    if (props.data) {
       // console.log("UserInfo props:::", props.data)
-      let pp
+      let pp;
       try {
-         pp=LOCAL_CHECK?  props.data.user_picture : props.data.user_picture_url  
-    
-       } catch (error) {
-         pp=""//userDetail.profile_picture.file_upload
-    
-       }  
-       return (
-          <div className="user-info">
-            <Link to={ plink }>
-
-             <div className="user-avatar">
-                {pp? (
-             <img src={pp} alt="author"></img>
-
-                ):(
-                  <img src="" alt="author"></img>
-
-                )}
-             </div>
-             </Link>
-             <div className="user-data">
-                <div className="username">
-                   {/* <svg width={props.data.username.toString()} height="10"> */}
-                {/* <svg width="40" height="7">
+        pp = LOCAL_CHECK
+          ? props.data.user_picture
+          : props.data.user_picture_url;
+      } catch (error) {
+        pp = ""; //userDetail.profile_picture.file_upload
+      }
+      return (
+        <div className="user-info">
+          <Link to={plink}>
+            <div className="user-avatar">
+              {pp ? (
+                <img src={pp} alt="author"></img>
+              ) : (
+                <img src="" alt="author"></img>
+              )}
+            </div>
+          </Link>
+          <div className="user-data">
+            <div className="username">
+              {/* <svg width={props.data.username.toString()} height="10"> */}
+              {/* <svg width="40" height="7">
 
                       <rect width="100%" height="100%" style={{ fill: "#dbdbdb" }} />
                    </svg> */}
-                </div>
- 
-                <div className="post-date">
-                   {/* {props.data.created_at} */}
-                </div>
-             </div>
- 
+            </div>
+
+            <div className="post-date">{/* {props.data.created_at} */}</div>
           </div>
-       );
-       
-   }else{
-      return "....."
-   }
-} 
- }
- 
- export default UserInfo;
+        </div>
+      );
+    } else {
+      return ".....";
+    }
+  }
+};
+
+export default UserInfo;
