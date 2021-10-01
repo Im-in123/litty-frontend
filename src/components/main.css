@@ -26,7 +26,7 @@ body {
 
   /* width: 100vw; */
   /* overflow-x: hidden; */
-  overflow: hidden;
+  overflow: scroll;
   /* overflow-y: hidden; */
 
   /* overflow-y: overlay; */
