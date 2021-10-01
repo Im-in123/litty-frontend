@@ -12,7 +12,7 @@ body {
   font-family: "Segoe UI";
   margin: 0;
   padding: 0;
-
+  width: 100vw;
   overflow: hidden;
 }
 
@@ -28,6 +28,7 @@ body {
   /* overflow-x: hidden; */
   overflow: scroll;
   /* overflow-y: hidden; */
+  width: 100vw;
 
   /* overflow-y: overlay; */
 }
