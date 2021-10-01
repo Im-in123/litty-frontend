@@ -69,9 +69,9 @@ const Feed = (props) => {
     setPostList(postContainer);
     post = postContainer;
     if (refreshFeed) {
-      //   alert(
-      //     "Please note:This site is still under development.Images are deleted after dyno restart. Hence some post dont have images."
-      //   );
+      alert(
+        "Please note:This site is still under development.Images might not persist."
+      );
       getPostContent(postTrigger);
     } else {
       setFetching(false);
