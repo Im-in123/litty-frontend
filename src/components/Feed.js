@@ -74,10 +74,10 @@ const Feed = (props) => {
       //   );
       getPostContent(postTrigger);
     } else {
+      setFetching(false);
       setShouldHandleScroll(true);
       setCanGoNext(true);
-      setFetching(false);
-      setEvl(true);
+      setEvl(!evl);
     }
     return () => {};
   }, []);
@@ -89,7 +89,7 @@ const Feed = (props) => {
       bb.addEventListener("scroll", autoFetch);
     } catch (error) {
       //  alert("bb")
-      console.log(error);
+      console.log("could add event listener to main-feed");
     }
     // }
 
@@ -172,7 +172,7 @@ const Feed = (props) => {
     console.log("post:::", post);
 
     setFetching(false);
-    setEvl(true);
+    setEvl(!evl);
   };
   // window.onscroll = function(){
   // }
