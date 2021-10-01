@@ -13,7 +13,6 @@ body {
   margin: 0;
   padding: 0;
   /* width: 100vw; */
-  overflow-y: overlay;
 }
 
 .scroll-indicator {
@@ -26,8 +25,10 @@ body {
   /* width: 100vw; */
   /* overflow-x: hidden; */
   /* overflow-y: scroll; */
-  overflow-y: overlay;
-  width: inherit;
+  overflow-y: hidden;
+
+  /* overflow-y: overlay; */
+  /* width: inherit; */
 }
 /* html {
   width: 100vw;
