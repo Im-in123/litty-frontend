@@ -12,7 +12,7 @@ body {
   font-family: "Segoe UI";
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .scroll-indicator {
@@ -22,6 +22,7 @@ body {
 #main-feed {
   height: calc(100vh - 5rem);
   overflow: auto;
+  width: 100vw;
   /* overflow-x: hidden; */
   /* overflow-y: scroll; */
 }
