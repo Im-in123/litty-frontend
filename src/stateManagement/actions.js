@@ -1,4 +1,3 @@
-
 export const userDetailAction = "userDetailAction";
 export const secondChangeAction = "secondChangeAction";
 export const CommentTriggerAction = "CommentTriggerAction";
@@ -8,9 +7,6 @@ export const bogusTriggerAction = "bogusTriggerAction";
 export const newCommentAction = "newCommentAction";
 export const newReplyAction = "newReplyAction";
 export const activeChatUserAction = "activeChatUserAction";
-
-
-
-
-
-
+export const refreshFeedAction = "refreshFeedAction";
+export const refreshProfileAction = "refreshProfileAction";
+export const postContainerAction = "postContainerAction";

@@ -1,12 +1,14 @@
 import {
- 
- secondChangeAction,
- userDetailAction, 
- CommentTriggerAction,
- postCommentAction,
- postTriggerAction,
- bogusTriggerAction,
- activeChatUserAction
+  secondChangeAction,
+  userDetailAction,
+  CommentTriggerAction,
+  postCommentAction,
+  postTriggerAction,
+  bogusTriggerAction,
+  activeChatUserAction,
+  refreshFeedAction,
+  refreshProfileAction,
+  postContainerAction,
 } from "./actions";
 
 export const commentTriggerState = {
@@ -20,7 +22,6 @@ export const postCommentState = {
 export const postTriggerState = {
   postTrigger: 1,
 };
-
 
 export const secondChangeState = {
   secondChange: false,
@@ -44,6 +45,18 @@ export const newReplyState = {
 
 export const activeChatUserState = {
   activeChatUser: null,
+};
+
+export const refreshFeedState = {
+  refreshFeed: true,
+};
+
+export const refreshProfileState = {
+  refreshProfile: null,
+};
+
+export const postContainerState = {
+  postContainer: true,
 };
 
 export const commentTriggerReducer = (state, action) => {
@@ -79,7 +92,7 @@ export const postTriggerReducer = (state, action) => {
   }
 };
 
-export const secondChangeReducer= (state, action) => {
+export const secondChangeReducer = (state, action) => {
   if (action.type === secondChangeAction) {
     return {
       ...state,
@@ -89,7 +102,6 @@ export const secondChangeReducer= (state, action) => {
     return state;
   }
 };
-
 
 export const userDetailReducer = (state, action) => {
   if (action.type === userDetailAction) {
@@ -102,8 +114,6 @@ export const userDetailReducer = (state, action) => {
   }
 };
 
-
-
 export const bogusTriggerReducer = (state, action) => {
   if (action.type === bogusTriggerAction) {
     return {
@@ -115,7 +125,6 @@ export const bogusTriggerReducer = (state, action) => {
   }
 };
 
-
 export const newCommentReducer = (state, action) => {
   if (action.type === newCommentReducer) {
     return {
@@ -126,7 +135,6 @@ export const newCommentReducer = (state, action) => {
     return state;
   }
 };
-
 
 export const newReplyReducer = (state, action) => {
   if (action.type === newReplyReducer) {
@@ -144,6 +152,39 @@ export const activeChatUserReducer = (state, action) => {
     return {
       ...state,
       activeChatUser: action.payload,
+    };
+  } else {
+    return state;
+  }
+};
+
+export const refreshFeedReducer = (state, action) => {
+  if (action.type === refreshFeedAction) {
+    return {
+      ...state,
+      refreshFeed: action.payload,
+    };
+  } else {
+    return state;
+  }
+};
+
+export const refreshProfileReducer = (state, action) => {
+  if (action.type === refreshProfileAction) {
+    return {
+      ...state,
+      refreshProfile: action.payload,
+    };
+  } else {
+    return state;
+  }
+};
+
+export const postContainerReducer = (state, action) => {
+  if (action.type === postContainerAction) {
+    return {
+      ...state,
+      postContainer: action.payload,
     };
   } else {
     return state;

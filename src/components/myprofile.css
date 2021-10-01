@@ -535,7 +535,7 @@ p {
     position: relative;
     overflow: hidden;
     z-index: 2;
-    height: 40vh;
+    height: 50vh;
   }
   .phi-profile-picture {
     /* min-width: 100%;
@@ -581,7 +581,7 @@ p {
     object-fit: fill;
     /* width:100%; */
     width: 112.5px;
-    height: 70.5px;
+    height: 87px;
   }
   .profile-page-inner {
     max-height: 355px;
