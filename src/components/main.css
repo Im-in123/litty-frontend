@@ -23,10 +23,11 @@ body {
 #main-feed {
   height: calc(100vh - 5rem);
   overflow: auto;
-  width: 100vw;
+  /* width: 100vw; */
   /* overflow-x: hidden; */
   /* overflow-y: scroll; */
-  /* overflow-y: overlay; */
+  overflow-y: overlay;
+  width: inherit;
 }
 /* html {
   width: 100vw;
