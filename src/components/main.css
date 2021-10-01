@@ -29,14 +29,14 @@ body {
 
   /* overflow-y: hidden; */
 
-  /* overflow-y: overlay; */
+  overflow-y: overlay;
 }
 /* html {
   width: 100vw;
 } */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 .feed-wrapper {
   display: flex;
