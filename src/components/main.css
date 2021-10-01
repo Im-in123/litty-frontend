@@ -23,7 +23,7 @@ body {
 #main-feed {
   height: calc(100vh - 5rem);
   /* overflow: auto; */
-
+  margin-left: -20px;
   /* width: 100vw; */
   /* overflow-x: hidden; */
   overflow: scroll;
