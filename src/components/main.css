@@ -21,8 +21,8 @@ body {
 #main-feed {
   height: calc(100vh - 5rem);
   overflow: auto;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  /* overflow-x: hidden; */
+  /* overflow-y: scroll; */
 }
 
 .feed-wrapper {
