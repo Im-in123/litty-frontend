@@ -21,16 +21,15 @@ body {
 }
 
 #main-feed {
+  align-items: center;
   height: calc(100vh - 5rem);
   /* overflow: auto; */
-  margin-right: -3px;
-  /* width: 100vw; */
+  /* margin-right: -10px; */
   /* overflow-x: hidden; */
   overflow: scroll;
   /* overflow-y: hidden; */
 
   /* overflow-y: overlay; */
-  /* width: inherit; */
 }
 /* html {
   width: 100vw;
