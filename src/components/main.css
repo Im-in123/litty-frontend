@@ -12,7 +12,6 @@ body {
   font-family: "Segoe UI";
   margin: 0;
   padding: 0;
-  width: 100vw;
   overflow: hidden;
 }
 
@@ -24,20 +23,18 @@ body {
   align-items: center;
   height: calc(100vh - 5rem);
   /* overflow: auto; */
-  margin-right: -10px;
   /* overflow-x: hidden; */
   overflow: scroll;
   /* overflow-y: hidden; */
-  width: 105vw;
 
   /* overflow-y: overlay; */
 }
 /* html {
   width: 100vw;
 } */
-/* ::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none;
-} */
+}
 
 .feed-wrapper {
   display: flex;
