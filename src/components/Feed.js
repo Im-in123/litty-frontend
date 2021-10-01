@@ -89,7 +89,7 @@ const Feed = (props) => {
       bb.addEventListener("scroll", autoFetch);
     } catch (error) {
       //  alert("bb")
-      console.log("could add event listener to main-feed");
+      console.log("couldnt add event listener to main-feed");
     }
     // }
 
