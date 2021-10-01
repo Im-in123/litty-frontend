@@ -73,7 +73,6 @@ const Feed = (props) => {
       //     "Please note:This site is still under development.Images are deleted after dyno restart. Hence some post dont have images."
       //   );
       getPostContent(postTrigger);
-      dispatch({ type: refreshFeedAction, payload: null });
     } else {
       setShouldHandleScroll(true);
       setCanGoNext(true);
@@ -165,6 +164,7 @@ const Feed = (props) => {
         setShouldHandleScroll(false);
         // alert("gonenext")
       }
+      dispatch({ type: refreshFeedAction, payload: null });
     }
     //  setScroll()
 
