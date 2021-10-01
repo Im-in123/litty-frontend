@@ -21,8 +21,8 @@ body {
 }
 
 #main-feed {
-  background: yellow;
-
+  background: white;
+  width: 100vw !important;
   height: calc(100vh - 5rem);
   overflow: auto;
   /* width: 100vw; */
