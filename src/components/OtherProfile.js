@@ -15,7 +15,6 @@ import {
 import UserInfo from "./UserInfo";
 import PostContent from "./PostContent";
 import PostInfo from "./PostInfo";
-import Comment from "./Comment";
 import { Griddy } from "./MyProfile";
 import { activeChatUserAction } from "../stateManagement/actions";
 

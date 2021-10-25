@@ -4,8 +4,10 @@ export const CommentTriggerAction = "CommentTriggerAction";
 export const postCommentAction = "postCommentAction";
 export const postTriggerAction = "postTriggerAction";
 export const bogusTriggerAction = "bogusTriggerAction";
-export const newCommentAction = "newCommentAction";
-export const newReplyAction = "newReplyAction";
+export const deleteCommentAction = "deleteCommentAction";
+export const deleteReplyAction = "deleteReplyAction";
+
+export const newReplyReplyAction = "newReplyReplyAction";
 export const activeChatUserAction = "activeChatUserAction";
 export const refreshFeedAction = "refreshFeedAction";
 export const refreshProfileAction = "refreshProfileAction";

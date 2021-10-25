@@ -24,7 +24,7 @@ const PostCreate = (props) => {
   const submit = async (e) => {
     setLoading(true);
     e.preventDefault();
-    let image = document.querySelector("#upload-image");
+    let image = document.querySelector("#add-image");
     let images = image.files;
     // let imageu = []
 

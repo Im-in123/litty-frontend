@@ -9,6 +9,9 @@ import {
   refreshFeedAction,
   refreshProfileAction,
   postContainerAction,
+  newReplyReplyAction,
+  deleteCommentAction,
+  deleteReplyAction,
 } from "./actions";
 
 export const commentTriggerState = {
@@ -35,12 +38,14 @@ export const bogusState = {
   bogus: null,
 };
 
-export const newCommentState = {
-  newComment: null,
+export const delCommentState = {
+  delComment: null,
 };
-
-export const newReplyState = {
-  newReply: null,
+export const delReplyState = {
+  delReply: null,
+};
+export const newReplyReplyState = {
+  newReplyReply: false,
 };
 
 export const activeChatUserState = {
@@ -125,22 +130,33 @@ export const bogusTriggerReducer = (state, action) => {
   }
 };
 
-export const newCommentReducer = (state, action) => {
-  if (action.type === newCommentReducer) {
+export const delCommentReducer = (state, action) => {
+  if (action.type === deleteCommentAction) {
     return {
       ...state,
-      newComment: action.payload,
+      delComment: action.payload,
     };
   } else {
     return state;
   }
 };
 
-export const newReplyReducer = (state, action) => {
-  if (action.type === newReplyReducer) {
+export const delReplyReducer = (state, action) => {
+  if (action.type === deleteReplyAction) {
     return {
       ...state,
-      newReply: action.payload,
+      delReply: action.payload,
+    };
+  } else {
+    return state;
+  }
+};
+
+export const newReplyReplyReducer = (state, action) => {
+  if (action.type === newReplyReplyAction) {
+    return {
+      ...state,
+      newReplyReply: action.payload,
     };
   } else {
     return state;

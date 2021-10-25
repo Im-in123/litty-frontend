@@ -7,7 +7,6 @@ import { BASE_URL, BASE_URL1, LOCAL_CHECK, POST_URL, SAVED_URL } from "../urls";
 import UserInfo from "./UserInfo";
 import PostContent from "./PostContent";
 import PostInfo from "./PostInfo";
-import Comment from "./Comment";
 import { logout } from "../customs/authController";
 
 let post = [];

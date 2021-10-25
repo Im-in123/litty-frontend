@@ -50,32 +50,34 @@ const Header = (props) => {
               <Link to="/">Litty</Link>
             </div>
           </div>
-          <div className="navmenu">
-            <div className="diva">
-              <Link to="/">
+          {userDetail && (
+            <div className="navmenu">
+              <div className="diva">
+                <Link to="/">
+                  {" "}
+                  <img src="/images/home-icon.svg" alt="home" />{" "}
+                </Link>
+              </div>
+              <div className="diva">
                 {" "}
-                <img src="/images/home-icon.svg" alt="home" />{" "}
-              </Link>
-            </div>
-            <div className="diva">
-              {" "}
-              <Link to="/search">
-                <img src="/images/search_white.svg" alt="discover" />
-              </Link>
-            </div>
-            <div className="diva">
-              <Link to="/create">
-                {" "}
-                <img src="/images/add_white.svg" alt="add" />{" "}
-              </Link>
-            </div>
+                <Link to="/search">
+                  <img src="/images/search_white.svg" alt="discover" />
+                </Link>
+              </div>
+              <div className="diva">
+                <Link to="/create">
+                  {" "}
+                  <img src="/images/add_white.svg" alt="add" />{" "}
+                </Link>
+              </div>
 
-            <div className="diva">
-              <Link to="/notification">
-                <img src="/images/message_white.svg" alt="inbox" />
-              </Link>
+              <div className="diva">
+                <Link to="/notification">
+                  <img src="/images/message_white.svg" alt="inbox" />
+                </Link>
+              </div>
             </div>
-          </div>
+          )}
           {userDetail && (
             <div className="header-right-side">
               <div className="header-info">

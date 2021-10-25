@@ -12,7 +12,7 @@ import {
 import {
   CommentTriggerAction,
   bogusTriggerAction,
-  newCommentAction,
+  deleteCommentAction,
   newReplyAction,
 } from "../stateManagement/actions";
 import { render } from "react-dom/cjs/react-dom.development";
@@ -171,7 +171,7 @@ const CommentComp = (props) => {
             "#appendrep" + replyResult.data.postcomment
           );
           container.style.display = "flex";
-          //  dispatch({type:newCommentAction,payload:"heya"});
+          //  dispatch({type:deleteCommentAction,payload:"heya"});
           let comment = document.querySelector(
             "#appendrep_comment" + replyResult.data.postcomment
           );
@@ -216,7 +216,7 @@ const CommentComp = (props) => {
             "#appendreprep" + replyResult.data.postcomment
           );
           container.style.display = "flex";
-          //  dispatch({type:newCommentAction,payload:"heya"});
+          //  dispatch({type:deleteCommentAction,payload:"heya"});
           let comment = document.querySelector(
             "#appendreprep_comment" + replyResult.data.postcomment
           );
@@ -272,7 +272,7 @@ const CommentComp = (props) => {
         // alert("comment submitted");
         let container = document.querySelector("#appendcom" + postComment);
         container.style.display = "flex";
-        dispatch({ type: newCommentAction, payload: "heya" });
+        dispatch({ type: deleteCommentAction, payload: "heya" });
         let comment = document.querySelector(
           "#appendcom_comment" + postComment
         );

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import PostContent from "./PostContent";
 import PostInfo from "./PostInfo";
 import UserInfo from "./UserInfo";
-import Comment from "./Comment";
 import { POST_URL } from "../urls";
 import { axiosHandler, getToken } from "../helper";
 import { store } from "../stateManagement/store";
