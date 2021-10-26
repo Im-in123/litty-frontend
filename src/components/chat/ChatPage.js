@@ -44,13 +44,6 @@ const ChatPage = (props) => {
   const [activeu, setActiveU] = useState(false);
 
   useEffect(() => {
-    alert(
-      "Chat features has been disabled for the moment due to bills from hosting company."
-    );
-    return () => {};
-  }, []);
-
-  useEffect(() => {
     getOtherProfile(props);
     return () => {};
   }, []);
@@ -194,6 +187,9 @@ const ChatPage = (props) => {
 
   const sendMessageHandler = (e) => {
     e.preventDefault();
+    alert(
+      "Chat features has been disabled for the moment due to bills from hosting company."
+    );
     const messageObject = {
       from: userDetail.user.username,
       content: msgObj.message,

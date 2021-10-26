@@ -68,12 +68,24 @@ const LoadComment = (props) => {
       console.log("currentComment:::", currentComment);
       if (currentComment) {
         setCommentList([...commentList, currentComment]);
+        scrollToBottom(postComment);
         props.setCommentCount(props.commentCount + 1);
         setCurrentComment(false);
       }
     }
     return () => {};
   }, [currentComment]);
+
+  const scrollToBottom = (p) => {
+    try {
+      setTimeout(() => {
+        let chatArea = document.getElementById("contenta" + p);
+        chatArea.scrollTop = chatArea.scrollHeight;
+      }, 300);
+    } catch (error) {
+      console.log("scrolltobottom error:::currentcomment");
+    }
+  };
 
   useEffect(() => {
     if (postComment === props.post_id) {
@@ -115,32 +127,11 @@ const LoadComment = (props) => {
     }
   };
 
-  //   if (fetching) {
-  //     return (
-  //       <>
-  //         <div class="contenta" id={"append" + props.post_id}>
-  //           <CommentCard />
-  //         </div>
-  // 111
-  //       </>
-  //     );
-  //   }
-
   return (
     <>
       {render ? (
         <>
-          <div class="contenta">
-            {/* {tt.map((item, key) => {
-                return (
-                  <CommentCard
-                    post_id={props.post_id}
-                    key={key}
-                    data={item}
-                    replyList={currentReply}
-                  />
-                );
-              })} */}
+          <div class="contenta" id={"contenta" + props.post_id}>
             {commentList.map((item, key) => {
               return (
                 <CommentCard

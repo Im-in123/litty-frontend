@@ -198,14 +198,18 @@ const CommentComp = (props) => {
           onChange={onChange}
           required
         />
-        <button
-          className="submit-button"
-          type="submit"
-          onClick={handleSubmit}
-          disabled={loading}
-        >
-          {loading ? "submiting.." : ""}
-        </button>
+        {loading ? (
+          <div style={{ color: "black", fontWeight: "bold" }}>
+            Submitting...
+          </div>
+        ) : (
+          <button
+            className="submit-button"
+            type="submit"
+            onClick={handleSubmit}
+            disabled={loading}
+          ></button>
+        )}
       </form>
     </div>
   );

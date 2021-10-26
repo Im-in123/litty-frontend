@@ -32,12 +32,8 @@ const Comment = (props) => {
   } = useContext(store);
 
   useEffect(() => {
-    maincomment();
-
     return () => {};
   }, [postComment]);
-
-  const maincomment = () => {};
 
   if (props) {
     return (

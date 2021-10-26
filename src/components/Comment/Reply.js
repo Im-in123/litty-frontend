@@ -223,7 +223,7 @@ const Reply = (props) => {
                     <div className="comment-span" id={props.data.id}>
                       <span className="repto"> replied</span>
                       <span className="reply-username">
-                        {reply.author.username}
+                        {reply.to.author.username}
                       </span>
                       : {reply.comment}
                     </div>

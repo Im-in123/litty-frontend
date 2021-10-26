@@ -142,17 +142,7 @@ const CommentCard = (props) => {
 
     let comment = props.data.comment;
     let replies = props.data.reply;
-    // let replyAvailable = false;
-    // let replyLength;
-    // let view = "view replies";
 
-    // if (replies.length > 0) {
-    //   replyAvailable = true;
-    //   replyLength = replies.length;
-    //   if (replyLength < 2) {
-    //     view = "view reply";
-    //   }
-    // }
     console.log("commentCard replies:::", replies);
 
     const getReply = async (e, comment_id) => {
@@ -319,7 +309,7 @@ const CommentCard = (props) => {
             })}
           {replyAvailable && (
             <div className="ravail" onClick={(e) => getReply(e, props.data.id)}>
-              {view} {replyLength && <>({replyLength} ) </>}
+              {view} {replyLength && <>({replyLength}) </>}
             </div>
           )}
         </div>
