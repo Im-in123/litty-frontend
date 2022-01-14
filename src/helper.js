@@ -67,7 +67,7 @@ const loopObj = (obj) => {
 export const getToken = async (props) => {
   let token = localStorage.getItem(tokenName);
   if (!token) {
-    alert("no token");
+    // alert("no token");
     logout(props);
   }
   token = JSON.parse(token);
@@ -82,7 +82,7 @@ export const getToken = async (props) => {
     return token.access;
   } else {
     console.log("token.refresh::", token.refresh);
-    alert("getting bew access with refresh token");
+    // alert("getting new access with refresh token");
     const getNewAccess = await axiosHandler({
       method: "post",
       url: REFRESH_URL,
@@ -100,7 +100,7 @@ export const getToken = async (props) => {
           e.response.data.error === "Token is invalid or has expired" ||
           e.response.data.error === "refresh token not found"
         ) {
-          alert("logout2");
+          // alert("logout2");
           logout(props);
         }
       } else if (e.request) {

@@ -29,7 +29,7 @@ export const checkAuthState = async (setChecking, dispatch, props) => {
   console.log("props:::::", props);
   let token = localStorage.getItem(tokenName);
   if (!token) {
-    alert("no token");
+    // alert("no token");
     console.log("logging out");
     logout(props);
     return;
@@ -73,7 +73,7 @@ export const checkAuthState = async (setChecking, dispatch, props) => {
     // window.location.href = "/verify";
   }
   console.log("token.refresh::", token.refresh);
-  alert("getting bew access with refresh token");
+  // alert("getting bew access with refresh token");
   const getNewAccess = await axiosHandler({
     method: "post",
     url: REFRESH_URL,
@@ -92,7 +92,7 @@ export const checkAuthState = async (setChecking, dispatch, props) => {
         e.response.data.error === "Token is invalid or has expired" ||
         e.response.data.error === "refresh token not found"
       ) {
-        alert("logout1");
+        // alert("logout1");
         logout(props);
       }
     } else if (e.request) {
