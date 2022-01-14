@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import "./comment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
+import { UrlParser } from "../../customs/others";
 import {
   BASE_URL,
   BASE_URL1,
@@ -19,13 +20,14 @@ import {
   deleteReplyAction,
 } from "../../stateManagement/actions";
 import Reply from "./Reply";
+import { Link } from "react-router-dom";
 
 const CommentCard = (props) => {
   const {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  console.log("commentCard props::::", props);
+  // console.log("commentCard props::::", props);
   const {
     state: { commentTrigger },
   } = useContext(store);
@@ -44,6 +46,7 @@ const CommentCard = (props) => {
   const [view, setView] = useState("View replies");
   const [replyLength, setReplyLength] = useState(null);
   const [replyAvailable, setReplyAvailable] = useState(false);
+  const [nextReps, setNextReps] = useState([]);
 
   const {
     state: { newReplyReply },
@@ -64,7 +67,7 @@ const CommentCard = (props) => {
   }, [newReplyReply]);
 
   useEffect(() => {
-    console.log("reply Trigger:::", commentTrigger);
+    // console.log("reply Trigger:::", commentTrigger);
     if (commentTrigger) {
       console.log(
         "Comment reply trigger postcomment::",
@@ -145,37 +148,56 @@ const CommentCard = (props) => {
 
     console.log("commentCard replies:::", replies);
 
-    const getReply = async (e, comment_id) => {
+    const getReply = async (e, comment_id, next = false) => {
       e.preventDefault();
-      // setReplyData({...replyData, post_id:props.post_id, comment_id:comment_id})
+      setView("loading...");
+
       console.log("reply data::::", replyData);
-      //     console.log("postcomment:::", postComment)
       let data = { post_id: props.post_id, comment_id: comment_id };
       console.log("reply data1:::", data);
-      // setLoading(true)
-      let post_id = props.post_id;
+      let url;
+      url = REPLY_URL + `?post_id=${props.post_id}&comment_id=${comment_id}`;
+      if (next) {
+        if (nextReps.next) {
+          url = nextReps.next;
+          console.log("nextReps:::", nextReps);
+        } else {
+          url =
+            REPLY_URL + `?post_id=${props.post_id}&comment_id=${comment_id}`;
+        }
+      }
+      console.log("url reply:::", url, next);
       const token = await getToken();
       const result = await axiosHandler({
         method: "get",
-        url: REPLY_URL + `?post_id=${props.post_id}&comment_id=${comment_id}`,
+        url: url,
         token,
         data: data,
       }).catch((e) => {
         console.log("getReply error::::", e.response.data);
-        //     setLoading(false)
       });
 
       if (result) {
+        setNextReps((r) => result.data);
+        if (result.data.next) {
+          setView("View more...");
+        } else {
+          setReplyAvailable(false);
+        }
         console.log("getReply results", result.data.results);
-        setView("View more...");
         setReplyLength(null);
-
-        setReplyData(result.data.results);
+        if (replyData.length > 0 && next) {
+          let pp = [...replyData, ...result.data.results];
+          setReplyData((r) => pp);
+          console.log("in here:::::::", replyData);
+          console.log("in here2:::::::", pp);
+        } else {
+          setReplyData((r) => result.data.results);
+        }
       }
     };
 
     const SendReply = async (comment_id, who) => {
-      let placeholder = document.getElementById("placeholder" + postComment);
       let placeholderText = "replying to " + who + " ...";
 
       dispatch({
@@ -200,7 +222,6 @@ const CommentCard = (props) => {
         data: data,
       }).catch((e) => {
         console.log("sendcommentLike error::::", e.response.data);
-        //     setLoading(false)
       });
 
       if (result) {
@@ -240,20 +261,33 @@ const CommentCard = (props) => {
       }
     };
 
+    let link;
+    if (props.data) {
+      if (userDetail.user.username === props.data.author.username) {
+        link = `/my-profile/`;
+      } else {
+        link = `/other-profile/` + props.data.author.username;
+      }
+    }
+
     return (
       <div className="comment">
         <div className="comment-avatar">
-          <img
-            src={
-              LOCAL_CHECK
-                ? props.data.author.user_picture
-                : props.data.author.user_picture_url
-            }
-            alt="author avatar"
-          ></img>
+          <Link to={link}>
+            <img
+              src={
+                LOCAL_CHECK
+                  ? props.data.author.user_picture
+                  : props.data.author.user_picture_url
+              }
+              alt="author avatar"
+            ></img>
+          </Link>
         </div>
         <div className="comment-user-data">
-          <div className="username">{props.data.author.username}</div>
+          <Link to={link}>
+            <div className="username">{props.data.author.username}</div>
+          </Link>
           <div className="comment-greply">
             <div className="comment-text">
               <div className="comment-span" id={props.data.id}>
@@ -266,6 +300,7 @@ const CommentCard = (props) => {
                   className="replycont"
                   onClick={(e) => SendCommentLike(props.data.id)}
                 >
+                  like
                   <i className="fas fa-heart"></i>
                   <span className="reply-like-num">
                     {likeLength > 0 ? likeLength : null}
@@ -276,6 +311,7 @@ const CommentCard = (props) => {
                   className="replytag"
                   onClick={(e) => SendCommentLike(props.data.id)}
                 >
+                  like
                   <i className="far fa-heart"></i>
                   <span className="reply-like-num">
                     {likeLength > 0 ? likeLength : null}
@@ -296,19 +332,21 @@ const CommentCard = (props) => {
                   className="replytag"
                   onClick={(e) => handleDelete(props.data.id)}
                 >
-                  <i class="fas fa-trash" style={{ color: "black" }}></i>
+                  <i className="fas fa-trash" style={{ color: "black" }}></i>
                 </span>
               ) : (
                 ""
               )}
             </div>
           </div>
-          {replyData &&
-            replyData.map((item, key) => {
-              return <Reply key={key} data={item} />;
-            })}
+          {replyData.map((item, key) => (
+            <Reply key={key} data={item} />
+          ))}
           {replyAvailable && (
-            <div className="ravail" onClick={(e) => getReply(e, props.data.id)}>
+            <div
+              className="ravail"
+              onClick={(e) => getReply(e, props.data.id, true)}
+            >
               {view} {replyLength && <>({replyLength}) </>}
             </div>
           )}
@@ -319,12 +357,12 @@ const CommentCard = (props) => {
     return (
       <div className="comment">
         <div className="user-avatar">
-          <img alt="author avatar"></img>
+          <img alt="author avatar" src={userDetail.profile_picture}></img>
         </div>
         <div className="comment-user-data">
           <div className="username"></div>
           <div className="comment-greply">
-            <div className="comment-text">Loading...</div>
+            <div className="comment-text"> &nbsp;Loading...</div>
           </div>
         </div>
       </div>

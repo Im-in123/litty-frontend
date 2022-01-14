@@ -1,67 +1,3 @@
-.mypost {
-  padding: 0 0 26px;
-}
-
-.mypost-content {
-  display: grid;
-  grid-gap: 25px;
-  gap: 25px;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.mypost-wrap {
-  /* padding-top: 56.25%; */
-  border-radius: 10px;
-  box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
-    rgb(0 0 0 / 73%) 0px 16px 10px -10px;
-  cursor: pointer;
-  overflow: hidden;
-  position: relative;
-  transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-  /* border: 3px solid rgba(249, 249, 249, 0.1); */
-  border: 2px solid white;
-}
-
-.mypost-wrap img {
-  inset: 0px;
-  display: block;
-  height: 100%;
-  object-fit: fill;
-  opacity: 1;
-  /* position: absolute; */
-  transition: opacity 500ms ease-in-out 0s;
-  width: 100%;
-  z-index: 1;
-  top: 0;
-  height: 100% !;
-}
-
-@media only screen and (max-width: 768px) {
-  .mypost {
-    padding: 0 0 26px;
-  }
-
-  .mypost-content {
-    display: grid;
-    grid-gap: 25px;
-    gap: 25px;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .mypost-wrap {
-    /* padding-top: 56.25%; */
-    border-radius: 10px;
-    box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
-      rgb(0 0 0 / 73%) 0px 16px 10px -10px;
-    cursor: pointer;
-    overflow: hidden;
-    position: relative;
-    transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-    /* border: 3px solid rgba(249, 249, 249, 0.1); */
-    border: 2px solid white;
-  }
-}
-
 :root {
   /* Main */
   --primary: 300, 92%, 48%;
@@ -99,96 +35,11 @@
   --font-main: "Poppins";
 }
 
-/* ==================
-   2. Global Styles
-  ================== */
-
-/* main {
-   margin: 0;
-   width: 100%;
-   color: hsl(var(--text-primary));
-   font-family: var(--font-main);
-   background-color: hsl(var(--background));
-   -webkit-font-smoothing: antialiased;
-   scroll-behavior: smooth;
-   box-sizing: border-box;
-} */
-
-/* ================
-   2.1 Typography
-  =============== */
-
-/* Paragraphs */
 p {
   margin: 0;
   color: hsl(var(--text-primary));
   font-size: var(--paragraph);
 }
-/* Links */
-
-/* a:visited {
-   color: hsla(var(--primary), .5);
-} */
-
-/* =============
-   2.2 Buttons
-  ============= */
-
-/* 
-.btn-primary-gray {
-   color: hsl(var(--white)) !important;
-   background: hsl(var(--black)) !important;
-}
-.button, .btn-secondary {
-   margin: 0;
-   width: 100%;
-   position: relative;
-   padding: 1.2em 1.8em;
-   letter-spacing: .025em;
-   color: hsl(var(--background));
-   font-size: var(--paragraph);
-   background: var(--gradient);
-   background-size: 500%;
-   border-radius: 5em;
-   border: none;
-   transform: scaleX(1);
-   transition: transform .3s cubic-bezier(var(--transition-main), 1.275), filter .3s cubic-bezier(var(--transition-main), 1.275), bottom .3s cubic-bezier(var(--transition-main), 1.275), background-position 7.5s cubic-bezier(var(--transition-main), .955);
-}
-.button {
-   transition: transform .3s cubic-bezier(var(--transition-main), 1.275), bottom .3s cubic-bezier(var(--transition-main), 1.275), background-position 17.5s cubic-bezier(var(--transition-main), .955);
-}
-.button, .button .btn-secondary {
-   bottom: 0;
-   background-position: 0 50%;
-}
-.button .btn-secondary {
-   left: 0;
-   width: 100%;
-   position: absolute;
-   filter: blur(1rem);
-   transform: scale3d(.85, .95, 1);
-   transition: transform .3s cubic-bezier(var(--transition-main), 1.275), filter .3s cubic-bezier(var(--transition-main), 1.275), bottom .3s cubic-bezier(var(--transition-main), 1.275), background-position 7.5s cubic-bezier(var(--transition-main), .955), opacity 3s cubic-bezier(var(--transition-main), 1.275);
-   opacity: .3;
-   z-index: -1;
-}
-.button:focus {
-   outline: none;
-}
-.button:hover {
-   bottom: 2px;
-   transform: scale3d(1.1, 1.1, 1);
-   background-position: 100% 50%;
-   outline: none;
-}
-.btn-secondary, .button:hover .btn-secondary {
-   bottom: -5px;
-   background-position: 100% 50%;
-   filter: blur(1.6rem);
-   opacity: .4;
-}
-.button ion-icon {
-   margin: 0 .5em .075em 0;
-} */
 
 .material-icons-round {
   user-select: none;
@@ -277,28 +128,12 @@ p {
   align-items: center;
 }
 
-/* ===============
-   3.2 Classes
-  =============== */
-
-.view-width {
-  width: 70%;
-}
-
-/* ==============
-   3.2.1 Navbar
-  ============== */
-
-/* ==============
-   3.2.2 Header
-  ============== */
-
-/* ============
-   3.2.3 Main
-  ============ */
-
 #main {
   height: calc(100vh - 5rem);
+}
+
+.view-width {
+  width: 100%;
 }
 
 /* ======================
@@ -310,6 +145,8 @@ p {
   margin-top: 2vh;
   width: 100%;
   position: relative;
+  z-index: 1;
+
   /* height:50vh; */
 }
 .profile-header-inner {
@@ -344,6 +181,11 @@ p {
   width: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
+
+  /* grid-template-columns: auto; */
+  place-items: center;
+  gap: 2em;
+
   gap: 2em;
   z-index: 5;
 }
@@ -354,15 +196,7 @@ p {
   gap: 2em;
   z-index: 5;
 }
-/* Profile Info */
-.phi-info-wrapper {
-  padding: 4em 4em 8em 4em;
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 2em;
-  z-index: 5;
-}
+
 /* Profile Picture */
 .phi-profile-picture-wrapper {
   width: 10em;
@@ -396,6 +230,7 @@ p {
 }
 /* Profile Username */
 .phi-profile-username-wrapper {
+  max-width: 50vw;
 }
 .phi-profile-username span {
   margin: 0 0 0 0.3em;
@@ -415,11 +250,12 @@ p {
   font-size: var(--paragraph);
   text-transform: uppercase;
 }
+
 .profile-page-inner {
   margin: 1.5em 0;
   display: grid;
   /* flex-wrap: wrap; */
-  grid-gap: 2px;
+  grid-gap: 1px;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   max-height: 450px;
   overflow: scroll;
@@ -441,17 +277,79 @@ p {
   vertical-align: bottom;
 }
 
+.profile-page-list-style {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.profile-page-list-style .g,
+.profile-page-list-style .l {
+  cursor: pointer;
+  font-size: 17px;
+}
+@media only screen and (max-width: 756px) {
+  .profile-page-inner {
+    margin: 1.5em 0;
+    display: grid;
+    /* flex-wrap: wrap; */
+    grid-gap: 1px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: 450px;
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+  .profile-page-item {
+    margin: 0;
+    /* height: 1vh; */
+    flex-grow: 1;
+    position: relative;
+    cursor: pointer;
+  }
+  .phi-info-wrapper {
+    padding: 0;
+    width: 100%;
+    height: auto;
+  }
+  .profile-page-item-image {
+    max-height: 160px;
+    min-width: 100%;
+    /* object-fit: cover; */
+    object-fit: fill;
+
+    vertical-align: bottom;
+  }
+}
+.postnum {
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
 .buttons-fm {
   display: grid;
   grid-gap: 25px;
   gap: 25px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
-.buttons-fm button {
+
+.buttons-fm .button {
+  cursor: pointer;
   height: 20px;
   margin: 0;
+  font-weight: bold;
+  line-height: 19px;
+  background: #5850eb;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 6px;
+  color: white;
+  width: 100%;
+  margin-top: 24px;
 }
-
+.buttons-fm .button:hover {
+  background: #6e67ee;
+}
+.buttons-fm .button:focus {
+  background: #4239e8;
+}
 .ps-fm {
   display: grid;
   grid-gap: 25px;
@@ -538,6 +436,7 @@ p {
   .phi-profile-username-wrapper {
     justify-content: center;
     align-items: center;
+    max-width: 100%;
   }
   .profile-header {
     margin-top: 2vh;
@@ -550,7 +449,7 @@ p {
     position: relative;
     overflow: hidden;
     z-index: 2;
-    height: 45vh;
+    height: auto;
   }
   .phi-profile-picture {
     /* min-width: 100%;
@@ -579,14 +478,6 @@ p {
     margin: auto;
   }
 
-  .phi-info-wrapper {
-    padding: 4px 4px 8px 4px;
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 2em;
-    z-index: 5;
-  }
   .phi-profile-username-wrapper {
     margin-top: -30px;
   }
@@ -604,28 +495,6 @@ p {
     overflow-x: hidden;
   }
 }
-
-/* ======================
-   6.6 max-width: 576px
-  ====================== */
-
-/* =======================
-   6.3 max-width: 1220px
-  ======================= */
-
-@media only screen and (max-width: 1220px) {
-  /* ===============
-       3.2 Classes
-      =============== */
-
-  .view-width {
-    width: 70%;
-  }
-}
-
-/* =======================
-   6.4 max-width: 1024px
-  ======================= */
 
 @media only screen and (max-width: 1024px) {
   :root {
@@ -663,32 +532,205 @@ p {
    6.5 max-width: 756px
   ====================== */
 
-@media only screen and (max-width: 1660px) {
-  :root {
-    /* Sizes */
-    --heading-large: 5.4rem;
-    --heading-medium: 3.4rem;
-    --heading-small: 2.2rem;
+/* griditem' */
+.containerz {
+  max-width: 93.5rem;
+  /* max-width: 70vw; */
+
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.btn {
+  display: inline-block;
+  font: inherit;
+  background: none;
+  border: none;
+  color: inherit;
+  padding: 0;
+  cursor: pointer;
+}
+
+.btn:focus {
+  outline: 0.5rem auto #4d90fe;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* Gallery Section */
+
+.containerz .gallery {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -1rem -1rem;
+  padding-bottom: 3rem;
+}
+
+.containerz .gallery-item {
+  position: relative;
+  flex: 1 0 22rem;
+  margin: 1rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.containerz .gallery-item:hover .gallery-item-info,
+.containerz .gallery-item:focus .gallery-item-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.containerz .gallery-item-info {
+  display: none;
+}
+
+.containerz .gallery-item-info li {
+  display: inline-block;
+  font-size: 2vmin;
+  font-weight: 600;
+}
+
+.containerz .gallery-item-likes {
+  margin-right: 2.2rem;
+}
+
+.containerz .gallery-item-type {
+  position: absolute;
+  top: 2px;
+  right: 4px;
+  /* font-size: 2.5rem; */
+  text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
+}
+
+.containerz .fa-clone,
+.containerz .fa-comment {
+  transform: rotateY(180deg);
+}
+.containerz .gallery-item .fa,
+.containerz .gallery-item .fas {
+  font-weight: 600;
+  font-size: 24px;
+}
+
+.containerz .gallery-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Loader */
+
+.loader {
+  width: 5rem;
+  height: 5rem;
+  border: 0.6rem solid #999;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: loader 500ms linear infinite;
+}
+
+/* Media Query */
+
+@media screen and (max-width: 40rem) {
+}
+
+/* Spinner Animation */
+
+@keyframes loader {
+  to {
+    transform: rotate(360deg);
   }
 }
 
-/* =======================
-   6.2 max-width: 1456px
-  ======================= */
+/*
 
-@media only screen and (max-width: 1456px) {
-  :root {
-    /* Sizes */
-    --heading-large: 5.2rem;
-    --heading-medium: 3.2rem;
-    --heading-small: 2rem;
+The following code will only run if your browser supports CSS grid.
+
+Remove or comment-out the code block below to see how the browser will fall-back to flexbox & floated styling. 
+
+*/
+
+@supports (display: grid) {
+  .containerz .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-gap: 1rem;
+    /* width: 77vw; */
+    width: 70vw;
   }
 
-  /* ===============
-       3.2 Classes
-      =============== */
+  .containerz .gallery-item {
+    width: auto;
+    margin: 0;
+    /* width: 90%; */
+    height: 250px;
+    /* max-height: 100%; */
+  }
 
-  .view-width {
-    width: 90%;
+  @media (max-width: 40rem) {
+  }
+}
+
+@media only screen and (max-width: 756px) {
+  .containerz {
+    /* max-width: 93.5rem; */
+    /* max-width: 70vw; */
+
+    margin: 0 auto;
+    padding: 2px;
+    width: 100%;
+  }
+
+  .containerz .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-gap: 4px;
+    width: auto;
+    margin: 0;
+  }
+  .containerz .gallery-item {
+    width: auto;
+    margin: 0;
+    /* width: 70%; */
+    height: 150px;
+    max-height: 100%;
+  }
+  .containerz .gallery-item-info li {
+    display: inline-block;
+    font-size: 4vmin;
+    font-weight: 600;
+  }
+}
+
+/* popup and overlay */
+
+.overlay .popup-back {
+  background: rgba(7, 6, 6, 0.6);
+}
+.popup .close-back {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+.popup .close-back:hover {
+  color: white;
+}
+@media only screen and (max-width: 768px) {
+  .overlay-back {
+    overflow: scroll;
+    top: unset;
   }
 }

@@ -1,31 +1,252 @@
-
-
-import React, { useState, useEffect, useLayoutEffect, useContext } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import "./notification.css"
-import { POST_URL} from '../../urls';
+import "./notification.css";
+import { BASE_URL1, NOTIFICATION_URL, POST_URL } from "../../urls";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 
- const Notitfication =(props) =>{
-    const [postData, setPostData] = useState({})
-    const {state:{userDetail}, dispatch} = useContext(store)
+let g_noti = [];
 
-    useEffect(() =>{
-    
-     return () => {
-          };
-     }, [])
+let p1;
+let goneNext = false;
+let canGoNext = false;
+let shouldHandleScroll = false;
 
-     return(
-    
-        <main>
-        <div class="containerNotification">
-           <h3>Notifications</h3>
+const Notitfication = (props) => {
+  const [notification, setNotification] = useState([]);
+  const [fetching, setFetching] = useState([]);
+
+  const {
+    state: { userDetail },
+    dispatch,
+  } = useContext(store);
+  useEffect(() => {
+    try {
+      window.addEventListener("scroll", autoFetchNotication);
+    } catch (error) {
+      console.log("couldnt add event listener to window");
+    }
+
+    return () => {
+      window.removeEventListener("scroll", autoFetchNotication);
+    };
+  }, []);
+  useEffect(() => {
+    getNotifications(1);
+    return () => {};
+  }, []);
+
+  const autoFetchNotication = async () => {
+    if (shouldHandleScroll) {
+      console.log("window.innerHeight:::", window.innerHeight);
+      console.log(" window.scrollY::", window.scrollY);
+      console.log("document.body.scrollHeight:::", document.body.scrollHeight);
+      console.log("added::", window.innerHeight + window.scrollY);
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.scrollHeight - 100
+      ) {
+        console.log("reached");
+        console.log("finally", canGoNext, goneNext);
+        if (canGoNext && !goneNext) {
+          goneNext = true;
+          shouldHandleScroll = false;
+
+          await getNotifications();
+        } else {
+          console.log("passing cangonext", canGoNext, goneNext);
+        }
+      }
+    } else {
+      console.log("passing autofetch", canGoNext, goneNext);
+    }
+  };
+  const getNotifications = async (page = null) => {
+    let extra = `keyword=${""}`;
+
+    console.log("getting notification");
+    setFetching(true);
+    let url;
+    if (page) {
+      url = `${NOTIFICATION_URL}?page=${page}&${extra}`;
+    } else {
+      url = `${p1.next}`;
+    }
+    const token = await getToken();
+    const result = await axiosHandler({
+      method: "get",
+      url: url,
+      token,
+    }).catch((e) => {
+      console.log("notification error::::", e);
+      canGoNext = true;
+      goneNext = false;
+    });
+
+    if (result) {
+      console.log("notification results::::", result.data);
+      console.log("notification qs::::", result.data.results);
+
+      g_noti = [...g_noti, ...result.data.results];
+      setNotification(g_noti);
+      p1 = result.data;
+
+      if (p1.next) {
+        canGoNext = true;
+
+        goneNext = false;
+
+        shouldHandleScroll = true;
+      } else {
+        shouldHandleScroll = false;
+        canGoNext = true;
+      }
+      setFetching(false);
+    }
+  };
+  return (
+    <div className="containerNotification">
+      <h3>Notifications</h3>
+      <div className="notification-main">
+        {notification.map((item, key) => (
+          <Noti data={item} key={key} />
+        ))}
+      </div>
+      <div className="load-more-post">
+        <span>
+          {fetching ? (
+            <>{p1 && p1.next ? "Loading ..." : ""}</>
+          ) : (
+            <>{p1 && p1.next ? "Loading more..." : "End of notifications!"}</>
+          )}
+        </span>
+      </div>
+    </div>
+  );
+};
+export default Notitfication;
+
+const Noti = (props) => {
+  const data = props.data;
+  if (!data) return <></>;
+  return (
+    <div className="notification">
+      <div className="message">
+        <div className="user-image">
+          <Link to={`/other-profile/` + data.sender.username}>
+            <img alt="image" src={data.sender.user_picture} />
+          </Link>
         </div>
-        </main>
-    
-     )
- }
- export default Notitfication;
-   
+        <div className="inner">
+          <div className="username">
+            <Link to={`/other-profile/` + data.sender.username}>
+              {data.sender.username}
+            </Link>
+          </div>
+          {data.action === "post-like" && (
+            <div className="user-msg">{data.message}</div>
+          )}
+          {data.action === "comment-like" && (
+            <div className="user-msg">
+              {data.message}
+              <p>{data.comment.comment}</p>
+            </div>
+          )}
+          {data.action === "reply-like" && (
+            <div className="user-msg">
+              {data.message}
+              <p>{data.reply.comment}</p>
+            </div>
+          )}
+          {data.action === "post-comment" && (
+            <div className="user-msg">
+              {data.message}
+              <p>{data.comment.comment}</p>
+            </div>
+          )}
+          {data.action === "comment-reply" && (
+            <div className="user-msg">
+              {data.message}
+              <p>{data.reply.comment}</p>
+            </div>
+          )}
+          {data.action === "reply-reply" && (
+            <div className="user-msg">
+              {data.message}
+              <p>{data.reply.comment}</p>
+            </div>
+          )}
+
+          {data.action === "user-follow" && (
+            <div className="user-msg">{data.message}</div>
+          )}
+        </div>
+      </div>
+
+      <PostCont item={data.post} />
+      <div className="action">
+        <span class="material-icons-outlined close">cancel</span>
+      </div>
+    </div>
+  );
+};
+
+const PostCont = (props) => {
+  if (!props.item) return <></>;
+  let item = props.item;
+  let image;
+  if (item) {
+    if (item.image.length > 0) {
+      let renderIcon = false;
+      image = item.image[0];
+      // console.log("image:::", image);
+      if (item.image.length > 1) {
+        renderIcon = true;
+      }
+      if (item.video.length > 0) renderIcon = true;
+      let show_actual_img = false;
+      if (image.thumbnail === BASE_URL1 + "/media/image_empty.jpg") {
+        show_actual_img = true;
+      }
+
+      return (
+        <>
+          <Link
+            to={`/new/${item.id}`}
+            // target="_blank"
+            // rel="noopener noreferrer"
+          >
+            <div className="img-content" key={image.id}>
+              <img
+                src={!show_actual_img ? image.thumbnail : image.image}
+                alt=""
+              />
+            </div>
+          </Link>
+        </>
+      );
+    }
+    let video;
+    if (item.video.length > 0) {
+      let renderIcon = false;
+      video = item.video[0];
+
+      if (item.video.length > 1) {
+        renderIcon = true;
+      }
+      return (
+        <>
+          <Link
+            to={`/new/${item.id}`}
+            // target="_blank"
+            // rel="noopener noreferrer"
+          >
+            <div className="img-content" key={video.id}>
+              <img src={video.thumbnail} className="" alt="" />
+            </div>
+          </Link>
+        </>
+      );
+    }
+  }
+};

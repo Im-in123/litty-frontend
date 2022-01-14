@@ -24,6 +24,12 @@ import {
   refreshProfileState,
   postContainerReducer,
   postContainerState,
+  volumeTriggerState,
+  volumeReducer,
+  slideTriggerState,
+  slideReducer,
+  checkAllFollowState,
+  checkAllFollowReducer,
 } from "./reducers";
 
 const reduceReducers =
@@ -47,7 +53,10 @@ const combinedReducers = reduceReducers(
   activeChatUserReducer,
   refreshFeedReducer,
   refreshProfileReducer,
-  postContainerReducer
+  postContainerReducer,
+  volumeReducer,
+  slideReducer,
+  checkAllFollowReducer
 );
 
 const initialState = {
@@ -63,6 +72,9 @@ const initialState = {
   ...refreshFeedState,
   ...refreshProfileState,
   ...postContainerState,
+  ...volumeTriggerState,
+  ...slideTriggerState,
+  ...checkAllFollowState,
 };
 
 const store = createContext(initialState);

@@ -67,6 +67,8 @@
   font-family: "Inter";
   font-weight: bold;
   font-size: 14px;
+  background: #5850eb;
+  color: white;
 }
 
 .content__input--form > .button:hover {

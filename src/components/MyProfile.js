@@ -8,357 +8,525 @@ import UserInfo from "./UserInfo";
 import PostContent from "./PostContent";
 import PostInfo from "./PostInfo";
 import { logout } from "../customs/authController";
+import PostDetail from "./PostDetail";
+import NewDetail from "./NewDetail/NewDetail";
+import { volumeAction } from "../stateManagement/actions";
+import { UrlParser } from "../customs/others";
 
 let post = [];
-let saved = [];
 
+let p1;
+let goneNext = false;
+let canGoNext = false;
+let shouldHandleScroll = false;
 const MyProfile = (props) => {
   const [fetching, setFetching] = useState(true);
+  const [loading, setLoading] = useState(true);
+
   const [error, setError] = useState(false);
   const {
     state: { userDetail },
     dispatch,
   } = useContext(store);
+  const {
+    state: { volumeTrigger },
+  } = useContext(store);
+  const [list, setList] = useState(false);
+  const [grid, setGrid] = useState(true);
+  const [id, setId] = useState(null);
+  const [user, setUser] = useState(null);
+
   const [followers, setFollowers] = useState(false);
   const [following, setFollowing] = useState(false);
+  const [close, setClose] = useState(false);
 
-  const [showProfile, setShowProfile] = useState(true);
-  const [showSaved, setShowSaved] = useState(false);
-  const [showLiked, setShowLiked] = useState(false);
+  const [myPost, setMyPost] = useState([]);
 
-  const [myPost, setMyPost] = useState(false);
-  const [mySaved, setMySaved] = useState(false);
-  const [myLiked, setMyLiked] = useState(false);
-  let bb;
+  const [overallAudio, setOverallAudio] = useState(true);
+  // const [canGoNext, setCanGoNext] = useState(false);
+  // const [shouldHandleScroll, setShouldHandleScroll] = useState(false);
 
-  useEffect(() => {
+  useEffect(async () => {
     console.log("MyProfile props:::", props);
 
-    let extra = `?keyword=${userDetail.user.username}`;
     setFollowers(userDetail.followers.length);
     setFollowing(userDetail.following.length);
 
-    getMyPost(extra);
+    let r = await getMyPost(1);
+    setFetching(false);
+
     return () => {};
   }, []);
 
-  //    useEffect(() =>{
-  //     try {
-  //        bb = document.getElementById("main-feed")
-  //          bb.addEventListener('scroll', autoFetch)
-  //      } catch (error) {
-  //         //  alert("bb")
-  //         //  console.log(error)
-  //      }
+  useEffect(() => {
+    try {
+      window.addEventListener("scroll", autoFetchProfile);
+    } catch (error) {
+      console.log("couldnt add event listener to window");
+    }
 
-  //  return () => {
-  //     window.removeEventListener('scroll', autoFetch);
+    return () => {
+      window.removeEventListener("scroll", autoFetchProfile);
+    };
+  }, []);
+  // window.onscroll = function (ev) {
+  //   console.log("chi");
+  //   if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+  //     alert("you're at the bottom of the page");
+  //   }
+  // };
+  const autoFetchProfile = async () => {
+    if (shouldHandleScroll) {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.body.scrollHeight - 100
+      ) {
+        console.log("reached");
+        console.log("finally", canGoNext, goneNext);
+        if (canGoNext && !goneNext) {
+          goneNext = true;
+          shouldHandleScroll = false;
 
-  //       };
-  //  }, [evl])
+          await getMyPost();
+        } else {
+          console.log("passing cangonext", canGoNext, goneNext);
+        }
+      }
+    } else {
+      console.log("passing autofetch", canGoNext, goneNext);
+    }
+  };
+  useEffect(() => {
+    console.log("overallAudio:::", overallAudio);
+    dispatch({ type: volumeAction, payload: overallAudio });
 
-  const getMyPost = async (extra = "") => {
-    setFetching(true);
+    return () => {};
+  }, [overallAudio]);
+
+  const getMyPost = async (page = null) => {
+    let extra = `keyword=${userDetail.user.username}`;
+
+    setLoading(true);
 
     const token = await getToken();
+    let url;
+    if (page) {
+      url = `${POST_URL}?page=${page}&${extra}`;
+    } else {
+      url = `${p1.next}`;
+    }
     const res = await axiosHandler({
       method: "get",
-      url: POST_URL + extra,
+      url: url,
       token,
     }).catch((e) => {
       console.log("Error in MyPost::::", e);
+      canGoNext = true;
+
+      goneNext = false;
       setError(true);
     });
 
     if (res) {
       console.log(" MyPost::::", res.data);
-      setMyPost(res.data.results);
-      post = res.data.results;
+      if (post.length > 0) {
+        for (var i in res.data.results) {
+          post.push(res.data.results[i]);
+        }
+        // setMyPost([...myPost, ...res.data.results]);
+
+        setMyPost(post);
+      } else {
+        post = res.data.results;
+        setMyPost(res.data.results);
+      }
+      p1 = res.data;
+
+      if (p1.next) {
+        canGoNext = true;
+
+        goneNext = false;
+
+        shouldHandleScroll = true;
+      } else {
+        shouldHandleScroll = false;
+        canGoNext = true;
+      }
     }
-    setFetching(false);
+    setLoading(false);
     console.log("PostList:::", myPost);
     console.log("post:::", post);
-  };
-  const getMySaved = async (extra = "") => {
-    // setFetching(true)
-
-    const token = await getToken();
-    const res = await axiosHandler({
-      method: "get",
-      url: SAVED_URL + extra,
-      token,
-    }).catch((e) => {
-      console.log("Error in getMySaved::::", e);
-      setError(true);
-    });
-
-    if (res) {
-      console.log(" getMySaved::::", res.data);
-      setMySaved(res.data.results);
-      saved = res.data.results;
-    }
-    //  setFetching(false)
-    console.log("getMySaved:::", mySaved);
-    console.log("getMySaved:::", saved);
-  };
-
-  const toggleProfile = (e) => {
-    setShowProfile(true);
-    setShowLiked(false);
-    setShowSaved(false);
-    // getMySaved()
-  };
-  const toggleSaved = (e) => {
-    setShowProfile(false);
-    setShowLiked(false);
-    setShowSaved(true);
-    getMySaved();
-  };
-  const toggleLiked = (e) => {
-    setShowProfile(false);
-    setShowLiked(true);
-    setShowSaved(false);
-    // getMySaved()
   };
 
   if (fetching) {
     return (
-      <main id="main" class="flexbox-col-start-center">
-        <div class="view-width">
-          <section class="profile-header">
-            <div class="profile-header-inner flexbox">
-              <div class="phi-info-wrapper flexbox">
-                <div class="phi-info-left flexbox">
-                  <div class="phi-profile-picture-wrapper">
-                    <div class="phi-profile-picture-inner flexbox">
-                      <img class="phi-profile-picture" alt="" />
+      <main id="main" className="flexbox-col-start-center">
+        <div className="view-width">
+          <section className="profile-header">
+            <div className="profile-header-inner flexbox">
+              <div className="phi-info-wrapper flexbox">
+                <div className="phi-info-left flexbox">
+                  <div className="phi-profile-picture-wrapper">
+                    <div className="phi-profile-picture-inner flexbox">
+                      <img className="phi-profile-picture" alt="" />
                     </div>
                   </div>
 
-                  <div class="phi-profile-username-wrapper flexbox-col-left">
-                    <h3 class="phi-profile-username flexbox">
-                      <span class="material-icons-round"></span>
+                  <div className="phi-profile-username-wrapper flexbox-col-left">
+                    <h3 className="phi-profile-username flexbox">
+                      <span className="material-icons-round"></span>
                     </h3>
                     <div className="ps-fm">
-                      <p class="">Followers </p>
-                      <p class="">Following </p>
-                      <p class="">Likes</p>
+                      <p className="">Followers </p>
+                      <p className="">Following </p>
+                      <p className="">Likes</p>
                     </div>
-                    <p class="phi-profile-tagline">Loading...</p>
+                    <p className="phi-profile-tagline">Loading...</p>
                     <br></br>
                     <br></br>
                   </div>
                 </div>
-                <div class="phi-info-right flexbox-right">
+                <div className="phi-info-right flexbox-right">
                   <div className="buttons-fm">
                     <button
                       type="button"
-                      class="btn-primary-gray button btn-primary flexbox"
+                      className="btn-primary-gray button btn-primary flexbox"
                     >
                       <ion-icon name="heart-outline"></ion-icon>{" "}
                       <Link to="/profile-update">Settings</Link>{" "}
-                      <div class="btn-secondary"></div>
+                      <div className="btn-secondary"></div>
                     </button>
                     <button
                       type="button"
-                      class="btn-primary-gray button btn-primary flexbox"
+                      className="btn-primary-gray button btn-primary flexbox"
                     >
                       <ion-icon name="heart-outline"></ion-icon> Logout
-                      <div class="btn-secondary"></div>
+                      <div className="btn-secondary"></div>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div class="profile-header-overlay"></div>
+              <div className="profile-header-overlay"></div>
               <img
-                class="profile-header-image"
+                className="profile-header-image"
                 src="https://images.unsplash.com/photo-1616808943301-d80596eff29f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2010&q=80"
                 alt=""
               />
             </div>
           </section>
 
-          <section class="profile-page">
-            <div className="grid-headings">
-              <h3>Posts</h3>
-              <h3>Saved </h3>
-              <h3>Liked</h3>
-            </div>
-
-            <div class="profile-page-inner"></div>
+          <section className="profile-page">
+            <div className="profile-page-inner"></div>
           </section>
         </div>
       </main>
     );
   }
   return (
-    <main id="main" class="flexbox-col-start-center">
-      <div class="view-width">
-        <section class="profile-header">
-          <div class="profile-header-inner flexbox">
-            <div class="phi-info-wrapper flexbox">
-              <div class="phi-info-left flexbox">
-                <div class="phi-profile-picture-wrapper">
-                  <div class="phi-profile-picture-inner flexbox">
-                    {LOCAL_CHECK ? (
-                      <img
-                        class="phi-profile-picture"
-                        src={`${BASE_URL1 + userDetail.profile_picture}`}
-                        alt=""
-                      />
-                    ) : (
-                      <img
-                        class="phi-profile-picture"
-                        src={userDetail.profile_picture_url}
-                        alt=""
-                      />
-                    )}
+    <>
+      <div id="main" className="flexbox-col-start-center">
+        <div className="view-width">
+          <section className="profile-header">
+            <div className="profile-header-inner flexbox">
+              <div className="phi-info-wrapper flexbox">
+                <div className="phi-info-left flexbox">
+                  <div className="phi-profile-picture-wrapper">
+                    <div className="phi-profile-picture-inner flexbox">
+                      {LOCAL_CHECK ? (
+                        <img
+                          className="phi-profile-picture"
+                          src={`${userDetail.profile_picture}`}
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          className="phi-profile-picture"
+                          src={userDetail.profile_picture_url}
+                          alt=""
+                        />
+                      )}
+                    </div>
+                  </div>
+                  <link
+                    rel="stylesheet"
+                    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+                  ></link>
+                  <div className="phi-profile-username-wrapper flexbox-col-left">
+                    <h3 className="phi-profile-username flexbox">
+                      {userDetail.user.username}
+                      {userDetail.user.verification_badge && (
+                        <span className="material-icons-round">verified</span>
+                      )}
+                    </h3>
+
+                    <div className="ps-fm">
+                      <p className="">Followers {followers}</p>
+                      <p className="">Following {following}</p>
+                      <p className="">Likes 2B</p>
+                    </div>
+                    <p className="phi-profile-tagline">{userDetail.bio}</p>
+                    <br></br>
+                    <p className="postnum">Posts 17k</p>
                   </div>
                 </div>
-                <link
-                  rel="stylesheet"
-                  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-                ></link>
-                <div class="phi-profile-username-wrapper flexbox-col-left">
-                  <h3 class="phi-profile-username flexbox">
-                    {userDetail.user.username}
-                    <span class="material-icons-round">verified</span>
-                  </h3>
-                  <div className="ps-fm">
-                    <p class="">Followers {followers}</p>
-                    <p class="">Following {following}</p>
-                    <p class="">Likes 2B</p>
+                <div className="phi-info-right flexbox-right">
+                  <div className="buttons-fm">
+                    <button
+                      type="button"
+                      className="btn-primary-gray button btn-primary flexbox"
+                    >
+                      <ion-icon name="heart-outline"></ion-icon>{" "}
+                      <Link to="/profile-update">Settings</Link>{" "}
+                      <div className="btn-secondary"></div>
+                    </button>
+                    <button
+                      type="button"
+                      className="btn-primary-gray button btn-primary flexbox"
+                      onClick={() => logout(props)}
+                    >
+                      <ion-icon name="heart-outline"></ion-icon> Logout
+                      <div className="btn-secondary"></div>
+                    </button>
                   </div>
-                  <p class="phi-profile-tagline">{userDetail.bio}</p>
-                  <br></br>
-                  <br></br>
                 </div>
               </div>
-              <div class="phi-info-right flexbox-right">
-                <div className="buttons-fm">
-                  <button
-                    type="button"
-                    class="btn-primary-gray button btn-primary flexbox"
-                  >
-                    <ion-icon name="heart-outline"></ion-icon>{" "}
-                    <Link to="/profile-update">Settings</Link>{" "}
-                    <div class="btn-secondary"></div>
-                  </button>
-                  <button
-                    type="button"
-                    class="btn-primary-gray button btn-primary flexbox"
-                    onClick={() => logout(props)}
-                  >
-                    <ion-icon name="heart-outline"></ion-icon> Logout
-                    <div class="btn-secondary"></div>
-                  </button>
-                </div>
+
+              <div className="profile-header-overlay"></div>
+              <img
+                className="profile-header-image"
+                src="https://images.unsplash.com/photo-1616808943301-d80596eff29f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2010&q=80"
+                alt=""
+              />
+            </div>
+          </section>
+
+          <section className="profile-page">
+            <div className="profile-page-list-style">
+              <div
+                className="g"
+                style={{ borderBottom: "2px solid white" }}
+                onClick={(e) => {
+                  const qs = document.querySelector(".l");
+                  qs.style.borderBottom = "none";
+                  e.target.style.borderBottom = "2px solid white";
+                  setGrid(true);
+                  setList(false);
+                }}
+              >
+                Grid
+              </div>
+              <div
+                className="l"
+                onClick={(e) => {
+                  const qs = document.querySelector(".g");
+                  qs.style.borderBottom = "none";
+                  e.target.style.borderBottom = "2px solid white";
+                  setList(true);
+                  setGrid(false);
+                }}
+              >
+                List
               </div>
             </div>
-
-            <div class="profile-header-overlay"></div>
-            <img
-              class="profile-header-image"
-              src="https://images.unsplash.com/photo-1616808943301-d80596eff29f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2010&q=80"
-              alt=""
-            />
-          </div>
-        </section>
-
-        <section class="profile-page">
-          <div className="grid-headings">
-            <h3 onClick={toggleProfile}>Posts</h3>
-            <h3 onClick={toggleSaved}>Saved </h3>
-            <h3 onClick={toggleLiked}>Liked</h3>
-          </div>
-          {showProfile && (
-            <div class="profile-page-inner postscroll">
-              {/* {post.map((item,key)=>
-                                            <Griddy image={item.image}/>
-
-                         )} */}
+          </section>
+        </div>
+        <div className="containerz">
+          {list && (
+            <>
               {myPost &&
                 myPost.map((item, key) => (
-                  <Link to={`/post-detail/` + item.id}>
-                    <Griddy image={item.image} />
-                  </Link>
+                  <div id="feed" id={`feed${item.id}`} key={key}>
+                    <div className="content-wrapper feed-wrapper">
+                      <div className="post-wall">
+                        <div className="post" id={"post" + item.id}>
+                          <div className="post-wrapper">
+                            <UserInfo
+                              data={item.author}
+                              id={item.id}
+                              refresh={false}
+                            />
+                            <PostContent
+                              id={item.id}
+                              image={item.image}
+                              video={item.video}
+                              overallAudio={overallAudio}
+                              setOverallAudio={setOverallAudio}
+                            />
+                            <PostInfo
+                              id={item.id}
+                              like={item.like}
+                              caption={item.caption}
+                              author={item.author}
+                              created_at={item.created_at}
+                              tags={item.tags}
+                              comment_count={item.comment_count}
+                            />
+                            <br />
+                            <br />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 ))}
-            </div>
+            </>
           )}
-          {showSaved && (
-            <div class="profile-page-inner savedscroll">
-              {mySaved &&
-                mySaved.map((item, key) => (
-                  <Link to={`/post-detail/` + item.post.id}>
-                    <Griddy2 post={item.post} />
-                  </Link>
-                ))}
-            </div>
-          )}
-          {showLiked && (
-            <div class="profile-page-inner likedscroll">
-              {/* { myLiked && myLiked.map((item,key)=>
-                     <Link to={`/post-detail/`+ item.id}>
-                                 <Griddy image={item.image}/>
-                                  </Link> 
-                      )}
-                        */}
-            </div>
-          )}
-          <div>loading more...</div>
-        </section>
+
+          <div className="gallery">
+            <>
+              {grid && (
+                <>
+                  {myPost &&
+                    myPost.map((item, key) => (
+                      <a
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setId(item.id);
+                          setUser(item.author);
+
+                          setClose(false);
+                          const popup1Cont = document.querySelector("#popup1");
+                          popup1Cont.style.visibility = "visible";
+                          popup1Cont.style.opacity = 1;
+                          popup1Cont.style.display = "block";
+                        }}
+                      >
+                        <GalleryItem item={item} />
+                      </a>
+                    ))}
+                </>
+              )}
+            </>
+          </div>
+          <div className="load-more-post">
+            <span>{p1 && p1.next ? "Loading more..." : ""}</span>
+          </div>
+          <div className="load-more-post">
+            <span>
+              {myPost.length < 1 || !p1?.next ? "No more posts!" : ""}
+            </span>
+          </div>
+        </div>
       </div>
-    </main>
+      <div id="popup1" className="overlay overlay-back">
+        <div className="popup popup-back">
+          <a
+            className="close close-back"
+            href="##"
+            onClick={(e) => {
+              e.preventDefault();
+              setClose(true);
+              setId(null);
+              setUser(null);
+              const popup1Cont = document.querySelector("#popup1");
+              popup1Cont.style.visibility = "hidden";
+              popup1Cont.style.opacity = 0;
+              popup1Cont.style.display = "none";
+            }}
+          >
+            &times;
+          </a>
+          <NewDetail post_id={id} close={close} user={user} />
+        </div>
+      </div>
+    </>
   );
 };
 
-export const Griddy = (props) => {
-  console.log("Griddy props::", props);
-  if (props.image) {
-    let image;
-    try {
-      image = props.image[0];
-    } catch (error) {
-      return <></>;
-    }
-    console.log("Griddyimg:::", props.image[0]);
-    return (
-      <>
-        <div class="profile-page-item flexbox" key={image.id}>
-          <img
-            class="profile-page-item-image"
-            src={LOCAL_CHECK ? image.image : image.image_url}
-            alt=""
-          />
-        </div>
-      </>
-    );
-  }
-};
-
-export const Griddy2 = (props) => {
-  console.log("Griddy2 props::", props);
-  if (props.post) {
-    let image;
-    try {
-      image = props.post.image[0];
-    } catch (error) {
-      return <></>;
-    }
-    console.log("Griddy2 img:::", props.post.image[0]);
-    return (
-      <>
-        <div class="profile-page-item flexbox" key={image.id}>
-          <img
-            class="profile-page-item-image"
-            src={LOCAL_CHECK ? image.image : image.image_url}
-            alt=""
-          />
-        </div>
-      </>
-    );
-  }
-};
-
 export default MyProfile;
+
+export const GalleryItem = (props) => {
+  // console.log("GalleryItem props:::", props);
+  let item = props.item;
+  let image;
+  if (item) {
+    if (item.image.length > 0) {
+      let renderIcon = false;
+      image = item.image[0];
+      // console.log("image:::", image);
+      if (item.image.length > 1) {
+        renderIcon = true;
+      }
+      if (item.video.length > 0) renderIcon = true;
+      let show_actual_img = false;
+      if (image.thumbnail === BASE_URL1 + "/media/image_empty.jpg") {
+        show_actual_img = true;
+      }
+      return (
+        <>
+          <div className="gallery-item" tabIndex="0">
+            <img
+              src={!show_actual_img ? image.thumbnail : image.image}
+              className="gallery-image"
+              alt=""
+            />
+            {renderIcon && (
+              <div className="gallery-item-type">
+                <span className="visually-hidden">Gallery</span>
+                <i className="fas fa-clone" aria-hidden="true"></i>
+              </div>
+            )}
+
+            <div className="gallery-item-info">
+              <ul>
+                <li className="gallery-item-likes">
+                  <span className="visually-hidden">Likes:</span>
+                  <i className="fas fa-heart" aria-hidden="true"></i>{" "}
+                  {item.like.length}
+                </li>
+                <li className="gallery-item-comments">
+                  <span className="visually-hidden">Comments:</span>
+                  <i className="fas fa-comment" aria-hidden="true"></i>{" "}
+                  {item.comment_count}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </>
+      );
+    }
+    let video;
+    if (item.video.length > 0) {
+      let renderIcon = false;
+      video = item.video[0];
+
+      if (item.video.length > 1) {
+        renderIcon = true;
+      }
+      return (
+        <>
+          <div className="gallery-item" tabIndex="0">
+            <img src={video.thumbnail} className="gallery-image" alt="" />
+
+            <div className="gallery-item-type">
+              <span className="visually-hidden">Video</span>
+              <i className="fas fa-video" aria-hidden="true"></i>
+              &nbsp;
+              {renderIcon && (
+                <i className="fas fa-clone" aria-hidden="true"></i>
+              )}
+            </div>
+
+            <div className="gallery-item-info">
+              <ul>
+                <li className="gallery-item-likes">
+                  <span className="visually-hidden">Likes:</span>
+                  <i className="fas fa-heart" aria-hidden="true"></i>{" "}
+                  {item.like.length}
+                </li>
+                <li className="gallery-item-comments">
+                  <span className="visually-hidden">Comments:</span>
+                  <i className="fas fa-comment" aria-hidden="true"></i>{" "}
+                  {item.comment_count}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </>
+      );
+    }
+  }
+  return <></>;
+};

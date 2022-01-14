@@ -3,19 +3,6 @@
 /* .ii input[type="file"] {
     display: none;
   } */
-ul {
-  list-style-type: none;
-}
-
-.btn {
-  padding: 0.5em 1em;
-
-  background-color: transparent;
-  color: #6b7270;
-
-  border: none;
-  cursor: pointer;
-}
 
 .widget-post {
   width: 600px;
@@ -29,13 +16,28 @@ ul {
   background-color: #fff;
 
   margin: auto;
+  margin-top: 7vh;
+
   overflow: hidden;
 }
+.widget-post ul {
+  list-style-type: none;
+}
 
+.widget-post .btn {
+  padding: 0.5em 1em;
+
+  background-color: transparent;
+  color: #6b7270;
+  background-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
 .widget-post__header {
   padding: 0.2em 0.5em;
 
-  background-color: #eaeaea;
+  background-color: whitesmoke;
   color: #3f5563;
 }
 .widget-post__title {
@@ -45,6 +47,8 @@ ul {
 .widget-post__content {
   width: 100%;
   height: 50%;
+  border-bottom: 2px solid #e3dede;
+  min-height: 70px;
 }
 .widget-post__textarea {
   width: 100%;
@@ -82,15 +86,15 @@ ul {
   position: relative;
   padding: 0.5em;
 
-  background-color: #f5f5f5;
-  color: #a2a6a7;
+  background-color: #a5cfe1;
+  color: black;
 }
 .post-actions__attachments {
   display: inline-block;
   width: 60%;
 }
 .attachments--btn {
-  background-color: #eaeaea;
+  background-color: white;
   color: #0c0d0e;
 
   border-radius: 1.5em;
@@ -152,4 +156,84 @@ ul {
   .widget-post {
     width: 100%;
   }
+}
+.widget-post__form .tag-wrapper .spanny-div {
+  display: flex;
+}
+.widget-post__form .tag-wrapper .spanny {
+  color: black;
+  font-weight: 500;
+  font-size: 13px;
+  margin: 9px;
+}
+
+.widget-post__form .tags {
+  display: flex;
+  /* display: none; */
+  align-items: center;
+  flex-wrap: wrap;
+  border: 1px solid #c0c0c0;
+  border-radius: 0.25rem;
+  margin: 1rem;
+  position: relative;
+  background: white;
+}
+.widget-post__form .tags:focus-within {
+  border-color: dodgerblue;
+}
+.widget-post__form .input-tags {
+  flex: 1;
+  margin: 0.5rem 0;
+  padding: 0 0.25rem;
+  outline: none;
+  color: black;
+}
+.widget-post__form .tag {
+  margin: 0.25rem;
+  padding: 0.05rem 0.5rem;
+  /* border: 1px solid #c0c0c0; */
+  border-radius: 4px;
+  white-space: nowrap;
+  color: black;
+  cursor: pointer;
+  user-select: none;
+  background: #e5f1ff;
+  font-size: 13px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.widget-post__form .tag .x {
+  color: #2e8eff;
+  font-size: 14px;
+}
+.widget-post__form .tag .x:hover {
+  cursor: text;
+}
+.widget-post__form .tags-drop {
+  display: inline-block;
+  list-style: none;
+  width: fit-content;
+  border: 1px solid #c0c0c0;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  position: absolute;
+  top: calc(100% + 0.15rem);
+  z-index: 1;
+  background: #fff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  color: #000;
+}
+.widget-post__form .tags-drop.active {
+  background: lightyellow;
+  opacity: 1;
+  pointer-events: auto;
+}
+.widget-post__form .tags-drop__item {
+  padding: 0.25rem 1rem;
+}
+.widget-post__form .tags-drop__item:hover,
+.widget-post__form .tags-drop__item:focus {
+  background: gold;
 }

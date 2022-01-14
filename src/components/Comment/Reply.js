@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import "./comment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
+import { UrlParser } from "../../customs/others";
+
 import {
   BASE_URL,
   BASE_URL1,
@@ -16,9 +18,10 @@ import {
   deleteCommentAction,
   deleteReplyAction,
 } from "../../stateManagement/actions";
+import { Link } from "react-router-dom";
 
 const Reply = (props) => {
-  console.log("Reply props::", props);
+  // console.log("Reply props::", props);
   const {
     state: { userDetail },
     dispatch,
@@ -123,6 +126,21 @@ const Reply = (props) => {
     console.log("Reply props.data::", props.data);
     let reply = props.data;
     if (!reply.author) return <></>;
+    let link;
+    let link2;
+    if (userDetail.user.username === reply.author.username) {
+      link = `/my-profile/`;
+    } else {
+      link = `/other-profile/` + reply.author.username;
+    }
+    if (reply.to) {
+      if (userDetail.user.username === reply.to.author.username) {
+        link2 = `/my-profile/`;
+      } else {
+        link2 = `/other-profile/` + reply.to.author.username;
+      }
+    }
+
     return (
       <>
         <div className="comment" key={reply.id}>
@@ -130,18 +148,20 @@ const Reply = (props) => {
           {!reply.to ? (
             <>
               <div className="comment-avatar">
-                <img
-                  src={
-                    LOCAL_CHECK
-                      ? reply.author.user_picture
-                      : reply.author.user_picture_url
-                  }
-                  alt="author avatar"
-                ></img>
+                <Link to={link}>
+                  <img
+                    src={
+                      LOCAL_CHECK
+                        ? reply.author.user_picture
+                        : reply.author.user_picture_url
+                    }
+                    alt=""
+                  ></img>
+                </Link>
               </div>
               <div className="comment-user-data">
                 <div className="username" style={{ fontSize: "0.8rem" }}>
-                  {reply.author.username}
+                  <Link to={link}>{reply.author.username}</Link>
                 </div>
                 <div className="comment-greply">
                   <div className="comment-text">
@@ -157,6 +177,7 @@ const Reply = (props) => {
                           SendReplyLike(props.data.id, reply.postcomment)
                         }
                       >
+                        unlike
                         <i className="fas fa-heart"></i>{" "}
                         <span className="reply-like-num">
                           {likeLength > 0 ? likeLength : null}
@@ -169,6 +190,7 @@ const Reply = (props) => {
                           SendReplyLike(props.data.id, reply.postcomment)
                         }
                       >
+                        like
                         <i className="far fa-heart"></i>{" "}
                         <span className="reply-like-num">
                           {likeLength > 0 ? likeLength : null}
@@ -193,7 +215,10 @@ const Reply = (props) => {
                         className="replytag"
                         onClick={(e) => handleReplyDelete(reply.id)}
                       >
-                        <i class="fas fa-trash" style={{ color: "black" }}></i>
+                        <i
+                          className="fas fa-trash"
+                          style={{ color: "black" }}
+                        ></i>
                       </span>
                     ) : (
                       ""
@@ -205,27 +230,29 @@ const Reply = (props) => {
           ) : (
             <>
               <div className="comment-avatar">
-                <img
-                  src={
-                    LOCAL_CHECK
-                      ? reply.author.user_picture
-                      : reply.author.user_picture_url
-                  }
-                  alt="author avatar"
-                ></img>
+                <Link to={link}>
+                  <img
+                    src={
+                      LOCAL_CHECK
+                        ? reply.author.user_picture
+                        : reply.author.user_picture_url
+                    }
+                    alt=""
+                  ></img>
+                </Link>
               </div>
               <div className="comment-user-data">
                 <div className="username" style={{ fontSize: "0.8rem" }}>
-                  {reply.author.username}
+                  <Link to={link}>{reply.author.username}</Link>
                 </div>
                 <div className="comment-greply">
                   <div className="comment-text">
                     <div className="comment-span" id={props.data.id}>
-                      <span className="repto"> replied</span>
+                      <span className="repto"> replied to</span>
                       <span className="reply-username">
-                        {reply.to.author.username}
+                        <Link to={link2}>{reply.to.author.username}</Link>
                       </span>
-                      : {reply.comment}
+                      : <Link to={link2}>{reply.comment}</Link>
                     </div>
                   </div>
                   <div className="greply">
@@ -236,6 +263,8 @@ const Reply = (props) => {
                           SendReplyLike(props.data.id, reply.postcomment)
                         }
                       >
+                        {" "}
+                        unlike
                         <i className="fas fa-heart"></i>
                       </span>
                     ) : (
@@ -245,6 +274,7 @@ const Reply = (props) => {
                           SendReplyLike(props.data.id, reply.postcomment)
                         }
                       >
+                        like
                         <i className="far fa-heart"></i>
                       </span>
                     )}
@@ -269,7 +299,10 @@ const Reply = (props) => {
                         className="replytag"
                         onClick={(e) => handleReplyDelete(reply.id)}
                       >
-                        <i class="fas fa-trash" style={{ color: "black" }}></i>
+                        <i
+                          className="fas fa-trash"
+                          style={{ color: "black" }}
+                        ></i>
                       </span>
                     ) : (
                       ""

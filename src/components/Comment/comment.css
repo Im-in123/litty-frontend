@@ -16,7 +16,7 @@ h1 {
   text-align: center;
 }
 
-.button {
+.box .button {
   font-size: 1em;
   padding: 10px;
   color: #fff;
@@ -26,7 +26,7 @@ h1 {
   cursor: pointer;
   transition: all 0.3s ease-out;
 }
-.button:hover {
+.box .button:hover {
   background: #06d85f;
 }
 
@@ -70,23 +70,44 @@ h1 {
   font-family: Tahoma, Arial, sans-serif;
 }
 .popup .close {
-  position: absolute;
-  top: 20px;
-  right: 30px;
+  /* position: absolute; */
+  /* top: 20px; */
+  /* right: 30px; */
   /* transition: all 200ms; */
   font-size: 30px;
   font-weight: bold;
   text-decoration: none;
-  color: #333;
+  color: rgb(219, 210, 210);
 }
 .popup .close:hover {
-  color: #06d85f;
+  color: #080808;
+}
+.popup .popup-inner {
+  display: flex;
+  justify-content: space-between;
+}
+.popup .close-reload {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup .close-reload .svg-reload {
+  fill: rgb(219, 210, 210);
+  margin-top: 4px;
+  margin-right: 4px;
+  cursor: pointer;
+}
+.popup .close-reload .svg-reload:hover {
+  fill: black;
 }
 .popup .contenta {
   max-height: 60vh !important;
   overflow: auto;
 }
-
+.popup .contenta a {
+  color: black;
+  text-decoration: none;
+}
 @media screen and (max-width: 768px) {
   .box {
     width: 70%;
@@ -180,9 +201,9 @@ h1 {
 }
 .repto {
   color: grey;
-  font-size: 12px;
-  padding-left: 3px;
-  padding-right: 10px;
+  font-size: 13px;
+  padding-left: 2px;
+  padding-right: 3px;
 }
 .greply {
   width: 30%;
@@ -223,6 +244,16 @@ h1 {
 .comment-greply {
   width: 100%;
   display: flex;
+}
+
+.loadcoms {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.loadcoms span {
+  color: lightgray;
+  cursor: pointer;
 }
 
 .comment-input {

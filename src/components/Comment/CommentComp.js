@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import "./comment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
+import { UrlParser } from "../../customs/others";
 import {
   BASE_URL,
   BASE_URL1,
@@ -19,7 +20,7 @@ const CommentComp = (props) => {
   //     const [commentData, setCommentData] = useState({post_id:props.post_id, author_id:props.author_id})
   const [commentData, setCommentData] = useState({});
   const [loading, setLoading] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Write you comment here...");
+  const [placeholder, setPlaceholder] = useState("Write a comment ...");
   const [loading1, setLoading1] = useState(false);
   const {
     state: { commentTrigger },
@@ -47,13 +48,15 @@ const CommentComp = (props) => {
       // dispatch({type:bogusTriggerAction,payload:null})
     } catch (error) {
       // console.log(error)
-      setPlaceholder("Write you comment here...");
+      setPlaceholder("Write a comment ...");
     }
     // }
   }, [bogus]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!commentData.comment) return;
+
     setLoading(true);
     let bb;
     const token = await getToken();
@@ -184,7 +187,7 @@ const CommentComp = (props) => {
               ? userDetail.profile_picture
               : userDetail.profile_picture_url
           }
-          alt="user avatar"
+          alt=""
         ></img>
       </div>
       <form>
@@ -199,7 +202,7 @@ const CommentComp = (props) => {
           required
         />
         {loading ? (
-          <div style={{ color: "black", fontWeight: "bold" }}>
+          <div style={{ color: "black", fontWeight: "bold", fontSize: 13 }}>
             Submitting...
           </div>
         ) : (

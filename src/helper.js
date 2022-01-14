@@ -1,7 +1,7 @@
 import Axios from "axios";
 import { logout, tokenName } from "./customs/authController";
 import { ME_URL, REFRESH_URL } from "./urls";
- 
+
 export const axiosHandler = ({
   method = "",
   url = "",
@@ -17,17 +17,19 @@ export const axiosHandler = ({
     let axiosProps = { method: methodType, url, data };
 
     if (token) {
-      console.log(token, "token")
+      console.log(token, "token");
       axiosProps.headers = { Authorization: `Bearer ${token}` };
     }
     if (extra) {
-      console.log(extra,"extra")
+      console.log(extra, "extra");
       axiosProps.headers = { ...axiosProps.headers, ...extra };
     }
     return Axios(axiosProps);
   } else {
     alert(`method ${methodType} is not accepted or data is not an object`);
-    console.log(`method ${methodType} is not accepted or data is not an object`);
+    console.log(
+      `method ${methodType} is not accepted or data is not an object`
+    );
   }
 };
 
@@ -64,31 +66,52 @@ const loopObj = (obj) => {
 
 export const getToken = async (props) => {
   let token = localStorage.getItem(tokenName);
-  if (!token) logout(props);
+  if (!token) {
+    alert("no token");
+    logout(props);
+  }
   token = JSON.parse(token);
   const userProfile = await axiosHandler({
     method: "get",
     url: ME_URL,
     token: token.access,
-  }).catch((e) =>{
-    const userProfile = false;
-    console.log(e)
+  }).catch((e) => {
+    console.log(e);
   });
   if (userProfile) {
     return token.access;
   } else {
+    console.log("token.refresh::", token.refresh);
+    alert("getting bew access with refresh token");
     const getNewAccess = await axiosHandler({
       method: "post",
       url: REFRESH_URL,
       data: {
         refresh: token.refresh,
       },
-    }).catch((e) => null);
+    }).catch((e) => {
+      console.log(e);
+      if (e.response) {
+        console.log("Request made and server responded");
+        console.log("e help response.data:::", e.response.data);
+        console.log("e help response,status:::", e.response.status);
+        console.log("e help response.headers:::", e.response.headers);
+        if (
+          e.response.data.error === "Token is invalid or has expired" ||
+          e.response.data.error === "refresh token not found"
+        ) {
+          alert("logout2");
+          logout(props);
+        }
+      } else if (e.request) {
+        // The request was made but no response was received
+        console.log("e help request:::", e.request);
+        alert("Slow Network connection");
+      }
+    });
     if (getNewAccess) {
       localStorage.setItem(tokenName, JSON.stringify(getNewAccess.data));
       return getNewAccess.data.access;
-    } else {
-      logout(props);
     }
   }
 };

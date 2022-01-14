@@ -18,16 +18,20 @@ const PostDetail = (props) => {
   const [post, setPost] = useState(false);
 
   useEffect(() => {
+    if (!props.id) return;
+
     console.log(props);
     getPostDetail(props);
-  }, []);
+  }, [props.id]);
 
   const getPostDetail = async () => {
     setFetching(true);
     const token = await getToken();
     const res = await axiosHandler({
       method: "get",
-      url: POST_URL + props.match.params.id + "/",
+      // url: POST_URL + props.match.params.id + "/",
+      url: POST_URL + props.id + "/",
+
       token,
     }).catch((e) => {
       console.log("getPostDetail Error::::", e);
@@ -45,46 +49,12 @@ const PostDetail = (props) => {
     }
   };
 
-  const handleDelete = async () => {
-    const token = await getToken();
-    const data = { author_id: userDetail.user.id, post_id: post.id };
-    const res = await axiosHandler({
-      method: "POST",
-      url: POST_DELETE,
-      data,
-      token,
-    }).catch((e) => {
-      console.log("Error in Delete post::::", e);
-      alert("There was an error");
-      // setError(true)
-    });
-
-    if (res) {
-      console.log(" Delete post response::::", res.data);
-      alert("Post deleted!");
-      window.location.href = "/my-profile";
-      // setMyPost(res.data)
-
-      // setFetching(false)
-    }
-  };
-
   if (fetching) {
     return (
       <div className="content-wrapper feed-wrapper">
         <div className="post-wall">
           <div className="post">
-            <div className="post-wrapper">
-              {isAuth && (
-                <div>
-                  <button>Edit</button>
-                  <button>Delete</button>
-                </div>
-              )}
-              <div>
-                <button>Share</button>
-              </div>
-            </div>
+            <div className="post-wrapper"></div>
           </div>
         </div>
       </div>
@@ -93,19 +63,9 @@ const PostDetail = (props) => {
   return (
     <div className="content-wrapper feed-wrapper">
       <div className="post-wall">
-        <div className="post">
+        <div className="post" id={"post" + post.id}>
           <div className="post-wrapper">
-            {isAuth && (
-              <div>
-                <button>Edit</button>
-                <button onClick={handleDelete}>Delete</button>
-              </div>
-            )}
-            <div>
-              <button>Share</button>
-            </div>
-
-            <UserInfo data={post.author} />
+            <UserInfo data={post.author} id={post.id} refresh={true} />
             <PostContent id={post.id} image={post.image} video={post.video} />
             <PostInfo
               id={post.id}

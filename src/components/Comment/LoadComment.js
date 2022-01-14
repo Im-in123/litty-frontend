@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import "./comment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
+import { UrlParser } from "../../customs/others";
 import {
   BASE_URL,
   BASE_URL1,
@@ -40,24 +41,23 @@ const LoadComment = (props) => {
   } = useContext(store);
 
   const [render, setRender] = useState(false);
-  const [fetching, setFetching] = useState(true);
 
   const [commentList, setCommentList] = useState([]);
+  const [nextMsgs, setNextMsgs] = useState([]);
 
   const [currentComment, setCurrentComment] = useState([]);
+  const [error, setError] = useState(false);
 
   const [loader, setLoader] = useState([]);
+  const [moreCmts, setMoreCmts] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
-  // const [replyData, setReplyData] = useState([]);
+  // let nextMsgs = [];
 
   useEffect(() => {
     if (postComment === props.post_id) {
-      //  alert("postcomment",postComment)
-      // alert("post_id", props.post_id)
-
-      getComments();
+      getComments(1);
     } else {
-      setFetching(false);
       setRender(false);
     }
     return () => {};
@@ -77,14 +77,14 @@ const LoadComment = (props) => {
   }, [currentComment]);
 
   const scrollToBottom = (p) => {
-    try {
-      setTimeout(() => {
+    setTimeout(() => {
+      try {
         let chatArea = document.getElementById("contenta" + p);
         chatArea.scrollTop = chatArea.scrollHeight;
-      }, 300);
-    } catch (error) {
-      console.log("scrolltobottom error:::currentcomment");
-    }
+      } catch (error) {
+        console.log("scrolltobottom error:::currentcomment");
+      }
+    }, 300);
   };
 
   useEffect(() => {
@@ -107,23 +107,47 @@ const LoadComment = (props) => {
     return () => {};
   }, [delComment]);
 
-  const getComments = async () => {
-    setFetching(true);
-
+  const getComments = async (page = null, next = false) => {
+    setLoadingMore(true);
+    setError(false);
+    let url;
+    if (!page) {
+      url = COMMENT_URL + `?post_id=${props.post_id}`;
+    } else {
+      url = COMMENT_URL + `?post_id=${props.post_id}`;
+    }
+    if (next) {
+      url = nextMsgs.next;
+      console.log("nextMsgs:::", nextMsgs);
+    } else {
+    }
     const token = await getToken();
     const result = await axiosHandler({
       method: "get",
-      url: COMMENT_URL + `?post_id=${props.post_id}`,
+      url: url,
       token,
     }).catch((e) => {
-      console.log("getComments error::::", e.response.data);
+      console.log("getComments error::::", e);
+      setError(true);
     });
 
     if (result) {
+      setNextMsgs((n) => result.data);
+      console.log("getComments data::::", result.data);
+
       console.log("getComments results::::", result.data.results);
-      setCommentList(result.data.results);
-      setFetching(false);
+      if (result.data.next) {
+        setMoreCmts(true);
+      } else {
+        setMoreCmts(false);
+      }
+      if (commentList.length > 0 && next) {
+        setCommentList((cm) => [...cm, ...result.data.results]);
+      } else {
+        setCommentList((cm) => result.data.results);
+      }
       setRender(true);
+      setLoadingMore(false);
     }
   };
 
@@ -131,20 +155,39 @@ const LoadComment = (props) => {
     <>
       {render ? (
         <>
-          <div class="contenta" id={"contenta" + props.post_id}>
-            {commentList.map((item, key) => {
-              return (
-                <CommentCard
-                  post_id={props.post_id}
-                  key={key}
-                  data={item}
-                  setCommentCount={props.setCommentCount}
-                  commentCount={props.commentCount}
-                  //   replyList={currentReply}
-                />
-              );
-            })}
-          </div>
+          {error ? (
+            "An error occured, reload comment!"
+          ) : (
+            <div className="contenta" id={"contenta" + props.post_id}>
+              {commentList.map((item, key) => {
+                return (
+                  <>
+                    <CommentCard
+                      post_id={props.post_id}
+                      key={key}
+                      data={item}
+                      setCommentCount={props.setCommentCount}
+                      commentCount={props.commentCount}
+                    />
+                  </>
+                );
+              })}
+              {moreCmts && (
+                <>
+                  <div className="loadcoms">
+                    {loadingMore ? (
+                      <span>loading more...</span>
+                    ) : (
+                      <span onClick={() => getComments(null, true)}>
+                        load more
+                      </span>
+                    )}
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
           <CommentComp
             post_id={props.id}
             author_id={userDetail.user.id}
@@ -153,7 +196,7 @@ const LoadComment = (props) => {
         </>
       ) : (
         <>
-          <div class="contenta" id={"append" + props.post_id}>
+          <div className="contenta" id={"append" + props.post_id}>
             <CommentCard
               setCommentCount={props.setCommentCount}
               commentCount={props.commentCount}

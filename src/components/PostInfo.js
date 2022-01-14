@@ -205,7 +205,7 @@ const PostInfo = (props) => {
 
       //  }
     }
-    setLikeSend(false);
+    // setLikeSend(false);
   };
 
   if (loading) {
@@ -257,22 +257,6 @@ const PostInfo = (props) => {
       <div className="post-info">
         <div className="likes" onClick={(e) => likeHandler()}>
           <a onClick={(e) => e.preventDefault()}>
-            {/* {loading?(<>
-                     <div className="icon">
-                        <i className="far fa-heart"></i>
-                     </div>
-                     <div id={"likecount"+props.id} className="count">
-                        {like_count}
-                     </div>
-               </>):(<>
-                  <div className="icon">
-                     <i className={`${likeIconStyle} fa-heart`}></i>
-                  </div>
-                  <div id={"likecount"+props.id} className="count">
-                     {like_count}
-                  </div>
-               </>)} */}
-
             <div className="icon">
               {isLiked1 ? (
                 <i className="fas fa-heart"></i>
@@ -299,16 +283,18 @@ const PostInfo = (props) => {
             <div className="count">{commentCount}</div>
           </a>
         </div>
-        <div className="share" id="##" onClick={(e) => saveHandler()}>
+        <div className="save" id="##" onClick={(e) => saveHandler()}>
           <a onClick={(e) => e.preventDefault()}>
-            <div className="icon">
-              {isSaved ? (
-                <i className="fas fa-save"></i>
-              ) : (
-                <i className="far fa-save"></i>
-              )}
-              {/* <i className= {`${isSaved} fa-save`}></i> */}
-            </div>
+            {isSaved ? (
+              <div className="icon1">
+                <i className="fas fa-save"></i>{" "}
+              </div>
+            ) : (
+              <div className="icon2">
+                {" "}
+                <i className="far fa-save"></i>{" "}
+              </div>
+            )}
           </a>
         </div>
       </div>
@@ -319,9 +305,14 @@ const PostInfo = (props) => {
             <Link to={plink}>{author} </Link>
           </b>{" "}
           {caption}
-          {tags.map((item, key) => (
-            <span key={item.id}>&nbsp; #{item.title}&nbsp;</span>
-          ))}
+          <span>
+            {" "}
+            &nbsp;
+            {tags.map((item, key) => (
+              <>#{item.title}</>
+            ))}
+            &nbsp;
+          </span>
         </p>
       </div>
       <div className="post-date">{created_at}</div>

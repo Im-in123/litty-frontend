@@ -42,14 +42,13 @@
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  /* height: 97vh; */
-
+  height: calc(100vh - 4rem);
 }
 
 aside {
   /* width: 25%; */
-  width:25%;
-  background-color: #511F79;
+  width: 25%;
+  background-color: #511f79;
   background-color: black;
   display: flex;
   flex-direction: column;
@@ -69,7 +68,7 @@ aside .head:hover {
   cursor: pointer;
 }
 aside .head .avatar {
-  background-color: #D65050;
+  background-color: #d65050;
   color: white;
   border-radius: 50%;
   height: 40px;
@@ -80,7 +79,8 @@ aside .head .avatar {
   align-items: center;
   justify-content: center;
 }
-aside .head .name, aside .head .mail {
+aside .head .name,
+aside .head .mail {
   margin: 3px 0px;
   font-size: 14px;
 }
@@ -107,16 +107,16 @@ aside .friends_list .friend {
   justify-content: space-between;
 }
 aside .friends_list .friend:hover {
-  background-color: #714B94;
+  background-color: #714b94;
 }
 aside .friends_list .friend.active {
-  background-color: #714B94;
+  background-color: #714b94;
 }
 aside .friends_list .friend.active .avatarbox {
   position: relative;
 }
 aside .friends_list .friend.active .avatarbox::before {
-  border: 2px solid #714B94;
+  border: 2px solid #714b94;
 }
 aside .friends_list .friend .avatarbox {
   position: relative;
@@ -125,14 +125,14 @@ aside .friends_list .friend .avatarbox::before {
   content: "";
   width: 12px;
   height: 12px;
-  background-color: #3EC649;
+  background-color: #3ec649;
   display: block;
   position: absolute;
   z-index: 99;
   border-radius: 50%;
   top: 5px;
   left: 10px;
-  border: 2px solid #673E8C;
+  border: 2px solid #673e8c;
 }
 aside .friends_list .friend .avatar_overlay {
   width: 40px;
@@ -165,11 +165,12 @@ aside .friends_list .friend .timeago {
 }
 
 .midcont {
- /* width:100%; */
+  /* width:100%; */
   width: 75%;
-  min-height: 85vh;
+  /* min-height: 85vh; */
   /* height:80vh; */
   background-color: rgba(0, 0, 0, 0.07);
+  /* background: antiquewhite; */
   display: flex;
   flex-direction: column;
 }
@@ -203,13 +204,13 @@ aside .friends_list .friend .timeago {
   transform: scale(1.1);
 }
 .midcont .head .configschat i.fa.fa-phone:hover {
-  color: #3EC649;
+  color: #3ec649;
 }
 .midcont .head .configschat i.fa.fa-camera-retro:hover {
   color: #673ab7;
 }
 .midcont .head .configschat i.fa.fa-ellipsis-v:hover {
-  color: #B5B5B5;
+  color: #b5b5b5;
 }
 .midcont .messagescont {
   /* height: 70%; */
@@ -219,6 +220,24 @@ aside .friends_list .friend .timeago {
   overflow: auto;
   /* background-color: yellow; */
 }
+.midcont .messagescont .load-more {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.midcont .messagescont .load-more span {
+  cursor: pointer;
+  color: rgb(201, 57, 86);
+  font-weight: 600;
+}
+.midcont .messagescont .show-no-message {
+  color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 15%;
+}
+
 .midcont .messagescont .msg {
   display: flex;
   flex-direction: row;
@@ -257,16 +276,15 @@ aside .friends_list .friend .timeago {
   animation: fade-in-100-right 1s 1.3s ease-in-out both;
 }
 .midcont .messagescont .user.friend .text {
-  background-color: #714B94;
+  background-color: #714b94;
   color: white;
- 
 }
 .midcont .messagescont .user.friend .text::before {
   content: "";
   display: block;
   border-style: solid;
   border-width: 7.5px 0 7.5px 12px;
-  border-color: transparent transparent transparent #714B94;
+  border-color: transparent transparent transparent #714b94;
   position: absolute;
   right: -11px;
 }
@@ -288,23 +306,126 @@ aside .friends_list .friend .timeago {
   height: 0px;
   border: 0px solid;
 }
-.midcont .bottomchat {
-  padding: 17px;
-  background-color: white;
-  color: #B5B5B5;
-  /* margin-top: auto; */
-  height: 60px;
+.midcont .msg .file-box {
+  padding: 10px 5px 5px 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
-
-.inputbutton{
-  width:60vw;
-  height:40px;
-  border:none;
-  background-color: whitesmoke;
+.midcont .msg .file-box .file-obj {
+  width: 100%;
+  padding-top: 5px;
+}
+.midcont .msg .file-box img {
+  height: 200px;
+  width: 250px;
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
+  max-height: 400px;
+}
+.midcont .msg .file-box video {
+  width: 300px;
+  height: 300px;
+}
+.midcont .msg .file-box .other_file {
+  background: black;
+  border-radius: 10px;
+  width: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px;
+  /* word-break: break-word; */
+  text-align: justify;
+  padding: 10px;
+}
+.midcont .bottomchat {
+  padding: 2%;
+  background-color: white;
+  color: #b5b5b5;
+  /* margin-top: auto; */
+}
+.bottomchat .bottom-form {
+  display: flex;
+  background: white;
+  border-radius: 5px;
+  justify-content: space-between;
+  border: 1px solid lightgray;
+  align-items: center;
+}
+.bottomchat .input-text {
+  width: 80%;
+}
+.bottomchat .inputbutton {
+  width: 100%;
+  height: 40px;
+  border: none;
+  background-color: lightgray;
   border-radius: 5px;
 }
 .midcont .bottomchat * {
   transition: all 0.2s ease-in-out;
+}
+.midcont .bottomchat {
+}
+
+.sub-bottom-chat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+}
+
+.btn-svg {
+  border: none;
+  outline: none;
+  background: none;
+}
+.sub-bottom-chat .svg-disabled {
+  fill: gray;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.sub-bottom-chat svg {
+  width: 30px;
+  height: 30px;
+  fill: blue;
+  cursor: pointer;
+  /* margin: 4px; */
+}
+.sub-bottom-chat input {
+  position: absolute;
+  left: -999em;
+  display: none;
+}
+
+.sub-bottom-chat label {
+  display: block;
+  overflow: hidden;
+  border-radius: 8px;
+}
+.sub-bottom-chat label > span {
+  display: inline-block;
+  overflow: hidden;
+  width: 100%;
+  padding-right: 0.5em;
+  background-color: white;
+  white-space: nowrap;
+  line-height: 32px;
+  cursor: pointer;
+}
+.sub-bottom-chat label > span:before {
+  content: attr(title);
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 10px;
+  padding: 0.5em 1em;
+  border-radius: 8px 0 0 8px;
+  background-color: steelblue;
+  line-height: normal;
+  color: white;
 }
 .midcont .bottomchat .text {
   float: left;
@@ -315,7 +436,7 @@ aside .friends_list .friend .timeago {
 }
 .midcont .bottomchat i:hover {
   opacity: 0.5;
-  color: #3EC649;
+  color: #3ec649;
 }
 
 .fcenter {
@@ -326,10 +447,6 @@ aside .friends_list .friend .timeago {
   font-weight: 700;
 }
 
-*, *:before, *:after {
-  box-sizing: border-box;
-}
-
 .avatarbox {
   position: relative;
 }
@@ -338,7 +455,7 @@ aside .friends_list .friend .timeago {
   content: "";
   width: 12px;
   height: 12px;
-  background-color: #3EC649;
+  background-color: #3ec649;
   display: block;
   position: absolute;
   z-index: 99;
@@ -370,6 +487,7 @@ aside .friends_list .friend .timeago {
     /* max-width: 360px; */
     width: auto;
     height: auto;
+    /* height: calc(100vh - 4rem); */
   }
 
   aside {
@@ -381,11 +499,11 @@ aside .friends_list .friend .timeago {
   aside .head {
     flex-direction: row;
     min-height: 50px;
-    max-height:55px;
+    max-height: 55px;
   }
-  aside .head .avatar{
-    height:30px;
-    width:30px;
+  aside .head .avatar {
+    height: 30px;
+    width: 30px;
   }
   aside .head * {
     margin: 0px 10px !important;
@@ -408,9 +526,8 @@ aside .friends_list .friend .timeago {
     height: 80vh;
     /* height: 70vh; */
     /* background-color: turquoise; */
-
   }
-  .midcont .head{
+  .midcont .head {
     /* min-height: 600px; */
     height: 55px;
   }
@@ -418,9 +535,8 @@ aside .friends_list .friend .timeago {
   .avatarbox .avatar_overlay {
     width: 40px;
     height: 40px;
-    
   }
-  .midcont .messagescont{
+  .midcont .messagescont {
     /* overflow: hidden; */
     height: 67vh;
     /* max-height: 68vh; */
@@ -429,8 +545,31 @@ aside .friends_list .friend .timeago {
     font-size: 18px !important;
   }
 
-  aside, .midcont {
+  aside,
+  .midcont {
     width: 100%;
+  }
+
+  .midcont .msg .file-box video {
+    width: 100%;
+    height: 300px;
+  }
+  .midcont .msg .file-box img {
+    height: 150px;
+    width: 150px;
+  }
+  .sub-bottom-chat .svg-disabled {
+    fill: gray;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  .sub-bottom-chat svg {
+    width: 24px;
+    height: 24px;
+    fill: black;
+    cursor: pointer;
+    /* margin: 4px; */
   }
 }
 /* Let's get this party started */

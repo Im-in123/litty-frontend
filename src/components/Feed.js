@@ -7,33 +7,33 @@ import { POST_URL } from "../urls";
 import { axiosHandler, getToken } from "../helper";
 import { store } from "../stateManagement/store";
 import {
-  CommentTriggerAction,
-  postTriggerAction,
   refreshFeedAction,
   postContainerAction,
+  volumeAction,
 } from "../stateManagement/actions";
 import { VerifyFunc } from "../customs/others";
-
-// import "./main.css"
 
 let p1;
 let post = [];
 let goneNext = false;
-let bb;
-let track = 0;
+let canGoNext = false;
+let shouldHandleScroll = false;
 const Feed = (props) => {
-  // const {state:{commentTrigger}, dispatch} = useContext(store)
   const [fetching, setFetching] = useState(true);
   const [error, setError] = useState(false);
   const [postList, setPostList] = useState([]);
+  const [overallAudio, setOverallAudio] = useState(true);
+
   const {
     state: { userDetail },
     dispatch,
   } = useContext(store);
   const {
+    state: { volumeTrigger },
+  } = useContext(store);
+  const {
     state: { postTrigger },
   } = useContext(store);
-  // dispatch({type:postTriggerAction,payload:1});
   const {
     state: { refreshFeed },
   } = useContext(store);
@@ -41,22 +41,11 @@ const Feed = (props) => {
     state: { postContainer },
   } = useContext(store);
 
-  const [nextPage, setNextPage] = useState(1);
-  const [canGoNext, setCanGoNext] = useState(false);
-  const [shouldHandleScroll, setShouldHandleScroll] = useState(false);
-  const [evl, setEvl] = useState(false);
-  let tt = 1;
+  useEffect(() => {
+    dispatch({ type: volumeAction, payload: overallAudio });
 
-  //   useEffect(() =>{
-
-  //     clearTimeout(debouncer);
-
-  //      debouncer= setTimeout(() =>{
-  //        let extra = `?keyword=${search}`;
-  //        getUser(extra)
-  //      }, 1700)
-
-  //  }, [search, searchb])
+    return () => {};
+  }, [overallAudio]);
 
   useEffect(() => {
     VerifyFunc(userDetail);
@@ -67,44 +56,44 @@ const Feed = (props) => {
   useEffect(() => {
     setPostList(postContainer);
     post = postContainer;
+    console.log("postContainer:::", postContainer);
+
     if (refreshFeed) {
-      alert(
-        "Please note:This site is still under development.Images might not persist."
-      );
       getPostContent(postTrigger);
     } else {
       setFetching(false);
-      setShouldHandleScroll(true);
-      setCanGoNext(true);
-      setEvl(!evl);
+      shouldHandleScroll = true;
+      canGoNext = true;
     }
     return () => {};
   }, []);
 
   useEffect(() => {
-    // if (!postContainer) {
     try {
-      bb = document.getElementById("main-feed");
-      bb.addEventListener("scroll", autoFetch);
+      window.addEventListener("scroll", autoFetch);
     } catch (error) {
-      //  alert("bb")
-      console.log("couldnt add event listener to main-feed");
+      console.log("couldnt add event listener to window");
     }
-    // }
 
     return () => {
       window.removeEventListener("scroll", autoFetch);
     };
-  }, [evl]);
-
-  const autoFetch = () => {
+  }, []);
+  const autoFetch = async () => {
     if (shouldHandleScroll) {
-      if (bb.offsetHeight + bb.scrollTop >= bb.scrollHeight - 700) {
+      let numb = document.documentElement.getBoundingClientRect();
+      let height =
+        document.documentElement.offsetHeight -
+        document.documentElement.clientHeight;
+
+      height = height * -1;
+
+      if (numb.top <= height + 200) {
         console.log("finally", canGoNext, goneNext);
         if (canGoNext && !goneNext) {
           goneNext = true;
-          setShouldHandleScroll(false);
-          getPostContent();
+          shouldHandleScroll = false;
+          await getPostContent();
         } else {
           console.log("passing cangonext", canGoNext, goneNext);
         }
@@ -114,68 +103,73 @@ const Feed = (props) => {
     }
   };
   const getPostContent = async (page = null) => {
-    setCanGoNext(false);
+    canGoNext = false;
     const token = await getToken();
 
     const res = await axiosHandler({
       method: "get",
-      //    url:  POST_URL + `?page=${page ? page : nextPage}`,
       url: page ? `${POST_URL}?page=${page}` : p1.next,
-      //  url:  POST_URL + `?page=${page ? page : tt}`,
       token,
     }).catch((e) => {
       console.log("Error in Feed::::", e);
       setError(true);
+      shouldHandleScroll = true;
+      canGoNext = true;
+      goneNext = false;
     });
 
     if (res) {
       console.log(" Feed::::", res.data.results);
-      console.log("post:::", res.data);
+      console.log("res.data:::", res.data);
 
-      if (post.length > 0) {
-        setPostList([...postList, ...res.data.results]);
-        // post =   [...post, ...res.data.results]
+      if (post.length >= 0 && post.length <= 27) {
+        console.log("herep:", post.length, "  herep1:", postList.length);
+      
         for (var i in res.data.results) {
           post.push(res.data.results[i]);
         }
+        setPostList(post);
       } else {
-        post = res.data.results;
-        setPostList(res.data.results);
+        console.log("therep");
+        setFetching(true);
+        setPostList([]);
+
+        setTimeout(() => {
+          post = res.data.results;
+          setPostList((a) => res.data.results);
+          setFetching(false);
+        }, 1000);
+
+        scrollToTop();
       }
       dispatch({ type: postContainerAction, payload: post });
 
       p1 = res.data;
 
       if (p1.next) {
-        setCanGoNext(true);
-        // tt += 1
-        // // dispatch({type:postTriggerAction,payload:postTrigger+1});
-
-        // // alert(postTrigger+1)
-        // alert(tt)
-        // setNextPage(nextPage + 1)
+        canGoNext = true;
 
         goneNext = false;
 
-        // setTimeout(() => setShouldHandleScroll(true), 1000)
-        setShouldHandleScroll(true);
+        shouldHandleScroll = true;
       } else {
-        setShouldHandleScroll(false);
-        // alert("gonenext")
+        shouldHandleScroll = false;
       }
       dispatch({ type: refreshFeedAction, payload: null });
     }
-    //  setScroll()
 
     console.log("PostList:::", postList);
     console.log("post:::", post);
 
     setFetching(false);
-    setEvl(!evl);
   };
-  // window.onscroll = function(){
-  // }
-
+  const scrollToTop = () => {
+    setTimeout(() => {
+      try {
+        document.documentElement.scrollTop = 0;
+      } catch (error) {}
+    }, 300);
+  };
   if (fetching) {
     return (
       <div id="maina-feed">
@@ -187,16 +181,16 @@ const Feed = (props) => {
                   <UserInfo />
 
                   <div className="post-content">
-                    <div class="slideshow-container">
-                      <div class="fade mySlides mySlidesget">
-                        <div class="numbertext">loading..</div>
+                    <div className="slideshow-container">
+                      <div className="fade mySlides mySlidesget">
+                        <div className="numbertext">loading..</div>
                         <img
                           src=""
                           alt="loading.."
                           className="iimm"
                           style={{ width: "100%" }}
                         />
-                        <div class="text">loading..</div>
+                        <div className="text">loading..</div>
                       </div>
                     </div>
                     <br />
@@ -244,22 +238,25 @@ const Feed = (props) => {
 
   if (!fetching) {
     return (
-      <div
-        id="main-feed"
-        //  style={{overflow:"scroll", height:"100vh"}}
-      >
-        {post &&
+      <>
+        {postList.length > 0 &&
           postList.map((item, key) => (
-            <div id="feed" key={key}>
+            <div id="feed" id={`feed${item.id}`} key={key}>
               <div className="content-wrapper feed-wrapper">
                 <div className="post-wall">
-                  <div className="post">
+                  <div className="post" id={"post" + item.id}>
                     <div className="post-wrapper">
-                      <UserInfo data={item.author} />
+                      <UserInfo
+                        data={item.author}
+                        id={item.id}
+                        refresh={false}
+                      />
                       <PostContent
                         id={item.id}
                         image={item.image}
                         video={item.video}
+                        overallAudio={overallAudio}
+                        setOverallAudio={setOverallAudio}
                       />
                       <PostInfo
                         id={item.id}
@@ -270,7 +267,6 @@ const Feed = (props) => {
                         tags={item.tags}
                         comment_count={item.comment_count}
                       />
-                      {/* <Comment id={item.id}/> */}
                       <br />
                       <br />
                     </div>
@@ -279,49 +275,22 @@ const Feed = (props) => {
               </div>
             </div>
           ))}
-        <div>loading more...</div>
-      </div>
+
+        <div className="load-more-post">
+          <span>{p1 && p1.next ? "Loading ..." : ""}</span>
+        </div>
+        {!fetching ? (
+          <div className="load-more-post">
+            <span>
+              {/* {postList.length < 1 || !p1?.next ? "No more posts!" : ""} */}
+            </span>
+          </div>
+        ) : (
+          ""
+        )}
+      </>
     );
   }
-  //   return (
-  //     <div
-  //       id="main-feed"
-  //       //  style={{overflow:"scroll", height:"100vh"}}
-  //     >
-  //       {post &&
-  //         postList.map((item, key) => (
-  //           <div id="feed" key={key}>
-  //             <div className="content-wrapper feed-wrapper">
-  //               <div className="post-wall">
-  //                 <div className="post">
-  //                   <div className="post-wrapper">
-  //                     <UserInfo data={item.author} />
-  //                     <PostContent
-  //                       id={item.id}
-  //                       image={item.image}
-  //                       video={item.video}
-  //                     />
-  //                     <PostInfo
-  //                       id={item.id}
-  //                       like={item.like}
-  //                       caption={item.caption}
-  //                       author={item.author}
-  //                       created_at={item.created_at}
-  //                       tags={item.tags}
-  //                       comment_count={item.comment_count}
-  //                     />
-  //                     {/* <Comment id={item.id}/> */}
-  //                     <br />
-  //                     <br />
-  //                   </div>
-  //                 </div>
-  //               </div>
-  //             </div>
-  //           </div>
-  //         ))}
-  //       <div>loading more...</div>
-  //     </div>
-  //   );
 };
 
 export default Feed;

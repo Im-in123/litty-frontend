@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
 import { BASE_URL, BASE_URL1, LOCAL_CHECK } from "../urls";
+import { UrlParser } from "../customs/others";
 import "./header.css";
 const Header = (props) => {
   const {
@@ -12,30 +13,11 @@ const Header = (props) => {
     state: { bogus },
   } = useContext(store);
 
-  const [pp, setPp] = useState("#");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    checker();
     return () => {};
   }, [userDetail]);
-
-  const checker = () => {
-    try {
-      // alert(userDetail.profile_picture)
-
-      setPp(
-        LOCAL_CHECK
-          ? BASE_URL1 + userDetail.profile_picture
-          : userDetail.profile_picture_url
-      );
-      setLoading(false);
-    } catch (error) {
-      //   prompt("Error header",error)
-      // pp=""//userDetail.profile_picture.file_upload
-      setLoading(false);
-    }
-  };
 
   if (loading) {
     return <>...</>;
@@ -47,16 +29,16 @@ const Header = (props) => {
           <div className="app-title">
             {/* <div className="side-menu-button"><a href="#"><i className="fas fa-bars"></i></a></div> */}
             <div className="title">
-              <Link to="/">Litty</Link>
+              <a href="/">Litty</a>
             </div>
           </div>
           {userDetail && (
             <div className="navmenu">
               <div className="diva">
-                <Link to="/">
+                <a href="/">
                   {" "}
                   <img src="/images/home-icon.svg" alt="home" />{" "}
-                </Link>
+                </a>
               </div>
               <div className="diva">
                 {" "}
@@ -73,7 +55,7 @@ const Header = (props) => {
 
               <div className="diva">
                 <Link to="/notification">
-                  <img src="/images/message_white.svg" alt="inbox" />
+                  <img src="/images/notifications.svg" alt="notifications" />
                 </Link>
               </div>
             </div>
@@ -99,7 +81,7 @@ const Header = (props) => {
               <Link to="/my-profile">
                 {" "}
                 <div className="user-avatar">
-                  <img src={pp} alt="user-avatar"></img>
+                  <img src={userDetail.profile_picture} alt="user-avatar"></img>
                 </div>
               </Link>
             </div>

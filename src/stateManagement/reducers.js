@@ -12,8 +12,17 @@ import {
   newReplyReplyAction,
   deleteCommentAction,
   deleteReplyAction,
+  volumeAction,
+  slideAction,
+  checkAllFollowAction,
 } from "./actions";
 
+export const checkAllFollowState = {
+  checkAllFollow: [],
+};
+export const slideTriggerState = {
+  slideTrigger: [],
+};
 export const commentTriggerState = {
   commentTrigger: false,
 };
@@ -64,6 +73,9 @@ export const postContainerState = {
   postContainer: true,
 };
 
+export const volumeTriggerState = {
+  volumeTrigger: true,
+};
 export const commentTriggerReducer = (state, action) => {
   if (action.type === CommentTriggerAction) {
     return {
@@ -201,6 +213,39 @@ export const postContainerReducer = (state, action) => {
     return {
       ...state,
       postContainer: action.payload,
+    };
+  } else {
+    return state;
+  }
+};
+
+export const volumeReducer = (state, action) => {
+  if (action.type === volumeAction) {
+    return {
+      ...state,
+      volumeTrigger: action.payload,
+    };
+  } else {
+    return state;
+  }
+};
+
+export const slideReducer = (state, action) => {
+  if (action.type === slideAction) {
+    return {
+      ...state,
+      slideTrigger: action.payload,
+    };
+  } else {
+    return state;
+  }
+};
+
+export const checkAllFollowReducer = (state, action) => {
+  if (action.type === checkAllFollowAction) {
+    return {
+      ...state,
+      checkAllFollow: action.payload,
     };
   } else {
     return state;

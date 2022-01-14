@@ -4,45 +4,50 @@ import "./main.css";
 import Feed from "./Feed";
 import React from "react";
 
- class Main extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { isMobile: false };
-        this.checkResolution = this.checkResolution.bind(this);
-     }
+class Main extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { isMobile: false };
+    this.checkResolution = this.checkResolution.bind(this);
+  }
 
-     checkResolution(e) {
-        if (document.documentElement.offsetWidth < 900 && !this.state.isMobile) this.setState({ isMobile: true });
-        else if (document.documentElement.offsetWidth > 900 && this.state.isMobile) this.setState({ isMobile: false });
-     }
-  
-     componentDidMount() {
+  checkResolution(e) {
+    if (document.documentElement.offsetWidth < 900 && !this.state.isMobile)
+      this.setState({ isMobile: true });
+    else if (document.documentElement.offsetWidth > 900 && this.state.isMobile)
+      this.setState({ isMobile: false });
+  }
 
-        if (document.documentElement.offsetWidth < 900) this.setState({ isMobile: true });
-        else this.setState({ isMobile: false });
-        window.addEventListener('resize', this.checkResolution);
-     }
+  componentDidMount() {
+    if (document.documentElement.offsetWidth < 900)
+      this.setState({ isMobile: true });
+    else this.setState({ isMobile: false });
+    window.addEventListener("resize", this.checkResolution);
+  }
 
-     componentDidUpdate(prevProps, prevState) {
-        if (prevState.count !== this.state.count) { //this default if optmizes the code in rerenders. 
-            document.title = `You clicked ${this.state.count} times`;
-          }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.count !== this.state.count) {
+      //this default if optmizes the code in rerenders.
+      document.title = `You clicked ${this.state.count} times`;
+    }
+  }
 
-     }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.checkResolution);
+  }
 
-     componentWillUnmount() {
-        window.removeEventListener('resize', this.checkResolution);
-     }
-     
-    render() {
-        return (
-            <div className="wrapper">
-                <Feed/>
-            </div>
-           
-        )
- }
-
+  render() {
+    return (
+      // <div className="overall">
+      <div className="wrapper">
+        <Feed />
+      </div>
+      //   <div className="side">
+      //  <span>hello there</span>
+      //   </div>
+      // </div>
+    );
+  }
 }
 
 export default Main;

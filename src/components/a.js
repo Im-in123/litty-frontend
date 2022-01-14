@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import "./comment.css";
 import { store } from "../stateManagement/store";
 import { axiosHandler, getToken } from "../helper";
+import { UrlParser } from "../customs/others";
 import {
   BASE_URL,
   BASE_URL1,
@@ -41,11 +42,11 @@ const Comment = (props) => {
   if (props) {
     return (
       <>
-        <div id={"popup1" + props.id} class="overlay">
-          <div class="popup">
+        <div id={"popup1" + props.id} className="overlay">
+          <div className="popup">
             <h2>Comment</h2>
             <a
-              class="close"
+              className="close"
               onClick={() =>
                 dispatch({ type: bogusTriggerAction, payload: null })
               }
@@ -63,11 +64,11 @@ const Comment = (props) => {
   }
   return (
     <>
-      <div id="popup1" class="overlay">
-        <div class="popup">
+      <div id="popup1" className="overlay">
+        <div className="popup">
           <h2>Here i am</h2>
           <a
-            class="close"
+            className="close"
             href="##"
             onClick={() => (document.body.style.color = "green")}
           >
@@ -408,7 +409,7 @@ const LoadComment = (props) => {
   if (fetching) {
     return (
       <>
-        <div class="contenta" id={"append" + props.post_id}>
+        <div className="contenta" id={"append" + props.post_id}>
           <CommentCard />
         </div>
       </>
@@ -419,7 +420,7 @@ const LoadComment = (props) => {
     <>
       {render ? (
         <>
-          <div class="contenta">
+          <div className="contenta">
             <div
               className="comment"
               id={"appendcom" + props.post_id}
@@ -453,7 +454,7 @@ const LoadComment = (props) => {
         </>
       ) : (
         <>
-          <div class="contenta" id={"append" + props.post_id}>
+          <div className="contenta" id={"append" + props.post_id}>
             <CommentCard />
           </div>
         </>
