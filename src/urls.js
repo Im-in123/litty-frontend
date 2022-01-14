@@ -10,6 +10,9 @@ export const BASE_URL1 = "https://litty-server.herokuapp.com";
 // export const BASE_URL2 = "192.168.43.77:8000";
 export const BASE_URL2 = "litty-server.herokuapp.com";
 
+// export const CHAT_SOCKET_URL = "http://localhost:9000/";
+export const CHAT_SOCKET_URL = "https://litty-chat-server.herokuapp.com:9000/";
+
 const W1 = BASE_URL2 + "/ws/chat/";
 export const WEBSOCKET_URL = "ws://" + W1 + "temp/";
 // 'ws://127.0.0.1:8000/ws/chat/123/';

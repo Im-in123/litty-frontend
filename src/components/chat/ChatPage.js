@@ -12,6 +12,7 @@ import {
   BASE_URL1,
   BASE_URL2,
   CHAT_LIST_URL,
+  CHAT_SOCKET_URL,
   GET_FOLLOWING_CHAT,
   LOCAL_CHECK,
   MESSAGE_URL,
@@ -122,7 +123,7 @@ const ChatPage = (props) => {
 
   const { isTyping, startTyping, stopTyping, cancelTyping } = useTyping();
 
-  const url = "http://localhost:9000/";
+  const url = CHAT_SOCKET_URL
   const { username, timeout } = props.match.params;
   let guessKey;
 
