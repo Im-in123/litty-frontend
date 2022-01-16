@@ -115,6 +115,7 @@ body {
 .drop-parent {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .drop-parent svg {
   cursor: pointer;
