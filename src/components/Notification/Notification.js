@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./notification.css";
-import { BASE_URL1, NOTIFICATION_URL, POST_URL } from "../../urls";
+import { BASE_URL1, NOTIFICATION_URL, LOCAL_CHECK } from "../../urls";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 
@@ -134,7 +134,14 @@ const Noti = (props) => {
       <div className="message">
         <div className="user-image">
           <Link to={`/other-profile/` + data.sender.username}>
-            <img alt="image" src={data.sender.user_picture} />
+            <img
+              alt="image"
+              src={
+                LOCAL_CHECK
+                  ? data.sender.user_picture
+                  : data.sender.user_picture_url
+              }
+            />
           </Link>
         </div>
         <div className="inner">
@@ -205,8 +212,15 @@ const PostCont = (props) => {
       }
       if (item.video.length > 0) renderIcon = true;
       let show_actual_img = false;
-      if (image.thumbnail === BASE_URL1 + "/media/image_empty.jpg") {
-        show_actual_img = true;
+
+      if (LOCAL_CHECK) {
+        if (image.thumbnail === BASE_URL1 + "/media/image_empty.jpg") {
+          show_actual_img = true;
+        }
+      } else {
+        if (image.thumbnail_url === BASE_URL1 + "/media/image_empty.jpg") {
+          show_actual_img = true;
+        }
       }
 
       return (
@@ -217,10 +231,17 @@ const PostCont = (props) => {
             // rel="noopener noreferrer"
           >
             <div className="img-content" key={image.id}>
-              <img
-                src={!show_actual_img ? image.thumbnail : image.image}
-                alt=""
-              />
+              {LOCAL_CHECK ? (
+                <img
+                  src={!show_actual_img ? image.thumbnail : image.image}
+                  alt=""
+                />
+              ) : (
+                <img
+                  src={!show_actual_img ? image.thumbnail_url : image.image_url}
+                  alt=""
+                />
+              )}
             </div>
           </Link>
         </>
@@ -242,7 +263,11 @@ const PostCont = (props) => {
             // rel="noopener noreferrer"
           >
             <div className="img-content" key={video.id}>
-              <img src={video.thumbnail} className="" alt="" />
+              <img
+                src={LOCAL_CHECK ? video.thumbnail : video.thumbnail_url}
+                className=""
+                alt=""
+              />
             </div>
           </Link>
         </>

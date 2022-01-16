@@ -496,8 +496,8 @@ const NewDetail = (props) => {
     const token = await getToken();
     const data = { author_id: userDetail.user.id, post_id: id };
     const res = await axiosHandler({
-      method: "POST",
-      url: POST_DELETE,
+      method: "DELETE",
+      url: POST_URL + post_id + "/",
       data,
       token,
     }).catch((e) => {
@@ -554,7 +554,14 @@ const NewDetail = (props) => {
                     <div className="gallery-author-new">
                       {isAuth ? (
                         <>
-                          <img src={post.author.user_picture} alt="" />
+                          <img
+                            src={
+                              LOCAL_CHECK
+                                ? post.author.user_picture
+                                : post.author.user_picture_url
+                            }
+                            alt=""
+                          />
 
                           <Link to={`/my-profile/`}>
                             {post.author.username}
@@ -562,7 +569,14 @@ const NewDetail = (props) => {
                         </>
                       ) : (
                         <>
-                          <img src={post.author.user_picture} alt="" />
+                          <img
+                            src={
+                              LOCAL_CHECK
+                                ? post.author.user_picture
+                                : post.author.user_picture_url
+                            }
+                            alt=""
+                          />
 
                           <Link to={`/other-profile/` + post.author.username}>
                             {post.author.username}
@@ -589,27 +603,9 @@ const NewDetail = (props) => {
                   <div className="drop-parent-new">
                     <div className="gallery-saved" onClick={saveHandler}>
                       {isSaved ? (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24px"
-                          viewBox="0 0 24 24"
-                          width="24px"
-                          fill="salmon"
-                        >
-                          <path d="M0 0h24v24H0z" fill="none" />
-                          <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm-5 16c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm3-10H5V5h10v4z" />
-                        </svg>
+                        <i class="fas fa-bookmark"></i>
                       ) : (
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          height="24px"
-                          viewBox="0 0 24 24"
-                          width="24px"
-                          fill="whitesmoke"
-                        >
-                          <path d="M0 0h24v24H0V0z" fill="none" />
-                          <path d="M17 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V7l-4-4zm2 16H5V5h11.17L19 7.83V19zm-7-7c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3zM6 6h9v4H6z" />
-                        </svg>
+                        <i class="far fa-bookmark"></i>
                       )}
                     </div>
                     <div className="dm-new">
@@ -888,13 +884,20 @@ const ContentSlide = (props) => {
                 )}
               </div>
             </div>
-            {item.image && <img src={item.image} alt="" className="iimm-new" />}
+
+            {item.image && (
+              <img
+                src={LOCAL_CHECK ? item.image : item.image_url}
+                alt=""
+                className="iimm-new"
+              />
+            )}
             {item.video && (
               <NewVid
-                video={item.video}
+                video={LOCAL_CHECK ? item.video : item.video_url}
                 id={`vid${item.id}`}
                 nid={item.id}
-                cover={item.thumbnail}
+                cover={LOCAL_CHECK ? item.thumbnail : item.thumbnail_url}
               />
             )}
 

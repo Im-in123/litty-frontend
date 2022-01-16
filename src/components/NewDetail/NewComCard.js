@@ -271,8 +271,8 @@ const NewComCard = (props) => {
       const token = await getToken();
       const data = { author_id: userDetail.user.id, comment_id: comment_id };
       const res = await axiosHandler({
-        method: "POST",
-        url: COMMENT_DELETE_URL,
+        method: "DELETE",
+        url: COMMENT_URL + comment_id + "/",
         data,
         token,
       }).catch((e) => {

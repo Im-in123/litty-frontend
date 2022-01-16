@@ -7,7 +7,7 @@ import React, {
 } from "react";
 import { Link } from "react-router-dom";
 import "./chatpage.css";
-import { UrlParser } from "../../customs/others";
+import { UrlParser, uuidv4 } from "../../customs/others";
 import {
   BASE_URL1,
   BASE_URL2,
@@ -18,6 +18,7 @@ import {
   MESSAGE_URL,
   OTHER_PROFILE_URL,
   POST_URL,
+  READ_WHOLE_ROOM_URL,
 } from "../../urls";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
@@ -30,7 +31,7 @@ import InfoBar from "./chatStuff/components/InfoBar";
 import Indicator from "./chatStuff/components/Indicator";
 import Messages from "./chatStuff/components/Messages";
 import useOutsideClick from "./chatStuff/components/hooks/useOutsideClick";
-
+import moment from "moment";
 import "./chatStuff/css/input.css";
 import "./chatStuff/css/messages.css";
 import "./chatStuff/css/message.css";
@@ -39,7 +40,7 @@ import { Picker } from "emoji-mart";
 let other_user_g = [];
 
 let msgs_g = [];
-
+let chat_id = [];
 let all_users_msgs = [];
 const addUserMsgs = (user, data, page, cangn) => {
   let v = { user: user, msg_set: [...data], page: page, canGoNext: cangn };
@@ -82,6 +83,18 @@ const addSingleMsg = (data, user) => {
   all_users_msgs.push(g[0]);
 };
 
+const updateReadMsg = (user) => {
+  try {
+    let g = all_users_msgs.filter((item) => item.user === user);
+    let h = g[0].msg_set;
+    for (var o in h) {
+      let ii = h[o];
+      ii.is_read = true;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 const ChatPage = (props) => {
   const {
     state: { userDetail },
@@ -106,7 +119,7 @@ const ChatPage = (props) => {
 
   const [error, setError] = useState(false);
   const [activeUser, setActiveUser] = useState([]);
-  const [chat_id, setChatId] = useState([]);
+  // const [chat_id, setChatId] = useState([]);
 
   const [activeUserProfile, setActiveUserProfile] = useState([]);
   const [sending, setSending] = useState(false);
@@ -118,15 +131,16 @@ const ChatPage = (props) => {
   const [user, setUser] = useState();
   const [file, setFile] = useState();
   const [activeTyping, setActiveTyping] = useState(false);
+  const [isOnline, setIsOnline] = useState(false);
 
   const socketRef = useRef();
 
   const { isTyping, startTyping, stopTyping, cancelTyping } = useTyping();
 
-  const url = CHAT_SOCKET_URL
+  const url = CHAT_SOCKET_URL;
   const { username, timeout } = props.match.params;
   let guessKey;
-
+  let el;
   useEffect(async () => {
     checkSize();
 
@@ -145,9 +159,40 @@ const ChatPage = (props) => {
         fileinput.siblings("span").text(value);
       });
 
-    return () => {};
-  }, [username, timeout]);
+    try {
+      el = document.querySelector(".content");
+      el.addEventListener("mousemove", mouseMove);
+    } catch (error) {
+      console.log("couldnt add mousemove event listener to window");
+    }
 
+    return () => {
+      el.removeEventListener("mousemove", mouseMove);
+
+      document
+        .querySelector("input[type='file']")
+        .removeEventListener("change mouseout", function () {
+          var fileinput = document.querySelector(this),
+            value = fileinput.value.split(/[\/]/g).pop();
+
+          fileinput.siblings("span").text(value);
+        });
+    };
+  }, [username, timeout]);
+  var mouseTimeout;
+  var timeoutTime = true;
+  const mouseMove = () => {
+    if (!timeoutTime) return;
+    clearTimeout(timeout);
+    startMouseMessage();
+    timeoutTime = false;
+
+    mouseTimeout = setTimeout(function () {
+      console.log("mousemoving");
+      stopMouseMessage();
+      timeoutTime = true;
+    }, 10000);
+  };
   useEffect(() => {
     if (!activeUser) return;
     guessKey =
@@ -178,12 +223,6 @@ const ChatPage = (props) => {
       };
       console.log("incomingMessage::", incomingMessage);
 
-      let msd = message.data.message_attachments;
-      for (var i in msd) {
-        let ii = msd[i];
-        ii.attachment.file_upload = BASE_URL1 + ii.attachment.file_upload;
-      }
-      message.data.message_attachments = msd;
       setSending(false);
       msgs_g.push(message.data);
 
@@ -197,9 +236,9 @@ const ChatPage = (props) => {
       console.log("typing...", typingInfo);
       if (typingInfo.senderId !== socketRef.current.id) {
         setActiveTyping(true);
+        updateReadMsg(other_user_g.username);
         const user = typingInfo.user;
-
-        // setTypingUsers((users) => [...users, user]);
+        setMsg((msg) => [...msg, []]);
       }
     });
 
@@ -210,8 +249,35 @@ const ChatPage = (props) => {
         const user = typingInfo.user;
 
         setActiveTyping(false);
+        updateReadMsg(other_user_g.username);
+        setMsg((msg) => [...msg, []]);
+      }
+    });
 
-        // setTypingUsers((users) => users.filter((u) => u.name !== user.name));
+    socketRef.current.on("start moving mouse", (mouseInfo) => {
+      if (mouseInfo.senderId !== socketRef.current.id) {
+        if (userDetail.user.username !== mouseInfo.user) {
+          console.log("started moving mouse...", mouseInfo);
+          setIsOnline(true);
+
+          updateReadMsg(other_user_g.username);
+          const user1 = mouseInfo.user;
+          setMsg((msg) => [...msg, []]);
+        }
+      }
+    });
+
+    socketRef.current.on("stop moving mouse", (mouseInfo) => {
+      if (mouseInfo.senderId !== socketRef.current.id) {
+        if (userDetail.user.username !== mouseInfo.user) {
+          const user1 = mouseInfo.user;
+          console.log("stoped moving mouse...", mouseInfo);
+          setIsOnline(false);
+
+          updateReadMsg(other_user_g.username);
+          setMsg((msg) => [...msg, []]);
+          updateChanger(user1);
+        }
       }
     });
     return () => {
@@ -219,6 +285,30 @@ const ChatPage = (props) => {
       console.log("closed socket");
     };
   }, [activeUser, username]);
+
+  let readTimeout;
+  let readTimeoutTime = true;
+
+  let sock_temp_name = userDetail.user.username;
+  const updateChanger = (name) => {
+    sock_temp_name = name;
+    if (!readTimeoutTime) return;
+    clearTimeout(readTimeout);
+
+    readTimeoutTime = false;
+    readTimeout = setTimeout(async () => {
+      if (sock_temp_name !== userDetail.username) {
+        console.log("changing sock_tem_name::", sock_temp_name);
+        // alert("stop");
+        await readWholeRoom();
+        await getChatList();
+      } else {
+        console.log("another big error:::", sock_temp_name);
+        alert("another big error");
+      }
+      readTimeoutTime = true;
+    }, 20000);
+  };
 
   const clicker = (e) => {
     document
@@ -248,7 +338,7 @@ const ChatPage = (props) => {
     }
   };
 
-  const getChatList = async (extra = "") => {
+  const getChatList = async () => {
     console.log("in getChatList");
 
     const token = await getToken();
@@ -263,12 +353,11 @@ const ChatPage = (props) => {
     if (res) {
       console.log(" getChatList::::", res.data.results);
 
-      setChatListObj([chatListObj, ...res.data.results]);
+      setChatListObj([...res.data.results]);
     }
     setFetching(false);
   };
   const getChatMsgs = async (id, page = null) => {
-    // setMoreMsgs(false);
     console.log("in getChatMsgs");
     let shouldGoNext = true;
     if (page) {
@@ -315,12 +404,6 @@ const ChatPage = (props) => {
             page = mypage + 1;
             shouldGoNext = mychat.canGoNext;
             console.log("pagehere::", page);
-
-            // mychat = mychat.msg_set;
-            // setMsg((msg) => [...mychat].reverse());
-            // console.log("mychat::", mychat);
-            // scrollToBottom();
-            // return;
           }
         } else {
           page = 1;
@@ -419,7 +502,25 @@ const ChatPage = (props) => {
 
     if (result) {
       console.log("createUserchat results::::", result.data);
-      setChatId((c) => (c = result.data));
+      // setChatId((c) => (c = result.data));
+      chat_id = result.data;
+    }
+  };
+
+  const readWholeRoom = async () => {
+    console.log("in readWholeRoom");
+    const token = await getToken();
+    const result = await axiosHandler({
+      method: "post",
+      url: READ_WHOLE_ROOM_URL,
+      token,
+      data: { chatlist_id: chat_id.id },
+    }).catch((e) => {
+      console.log("readWholeRoom error::::", e);
+    });
+
+    if (result) {
+      console.log("readWholeRoom results::::", result.data);
     }
   };
   const sendSocketMessage = (data) => {
@@ -452,10 +553,11 @@ const ChatPage = (props) => {
   const sendMessageHandler = async (e) => {
     const token = await getToken();
     const formData = new FormData();
+    console.log("chat_id::", chat_id.id);
     formData.append("message", newMessage);
     formData.append("sender_id", userDetail.user.id);
     formData.append("receiver_id", activeUser.id);
-    formData.append("chat_id", chat_id.id);
+    formData.append("chatlist_id", chat_id.id);
     if (file) {
       console.log("file::", file);
       for (let i = 0; i < file.length; i++) {
@@ -472,6 +574,7 @@ const ChatPage = (props) => {
       headers: { "Content-Type": "multipart/form-data" },
     }).catch((e) => {
       console.log("Error in send Message::::", e);
+      setSending(false);
     });
 
     if (res) {
@@ -496,6 +599,21 @@ const ChatPage = (props) => {
       user: userDetail.user.username,
     });
   };
+  const startMouseMessage = () => {
+    if (!socketRef.current) return;
+    socketRef.current.emit("start moving mouse", {
+      senderId: socketRef.current.id,
+      user: userDetail.user.username,
+    });
+  };
+
+  const stopMouseMessage = () => {
+    if (!socketRef.current) return;
+    socketRef.current.emit("stop moving mouse", {
+      senderId: socketRef.current.id,
+      user: userDetail.user.username,
+    });
+  };
 
   const handleSendMessage = async (event) => {
     event.preventDefault();
@@ -503,11 +621,11 @@ const ChatPage = (props) => {
     scrollToBottom();
     console.log("sending::", newMessage);
     cancelTyping();
-    // sendSocketMessage(newMessage);
     const res = await sendMessageHandler();
     if (!res) return;
     await sendSocketMessage(res);
     setNewMessage("");
+    await getChatList();
   };
 
   function selectFile(e) {
@@ -540,19 +658,24 @@ const ChatPage = (props) => {
     setNewMessage(e.target.value);
   };
 
-  const getChat = async (user) => {
+  const getChat = async (user, chatlist) => {
     if (other_user_g.username === user.username) return;
     setActiveUser(user);
     setFetchingMsgs(true);
-
+    chat_id = chatlist;
     setMsg([]);
     console.log("change user::", user);
     await getOtherProfile(user.username, false);
     await getChatMsgs(user.id, 1);
+    setFile(null);
+    setNewMessage("");
   };
 
   const renderMessages = (item) => {
     // console.log("render messages:::", item);
+    if (!item) return <></>;
+    if (item.length < 1) return <></>;
+
     let files = null;
     if (item) {
       try {
@@ -574,19 +697,13 @@ const ChatPage = (props) => {
               }
             >
               <div className="avatarbox">
-                {/* <div className="avatar_overlay"><img src="https://s-media-cache-ak0.pinimg.com/736x/c9/b8/87/c9b8873c63d378702f5b932d6acfa28b.jpg"/></div> */}
+                <div className="avatar_overlay">
+                  <img src={UrlParser(item.sender.user.user_picture)} />
+                </div>
               </div>
               <div className="text">
                 {item.message}
-                <small>
-                  {" "}
-                  {Math.round(
-                    (new Date().getTime() -
-                      new Date(item.created_at).getTime()) /
-                      60000
-                  )}{" "}
-                  ago
-                </small>
+
                 <div className="file-box">
                   {files &&
                     files.map((item, key) => (
@@ -628,6 +745,28 @@ const ChatPage = (props) => {
                         )}
                       </div>
                     ))}
+                </div>
+                <br />
+                <div className="date-and-seen">
+                  <div className="date">
+                    <small>
+                      {moment(item.created_at).format("YYYY/MM/DD")}{" "}
+                    </small>
+                    <small>{moment(item.created_at).format("hh:mm a")}</small>
+                  </div>
+                  <div className="seen">
+                    {userDetail.user.username === item.sender.user.username ? (
+                      <>
+                        {item.is_read ? (
+                          <span class="material-icons">done_all</span>
+                        ) : (
+                          <span class="material-icons">check</span>
+                        )}
+                      </>
+                    ) : (
+                      ""
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
@@ -682,18 +821,19 @@ const ChatPage = (props) => {
         <div className="head">
           <div className="avatarbox">
             <div className="avatar_overlay">
-              {/* <img src={`${activeUserProfile.profile_picture}`} /> */}
+              {isOnline && <div className="online"></div>}
+
               <img src={`${activeUser.user_picture}`} />
             </div>
           </div>
           <h4>
             {activeUser.username} &nbsp; {activeTyping && "is typing..."}
           </h4>
-          <div className="configschat">
+          {/* <div className="configschat">
             <i className="fa fa-phone"></i>
             <i className="fa fa-camera-retro"></i>
             <i className="fa fa-ellipsis-v"></i>
-          </div>
+          </div> */}
         </div>
         <div className="messagescont" id="scrollto">
           {!fetchingMsgs ? (
@@ -764,6 +904,7 @@ const ChatPage = (props) => {
                     viewBox="0 0 24 24"
                     width="24px"
                     fill="#000000"
+                    className={`${file ? "svg-send" : "svg-disabled"}`}
                   >
                     <path d="M0 0h24v24H0z" fill="none" />
                     <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" />
@@ -788,31 +929,17 @@ const ChatPage = (props) => {
                   <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
                 </svg>
                 <button type="submit" className="btn-svg" disabled={sending}>
-                  {!newMessage ? (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24px"
-                      viewBox="0 0 24 24"
-                      width="24px"
-                      fill="gray"
-                      className="send svg-disabled"
-                    >
-                      <path d="M0 0h24v24H0z" fill="none" />
-                      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                    </svg>
-                  ) : (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      height="24px"
-                      viewBox="0 0 24 24"
-                      width="24px"
-                      fill="#FFFFFF"
-                      className="send "
-                    >
-                      <path d="M0 0h24v24H0z" fill="none" />
-                      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-                    </svg>
-                  )}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24px"
+                    viewBox="0 0 24 24"
+                    width="24px"
+                    fill="gray"
+                    className={`${newMessage ? "svg-send" : "svg-disabled"}`}
+                  >
+                    <path d="M0 0h24v24H0z" fill="none" />
+                    <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                  </svg>
                 </button>
               </div>
               <div>
@@ -839,33 +966,50 @@ const RenderUsers2 = (props) => {
   let user, me, notification;
   // console.log("render users2:::", item);
 
-  if (item.other) {
-    if (item.other.username === userDetail.user.username) {
-      user = item.user;
-      notification = item.other_notification;
-      me = item.other;
-    }
-  }
+  // if (item.other) {
+  //   if (item.other.username === userDetail.user.username) {
+  //     user = item.user;
+  //     notification = item.user_notification;
+  //     me = item.other;
+  //   }
+  // }
   if (item.user) {
     if (item.user.username === userDetail.user.username) {
       user = item.other;
       notification = item.user_notification;
       me = item.user;
+    } else {
+      if (item.other) {
+        if (item.other.username === userDetail.user.username) {
+          user = item.user;
+          notification = item.other_notification;
+          me = item.other;
+        }
+      }
     }
   }
-
   if (user) {
     if (user.username === userDetail.user.username) {
       return null;
     }
+    let item_message = item.last_message;
+    let item_message_str;
+    if (item_message?.length > 10) {
+      item_message_str = `${item_message.substring(0, 10)}...`;
+    } else {
+      item_message_str = item.last_message;
+    }
+
     return (
       <>
         <div
           className={"friend  fcenter"}
           key={user.id}
-          onClick={() => props.getChat(user)}
+          onClick={() => props.getChat(user, item)}
         >
           <div className="avatarbox">
+            {/* <div className="online"></div> */}
+
             <div className="avatar_overlay">
               <img
                 src={LOCAL_CHECK ? user.user_picture : user.user_picture_url}
@@ -874,9 +1018,13 @@ const RenderUsers2 = (props) => {
           </div>
           <div className="namemsg">
             <p className="b">{user.username} </p>
+            <p className="b-str">
+              {item_message_str}
+              {notification && notification !== 0 ? <>({notification})</> : ""}
+            </p>
           </div>
           <div className="timeago">
-            <p>20 mins ago</p>
+            <p> {moment(item.updated_at).format("YYYY/MM/DD")} </p>
           </div>
         </div>
       </>

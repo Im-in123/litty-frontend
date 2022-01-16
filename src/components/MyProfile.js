@@ -451,17 +451,32 @@ export const GalleryItem = (props) => {
       }
       if (item.video.length > 0) renderIcon = true;
       let show_actual_img = false;
-      if (image.thumbnail === BASE_URL1 + "/media/image_empty.jpg") {
-        show_actual_img = true;
+      if (LOCAL_CHECK) {
+        if (image.thumbnail === BASE_URL1 + "/media/image_empty.jpg") {
+          show_actual_img = true;
+        }
+      } else {
+        if (image.thumbnail_url === BASE_URL1 + "/media/image_empty.jpg") {
+          show_actual_img = true;
+        }
       }
       return (
         <>
           <div className="gallery-item" tabIndex="0">
-            <img
-              src={!show_actual_img ? image.thumbnail : image.image}
-              className="gallery-image"
-              alt=""
-            />
+            {LOCAL_CHECK ? (
+              <img
+                src={!show_actual_img ? image.thumbnail : image.image}
+                className="gallery-image"
+                alt=""
+              />
+            ) : (
+              <img
+                src={!show_actual_img ? image.thumbnail_url : image.image_url}
+                className="gallery-image"
+                alt=""
+              />
+            )}
+
             {renderIcon && (
               <div className="gallery-item-type">
                 <span className="visually-hidden">Gallery</span>
@@ -498,7 +513,11 @@ export const GalleryItem = (props) => {
       return (
         <>
           <div className="gallery-item" tabIndex="0">
-            <img src={video.thumbnail} className="gallery-image" alt="" />
+            <img
+              src={LOCAL_CHECK ? video.thumbnail : video.thumbnail_url}
+              className="gallery-image"
+              alt=""
+            />
 
             <div className="gallery-item-type">
               <span className="visually-hidden">Video</span>

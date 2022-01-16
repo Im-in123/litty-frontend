@@ -392,9 +392,6 @@ hr {
 }
 
 @media only screen and (max-width: 768px) {
-}
-
-@media only screen and (max-width: 768px) {
   /* .gallery-image-new {
  
   } */
@@ -428,7 +425,10 @@ hr {
   display: flex;
   justify-content: space-between;
 }
-.dm-new {
+.drop-parent-new .gallery-saved {
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 .dropdown-edit-new {
   position: relative;

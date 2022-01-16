@@ -13,10 +13,6 @@ export const BASE_URL2 = "litty-server.herokuapp.com";
 // export const CHAT_SOCKET_URL = "http://localhost:9000/";
 export const CHAT_SOCKET_URL = "https://litty-chat-server.herokuapp.com/";
 
-const W1 = BASE_URL2 + "/ws/chat/";
-export const WEBSOCKET_URL = "ws://" + W1 + "temp/";
-// 'ws://127.0.0.1:8000/ws/chat/123/';
-
 // export const LOCAL_CHECK = true;
 export const LOCAL_CHECK = false;
 
@@ -60,3 +56,4 @@ export const CHAT_LIST_URL = BASE_URL + "message/chatlist/";
 export const MESSAGE_URL = BASE_URL + "message/message/";
 export const MESSAGE_GROUP_URL = BASE_URL + "message/message-group/";
 export const MESSAGE_GROUP_CHAT_URL = BASE_URL + "message/message-group-chat/";
+export const READ_WHOLE_ROOM_URL = BASE_URL + "message/read-whole-room";

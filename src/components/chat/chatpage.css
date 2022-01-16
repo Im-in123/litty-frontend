@@ -19,19 +19,6 @@
     opacity: 1;
   }
 }
-/* html {
-  height: 100%;
-  font-family: "Roboto", sans-serif;
-} */
-
-/* body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #DED7E2;
-} */
 
 .content {
   width: 100vw;
@@ -47,7 +34,7 @@
 
 aside {
   /* width: 25%; */
-  width: 25%;
+  width: 30%;
   background-color: #511f79;
   background-color: black;
   display: flex;
@@ -121,7 +108,7 @@ aside .friends_list .friend.active .avatarbox::before {
 aside .friends_list .friend .avatarbox {
   position: relative;
 }
-aside .friends_list .friend .avatarbox::before {
+/* aside .friends_list .friend .avatarbox::before {
   content: "";
   width: 12px;
   height: 12px;
@@ -133,7 +120,7 @@ aside .friends_list .friend .avatarbox::before {
   top: 5px;
   left: 10px;
   border: 2px solid #673e8c;
-}
+} */
 aside .friends_list .friend .avatar_overlay {
   width: 40px;
   height: 40px;
@@ -149,8 +136,14 @@ aside .friends_list .friend .namemsg {
   color: white;
   width: 70%;
 }
-aside .friends_list .friend .namemsg p {
+aside .friends_list .friend .namemsg .b {
   line-height: 18px;
+  font-size: 1.1rem;
+}
+aside .friends_list .friend .namemsg .b-str {
+  line-height: 18px;
+  font-size: 14px;
+  color: whitesmoke;
 }
 aside .friends_list .friend .namemsg .msg {
   opacity: 0.6;
@@ -160,13 +153,14 @@ aside .friends_list .friend .namemsg .msg {
   text-overflow: ellipsis;
 }
 aside .friends_list .friend .timeago {
-  width: 20%;
+  width: 30%;
+}
+aside .friends_list .friend .timeago p {
   font-size: 11px;
 }
-
 .midcont {
   /* width:100%; */
-  width: 75%;
+  width: 70%;
   /* min-height: 85vh; */
   /* height:80vh; */
   background-color: rgba(0, 0, 0, 0.07);
@@ -246,7 +240,7 @@ aside .friends_list .friend .timeago {
 }
 .midcont .messagescont .msg .text {
   background-color: white;
-  padding: 1em;
+  padding: 1em 1em 0px 1em;
   border-radius: 6px;
   color: #737373;
   position: relative;
@@ -278,6 +272,7 @@ aside .friends_list .friend .timeago {
 .midcont .messagescont .user.friend .text {
   background-color: #714b94;
   color: white;
+  padding: 1em 1em 0px 1em;
 }
 .midcont .messagescont .user.friend .text::before {
   content: "";
@@ -305,6 +300,18 @@ aside .friends_list .friend .timeago {
   width: 0px;
   height: 0px;
   border: 0px solid;
+}
+.midcont .messagescont .user .date-and-seen {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.midcont .messagescont .user .date-and-seen .date small {
+  padding: 5px 5px 0px 0px;
+  font-size: 9px;
+}
+.midcont .messagescont .user .date-and-seen .seen span {
+  font-size: 18px;
 }
 .midcont .msg .file-box {
   padding: 10px 5px 5px 5px;
@@ -374,13 +381,28 @@ aside .friends_list .friend .timeago {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 20%;
+  /* width: 20%; */
 }
 
 .btn-svg {
   border: none;
   outline: none;
   background: none;
+}
+
+.sub-bottom-chat .svg-send {
+  fill: blue;
+  fill: #25959b;
+  fill: #5b5bcb;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+}
+.sub-bottom-chat .svg-add {
+  fill: gray;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
 }
 .sub-bottom-chat .svg-disabled {
   fill: gray;
@@ -391,7 +413,7 @@ aside .friends_list .friend .timeago {
 .sub-bottom-chat svg {
   width: 30px;
   height: 30px;
-  fill: blue;
+  fill: gray;
   cursor: pointer;
   /* margin: 4px; */
 }
@@ -450,8 +472,19 @@ aside .friends_list .friend .timeago {
 .avatarbox {
   position: relative;
 }
-
-.avatarbox::before {
+.online {
+  width: 12px;
+  height: 12px;
+  background-color: #3ec649;
+  display: block;
+  position: absolute;
+  z-index: 4;
+  border-radius: 50%;
+  top: 5px;
+  left: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+/* .avatarbox::before {
   content: "";
   width: 12px;
   height: 12px;
@@ -463,7 +496,7 @@ aside .friends_list .friend .timeago {
   top: 5px;
   left: 10px;
   border: 2px solid rgba(255, 255, 255, 0.8);
-}
+} */
 .avatarbox .avatar_overlay {
   width: 45px;
   height: 45px;
@@ -558,8 +591,17 @@ aside .friends_list .friend .timeago {
     height: 150px;
     width: 150px;
   }
+  .sub-bottom-chat .svg-send {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
+  .sub-bottom-chat .svg-add {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+  }
   .sub-bottom-chat .svg-disabled {
-    fill: gray;
     width: 24px;
     height: 24px;
     cursor: pointer;
@@ -567,7 +609,6 @@ aside .friends_list .friend .timeago {
   .sub-bottom-chat svg {
     width: 24px;
     height: 24px;
-    fill: black;
     cursor: pointer;
     /* margin: 4px; */
   }

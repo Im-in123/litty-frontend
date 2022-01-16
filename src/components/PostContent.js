@@ -225,7 +225,6 @@ const PostContent = (props) => {
                   )}
                 </div>
               </div>
-              {item.video && <></>}
               {item.image ? (
                 <img
                   src={LOCAL_CHECK ? item.image : item.image_url}
@@ -237,7 +236,7 @@ const PostContent = (props) => {
               ) : null}
               {item.video ? (
                 <VideoComp
-                  video={item.video}
+                  src={LOCAL_CHECK ? item.video : item.video_url}
                   id={`vid${item.id}`}
                   nid={item.id}
                   setOverallAudio={props.setOverallAudio}

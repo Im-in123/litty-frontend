@@ -104,8 +104,8 @@ const Reply = (props) => {
     const token = await getToken();
     const data = { author_id: userDetail.user.id, reply_id: reply_id };
     const res = await axiosHandler({
-      method: "POST",
-      url: REPLY_DELETE_URL,
+      method: "DELETE",
+      url: REPLY_URL + reply_id + "/",
       data,
       token,
     }).catch((e) => {

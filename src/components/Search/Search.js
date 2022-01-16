@@ -94,18 +94,15 @@ const Search = (props) => {
       console.log("category::", category);
       if (category === "All") {
         await getResultAll(addt);
-                    shouldHandleScroll=true
-
+        shouldHandleScroll = true;
       }
       if (category === "People") {
         await getUsers(addt);
-                    shouldHandleScroll=true
-
+        shouldHandleScroll = true;
       }
       if (category === "Hashtags") {
         await getPosts(addt);
-                    shouldHandleScroll=true
-
+        shouldHandleScroll = true;
       }
     }, 2000);
   };
@@ -118,7 +115,7 @@ const Search = (props) => {
       ) {
         console.log("reached");
         console.log("finally", canGoNext, goneNext);
-        shouldHandleScroll=false
+        shouldHandleScroll = false;
         // if (shouldHandleScrollp) shouldHandleScrollp = !shouldHandleScrollp;
         // if (shouldHandleScrollu) shouldHandleScrollu = !shouldHandleScrollu;
 
@@ -211,7 +208,6 @@ const Search = (props) => {
         goneNextp = true;
       }
       setFetching(false);
-
     }
   };
   const getUsers = async (addt = null) => {
@@ -481,7 +477,12 @@ const UserDiv = (props) => {
     <Link to={`/other-profile/` + item.user.username}>
       <div className="user" key={props.key}>
         <div className="pic">
-          <img alt="image" src={item.user.user_picture} />
+          <img
+            alt="image"
+            src={
+              LOCAL_CHECK ? item.user.user_picture : item.user.user_picture_url
+            }
+          />
         </div>
         <div className="username">
           <span>{item.user.username}</span>
@@ -508,8 +509,15 @@ const PostDiv = (props) => {
       }
       if (item.video.length > 0) renderIcon = true;
       let show_actual_img = false;
-      if (image.thumbnail === BASE_URL1 + "/media/image_empty.jpg") {
-        show_actual_img = true;
+
+      if (LOCAL_CHECK) {
+        if (image.thumbnail === BASE_URL1 + "/media/image_empty.jpg") {
+          show_actual_img = true;
+        }
+      } else {
+        if (image.thumbnail_url === BASE_URL1 + "/media/image_empty.jpg") {
+          show_actual_img = true;
+        }
       }
       return (
         <>
@@ -520,10 +528,20 @@ const PostDiv = (props) => {
           >
             <div className="user-post" key={props.key}>
               <div className="gallery-item" key={props.key}>
-                <img
-                  src={!show_actual_img ? image.thumbnail : image.image}
-                  alt=""
-                />
+                {LOCAL_CHECK ? (
+                  <img
+                    src={!show_actual_img ? image.thumbnail : image.image}
+                    alt=""
+                  />
+                ) : (
+                  <img
+                    src={
+                      !show_actual_img ? image.thumbnail_url : image.image_url
+                    }
+                    alt=""
+                  />
+                )}
+
                 {renderIcon && (
                   <div className="gallery-item-type">
                     <span className="visually-hidden">Gallery</span>
@@ -568,7 +586,11 @@ const PostDiv = (props) => {
           >
             <div className="user-post">
               <div className="gallery-item" key={props.key}>
-                <img src={video.thumbnail} className="" alt="" />
+                <img
+                  src={LOCAL_CHECK ? video.thumbnail : video.thumbnail_url}
+                  className=""
+                  alt=""
+                />
                 <div className="gallery-item-type">
                   <span className="visually-hidden">Video</span>
                   <i className="fas fa-video" aria-hidden="true"></i>

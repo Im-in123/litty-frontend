@@ -64,22 +64,14 @@ const PostInfo = (props) => {
           break;
         } else {
           isliked = null;
-          // actiontype="unlike";
           setActiontype("unlike");
           setIsLiked1(false);
         }
-        // setLikeIconStyle(isliked ? "fas" : "far")
-        // likeIconStyle = isliked ? "fas" : "far";
-        // setLoading(false)
       }
     } catch (error) {
       console.log("likeeeeeeeee error:::::::", error);
       isliked = null;
       setActiontype("unlike");
-
-      // setLikeIconStyle(isliked ? "fas" : "far")
-      //  likeIconStyle = isliked ? "fas" : "far";
-      //  setLoading(false)
     }
     setLikeIconStyle(isliked ? "fas" : "far");
 
@@ -108,8 +100,7 @@ const PostInfo = (props) => {
       likeCount = document.querySelector("#likecount" + props.id);
       likevalue = likeCount.textContent;
       console.log("likecount and value:::", likeCount, likevalue);
-      // var up =
-      // var down=
+
       changed = true;
     }
 
@@ -190,22 +181,7 @@ const PostInfo = (props) => {
       if (res.success === "removed") {
         // setIsSaved(false)
       }
-      //   if(res.data ==="success-added"){
-      //    setLikeIconStyle("fas")
-      //    setActiontype("like")
-
-      //   }else if(res.data==="success-removed"){
-      //    setLikeIconStyle("far")
-      //    setActiontype("unlike")
-      // }else{
-      //    //   alert(res.data)
-      //    console.log("needs checking")
-      //   }
-      // //   alert("success")
-
-      //  }
     }
-    // setLikeSend(false);
   };
 
   if (loading) {
@@ -287,12 +263,12 @@ const PostInfo = (props) => {
           <a onClick={(e) => e.preventDefault()}>
             {isSaved ? (
               <div className="icon1">
-                <i className="fas fa-save"></i>{" "}
+                <i class="fas fa-bookmark"></i>
               </div>
             ) : (
               <div className="icon2">
                 {" "}
-                <i className="far fa-save"></i>{" "}
+                <i class="far fa-bookmark"></i>
               </div>
             )}
           </a>

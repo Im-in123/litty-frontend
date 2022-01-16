@@ -26,7 +26,6 @@ h3 {
   margin: 0.5rem;
   width: 50%;
   border-radius: 1rem;
-  /* color: white; */
 }
 
 .notification .message {
@@ -85,4 +84,15 @@ h3 {
   color: whitesmoke;
 
   padding: 0.5rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .notification {
+    display: flex;
+    background: beige;
+    justify-content: space-between;
+    margin: 0.5rem;
+    width: 100%;
+    border-radius: 1rem;
+  }
 }

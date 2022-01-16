@@ -19,7 +19,8 @@
 .emoji-mart {
   position: absolute;
   bottom: 27%;
-  right: 43%;
+  right: 20%;
+  z-index: 5;
 }
 
 .emoji-mart-preview {
