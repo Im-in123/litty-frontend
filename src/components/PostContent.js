@@ -309,6 +309,7 @@ const VideoComp = (props) => {
   let spin;
   let numbertext;
   useEffect(() => {
+    console.log("props.video", props.video);
     vidpop = document.querySelector("#vidpop" + props.id);
     popPlayBtn = document.querySelector(".pop-play" + props.id);
     spin = document.querySelector(".spin" + props.id);
