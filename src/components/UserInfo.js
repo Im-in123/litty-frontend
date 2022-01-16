@@ -231,11 +231,7 @@ const UserInfo = (props) => {
         </div>
 
         <div className="user-data">
-          <div className="username">
-            <svg width="10" height="10">
-              <rect width="100%" height="100%" style={{ fill: "#dbdbdb" }} />
-            </svg>
-          </div>
+          <div className="username"></div>
 
           <div className="post-date"></div>
         </div>

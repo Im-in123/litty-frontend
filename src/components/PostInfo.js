@@ -207,7 +207,7 @@ const PostInfo = (props) => {
           <div className="share" id="##">
             <a href="#">
               <div className="icon">
-                <i className="far fa-save"></i>
+                <i class="far fa-bookmark"></i>
               </div>
             </a>
           </div>
