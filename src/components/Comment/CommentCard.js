@@ -300,7 +300,6 @@ const CommentCard = (props) => {
                   className="replycont"
                   onClick={(e) => SendCommentLike(props.data.id)}
                 >
-                  like
                   <i className="fas fa-heart"></i>
                   <span className="reply-like-num">
                     {likeLength > 0 ? likeLength : null}
@@ -311,7 +310,6 @@ const CommentCard = (props) => {
                   className="replytag"
                   onClick={(e) => SendCommentLike(props.data.id)}
                 >
-                  like
                   <i className="far fa-heart"></i>
                   <span className="reply-like-num">
                     {likeLength > 0 ? likeLength : null}

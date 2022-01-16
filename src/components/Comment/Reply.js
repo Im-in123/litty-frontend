@@ -263,8 +263,6 @@ const Reply = (props) => {
                           SendReplyLike(props.data.id, reply.postcomment)
                         }
                       >
-                        {" "}
-                        unlike
                         <i className="fas fa-heart"></i>
                       </span>
                     ) : (
@@ -274,7 +272,6 @@ const Reply = (props) => {
                           SendReplyLike(props.data.id, reply.postcomment)
                         }
                       >
-                        like
                         <i className="far fa-heart"></i>
                       </span>
                     )}

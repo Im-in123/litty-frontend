@@ -27,7 +27,6 @@ const Header = (props) => {
       <div className="fixed-header">
         <div className="content-wrapper header-content">
           <div className="app-title">
-            {/* <div className="side-menu-button"><a href="#"><i className="fas fa-bars"></i></a></div> */}
             <div className="title">
               <a href="/">Litty</a>
             </div>
@@ -81,7 +80,14 @@ const Header = (props) => {
               <Link to="/my-profile">
                 {" "}
                 <div className="user-avatar">
-                  <img src={userDetail.profile_picture} alt="user-avatar"></img>
+                  <img
+                    src={
+                      LOCAL_CHECK
+                        ? userDetail.profile_picture
+                        : userDetail.profile_picture_url
+                    }
+                    alt="user-avatar"
+                  ></img>
                 </div>
               </Link>
             </div>
