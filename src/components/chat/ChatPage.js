@@ -823,7 +823,13 @@ const ChatPage = (props) => {
             <div className="avatar_overlay">
               {isOnline && <div className="online"></div>}
 
-              <img src={`${activeUser.user_picture}`} />
+              <img
+                src={`${
+                  LOCAL_CHECK
+                    ? activeUser.user_picture
+                    : activeUser.user_picture_url
+                }`}
+              />
             </div>
           </div>
           <h4>
