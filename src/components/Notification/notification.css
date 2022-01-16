@@ -50,6 +50,7 @@ h3 {
   height: 50px;
   width: 50px;
   border-radius: 50%;
+  object-fit: cover;
 }
 .notification .message .inner {
   padding-left: 0.5rem;
