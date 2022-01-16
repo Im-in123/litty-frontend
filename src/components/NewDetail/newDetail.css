@@ -424,6 +424,7 @@ hr {
 .drop-parent-new {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 .drop-parent-new .gallery-saved {
   align-items: center;
