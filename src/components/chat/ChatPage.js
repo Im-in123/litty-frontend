@@ -698,7 +698,13 @@ const ChatPage = (props) => {
             >
               <div className="avatarbox">
                 <div className="avatar_overlay">
-                  <img src={UrlParser(item.sender.user.user_picture)} />
+                  <img
+                    src={
+                      LOCAL_CHECK
+                        ? UrlParser(item.sender.user.user_picture)
+                        : item.sender.user.user_picture_url
+                    }
+                  />
                 </div>
               </div>
               <div className="text">
