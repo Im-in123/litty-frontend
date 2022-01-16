@@ -43,7 +43,7 @@ const Verify = props =>{
      if (!verified){
         return(
           <>
-          <div className="TypesMain">
+          <div className="TypesMain" style={{marginTop:"7vh"}}>
             <h4 className="H4Group">A verification link has been sent to your email address.</h4>
             <p id="p">Verify your account from your email address to continue!</p>
            <button id="b" onClick={(e)=> requestEmailVerification()}>Request resend</button>
@@ -53,9 +53,9 @@ const Verify = props =>{
         )
        }
      if (verified){
-        return(<>
+        return<div className="TypesMain" style={{marginTop:"7vh"}}>
             <h4 className="H4Group">Your account has successfully been verified!</h4>
-            </>
+            </div>
         )
     }
 

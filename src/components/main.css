@@ -102,6 +102,7 @@ body {
 .user-avatar img {
   width: inherit;
   height: inherit;
+  object-fit: cover;
 }
 
 .user-data {
