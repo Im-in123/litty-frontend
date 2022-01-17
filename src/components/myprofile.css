@@ -424,7 +424,7 @@ p {
 
   .view-width {
     /* width: calc(100% - 5em); */
-    width: 90%;
+    width: 95%;
   }
 
   .phi-info-left {
@@ -507,10 +507,6 @@ p {
   /* ===============
        3.2 Classes
       =============== */
-
-  .view-width {
-    width: 75%;
-  }
 
   /* Profile Info */
   .phi-info-wrapper {

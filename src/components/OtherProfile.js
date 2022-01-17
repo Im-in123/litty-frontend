@@ -523,6 +523,7 @@ const OtherProfile = (props) => {
                         e.preventDefault();
                         setId(item.id);
                         setUser(item.author);
+                        document.documentElement.style.overflow = "hidden";
 
                         setClose(false);
                         const popup1Cont = document.querySelector("#popup1");
@@ -554,6 +555,8 @@ const OtherProfile = (props) => {
             href="##"
             onClick={(e) => {
               e.preventDefault();
+              document.documentElement.style.overflow = "auto";
+
               setClose(true);
               setId(null);
               setUser(null);

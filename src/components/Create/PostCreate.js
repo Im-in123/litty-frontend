@@ -291,19 +291,19 @@ const PostCreate = (props) => {
               type="button"
               className="btn post-actions__upload attachments--btn"
             >
-              <label for="upload-image" className="post-actions__label">
+              <label for="add-image-video" className="post-actions__label">
                 <i className="fa fa-upload" aria-hidden="true"></i>
-                add image/video
+                &nbsp; image/video
+                <input
+                  type="file"
+                  id="add-image-video"
+                  accept="image/video*"
+                  multiple
+                  required={true}
+                  onChange={fileChange}
+                />
               </label>
             </button>
-            <input
-              type="file"
-              id="add-image-video"
-              accept="image/video*"
-              multiple
-              required={true}
-              onChange={fileChange}
-            />
           </div>
           <div className="post-actions__widget">
             <button type="submit" className="btn post-actions__publish">

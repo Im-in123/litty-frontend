@@ -175,7 +175,13 @@ h1 {
   width: 70%;
 }
 .comment-span {
+  padding-left: 5px;
+  word-break: break-word;
+}
+.comment-ago {
   padding: 5px;
+  font-size: 11px;
+  color: lightgray;
 }
 .comment-rtext {
   color: grey;

@@ -21,7 +21,43 @@ import {
 } from "../../stateManagement/actions";
 import Reply from "./Reply";
 import { Link } from "react-router-dom";
-
+import moment from "moment";
+moment.locale("en", {
+  relativeTime: {
+    future: "in %s",
+    past: "%s ago",
+    s: "few seconds ago",
+    ss: "%ss",
+    m: "a minute",
+    mm: "%dm",
+    h: "an hour",
+    hh: "%dh",
+    d: "a day",
+    dd: "%dd",
+    M: "a month",
+    MM: "%dM",
+    y: "a year",
+    yy: "%dY",
+  },
+});
+// moment.locale("en", {
+//   relativeTime: {
+//     future: "in %s",
+//     past: "%s ago",
+//     s: "seconds",
+//     ss: "%ss",
+//     m: "a minute",
+//     mm: "%dm",
+//     h: "an hour",
+//     hh: "%dh",
+//     d: "a day",
+//     dd: "%dd",
+//     M: "a month",
+//     MM: "%dM",
+//     y: "a year",
+//     yy: "%dY",
+//   },
+// });
 const CommentCard = (props) => {
   const {
     state: { userDetail },
@@ -292,6 +328,10 @@ const CommentCard = (props) => {
             <div className="comment-text">
               <div className="comment-span" id={props.data.id}>
                 {comment}
+                <span className="comment-ago">
+                  {" "}
+                  {moment(props.data.created_at).fromNow(true)}
+                </span>
               </div>
             </div>
             <div className="greply">

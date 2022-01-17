@@ -387,6 +387,8 @@ const MyProfile = (props) => {
                           setUser(item.author);
 
                           setClose(false);
+                          document.documentElement.style.overflow = "hidden";
+
                           const popup1Cont = document.querySelector("#popup1");
                           popup1Cont.style.visibility = "visible";
                           popup1Cont.style.opacity = 1;
@@ -417,6 +419,8 @@ const MyProfile = (props) => {
             href="##"
             onClick={(e) => {
               e.preventDefault();
+              document.documentElement.style.overflow = "auto";
+
               setClose(true);
               setId(null);
               setUser(null);

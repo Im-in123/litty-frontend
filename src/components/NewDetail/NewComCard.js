@@ -3,6 +3,7 @@ import "./newComment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 import { UrlParser } from "../../customs/others";
+import moment from "moment";
 import {
   BASE_URL,
   BASE_URL1,
@@ -142,36 +143,6 @@ const NewComCard = (props) => {
 
     let comment = props.data.comment;
     let replies = props.data.reply;
-
-    // console.log("commentCard replies:::", replies);
-
-    // const getReply = async (e, comment_id) => {
-    //   e.preventDefault();
-    //   setView("loading...");
-
-    //   console.log("reply data::::", replyData);
-    //   let data = { post_id: props.post_id, comment_id: comment_id };
-    //   console.log("reply data1:::", data);
-    //   let post_id = props.post_id;
-    //   const token = await getToken();
-    //   const result = await axiosHandler({
-    //     method: "get",
-    //     url: REPLY_URL + `?post_id=${props.post_id}&comment_id=${comment_id}`,
-    //     token,
-    //     data: data,
-    //   }).catch((e) => {
-    //     console.log("getReply error::::", e.response.data);
-    //     //     setLoading(false)
-    //   });
-
-    //   if (result) {
-    //     console.log("getReply results", result.data.results);
-    //     setView("View more...");
-    //     setReplyLength(null);
-
-    //     setReplyData(result.data.results);
-    //   }
-    // };
 
     const getReply = async (e, comment_id, next = false) => {
       e.preventDefault();
@@ -320,7 +291,11 @@ const NewComCard = (props) => {
           <div className="comment-greply">
             <div className="comment-text">
               <div className="comment-span" id={props.data.id}>
-                {comment}
+                {comment}{" "}
+                <span className="comment-ago">
+                  {" "}
+                  {moment(props.data.created_at).fromNow(true)}
+                </span>
               </div>
             </div>
             <div className="greply">

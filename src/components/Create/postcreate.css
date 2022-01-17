@@ -36,9 +36,8 @@
 }
 .widget-post__header {
   padding: 0.2em 0.5em;
-
-  background-color: whitesmoke;
-  color: #3f5563;
+  background-color: wheat;
+  color: white;
 }
 .widget-post__title {
   font-size: 18px;
@@ -82,12 +81,15 @@
   width: 100%;
   padding: 0.5em;
 }
+.widget-post__actions input {
+  display: none;
+}
+
 .post--actions {
   position: relative;
   padding: 0.5em;
-
-  background-color: #a5cfe1;
   color: black;
+  background-color: wheat;
 }
 .post-actions__attachments {
   display: inline-block;

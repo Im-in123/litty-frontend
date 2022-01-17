@@ -63,18 +63,10 @@ const Header = (props) => {
             <div className="header-right-side">
               <div className="header-info">
                 <svg width="25" height="7">
-                  <rect
-                    width="100%"
-                    height="100%"
-                    style={{ fill: "#8075a4" }}
-                  />
+                  <rect width="100%" height="100%" fill="whitesmoke" />
                 </svg>
                 <svg width="20" height="7" style={{ float: "right" }}>
-                  <rect
-                    width="100%"
-                    height="100%"
-                    style={{ fill: "#a4a4a4" }}
-                  />
+                  <rect width="100%" height="100%" fill="whitesmoke" />
                 </svg>
               </div>
               <Link to="/my-profile">

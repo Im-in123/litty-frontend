@@ -249,9 +249,11 @@ const PostInfo = (props) => {
         <div className="comments" id="##">
           <a
             href={"#popup1" + props.id}
-            onClick={() =>
-              dispatch({ type: postCommentAction, payload: props.id })
-            }
+            onClick={() => {
+              document.documentElement.style.overflow = "hidden";
+
+              dispatch({ type: postCommentAction, payload: props.id });
+            }}
           >
             <div className="icon">
               <i className="far fa-comment-alt"></i>

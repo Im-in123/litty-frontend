@@ -59,6 +59,7 @@
 }
 .gallery-comments-new .comment-span {
   padding: 5px;
+  word-break: break-word;
 }
 .gallery-comments-new .comment-rtext {
   color: grey;

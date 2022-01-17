@@ -19,6 +19,7 @@ import {
   deleteReplyAction,
 } from "../../stateManagement/actions";
 import { Link } from "react-router-dom";
+import moment from "moment";
 
 const Reply = (props) => {
   // console.log("Reply props::", props);
@@ -167,6 +168,10 @@ const Reply = (props) => {
                   <div className="comment-text">
                     <div className="comment-span" id={props.data.id}>
                       {reply.comment}
+                      <span className="comment-ago">
+                        {" "}
+                        {moment(reply.created_at).fromNow(true)}
+                      </span>
                     </div>
                   </div>
                   <div className="greply">
@@ -250,7 +255,11 @@ const Reply = (props) => {
                       <span className="reply-username">
                         <Link to={link2}>{reply.to.author.username}</Link>
                       </span>
-                      : <Link to={link2}>{reply.comment}</Link>
+                      <span> : {reply.comment}</span>{" "}
+                      <span className="comment-ago">
+                        {" "}
+                        {moment(reply.created_at).fromNow(true)}
+                      </span>
                     </div>
                   </div>
                   <div className="greply">
