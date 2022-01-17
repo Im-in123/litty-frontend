@@ -65,6 +65,7 @@
 /* görsel numaraları */
 .numbertext {
   color: white;
+  color: beige;
   font-size: 12px;
   padding: 8px 12px;
   position: absolute;

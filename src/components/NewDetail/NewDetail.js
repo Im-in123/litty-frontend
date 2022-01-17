@@ -569,14 +569,16 @@ const NewDetail = (props) => {
                         </>
                       ) : (
                         <>
-                          <img
-                            src={
-                              LOCAL_CHECK
-                                ? post.author.user_picture
-                                : post.author.user_picture_url
-                            }
-                            alt=""
-                          />
+                          <Link to={`/other-profile/` + post.author.username}>
+                            <img
+                              src={
+                                LOCAL_CHECK
+                                  ? post.author.user_picture
+                                  : post.author.user_picture_url
+                              }
+                              alt=""
+                            />
+                          </Link>
 
                           <Link to={`/other-profile/` + post.author.username}>
                             {post.author.username}
