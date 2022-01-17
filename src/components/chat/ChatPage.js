@@ -904,7 +904,7 @@ const ChatPage = (props) => {
                   onChange={handleNewMessageChange}
                   value={newMessage}
                   placeholder="Press enter to send.."
-                  autoFocus={true}
+                  // autoFocus={true}
                   disabled={sending}
                 />
               </div>

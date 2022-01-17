@@ -37,8 +37,14 @@
   }
 }
 
-@media (min-width: 480px) and (max-width: 1200px) {
+@media only screen and (max-width: 768px) {
   .container {
     width: 60%;
+  }
+  .emoji-mart {
+    position: absolute;
+    bottom: 25%;
+    right: 10%;
+    z-index: 5;
   }
 }
