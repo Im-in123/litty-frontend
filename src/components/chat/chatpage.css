@@ -108,19 +108,7 @@ aside .friends_list .friend.active .avatarbox::before {
 aside .friends_list .friend .avatarbox {
   position: relative;
 }
-/* aside .friends_list .friend .avatarbox::before {
-  content: "";
-  width: 12px;
-  height: 12px;
-  background-color: #3ec649;
-  display: block;
-  position: absolute;
-  z-index: 99;
-  border-radius: 50%;
-  top: 5px;
-  left: 10px;
-  border: 2px solid #673e8c;
-} */
+
 aside .friends_list .friend .avatar_overlay {
   width: 40px;
   height: 40px;
@@ -209,7 +197,7 @@ aside .friends_list .friend .timeago p {
 .midcont .messagescont {
   /* height: 70%; */
   height: 67vh;
-  padding: 10px;
+  padding: 5px;
   /* overflow: scroll; */
   overflow: auto;
   /* background-color: yellow; */
@@ -249,7 +237,7 @@ aside .friends_list .friend .timeago p {
 .midcont .messagescont .user {
   display: flex;
   flex-direction: row;
-  width: 50%;
+  max-width: 70%;
 }
 .midcont .messagescont .user.me {
   margin-right: auto;
@@ -293,7 +281,7 @@ aside .friends_list .friend .timeago p {
 .midcont .messagescont .user .avatarbox {
   display: block;
   margin-top: 15px;
-  padding: 0px 5px;
+  /* padding: 0px 5px; */
 }
 .midcont .messagescont .user .avatarbox::before {
   content: "";
@@ -330,10 +318,12 @@ aside .friends_list .friend .timeago p {
   width: -webkit-fill-available;
   height: -webkit-fill-available;
   max-height: 400px;
+  object-fit: contain;
 }
 .midcont .msg .file-box video {
   width: 300px;
   height: 300px;
+  object-fit: contain;
 }
 .midcont .msg .file-box .other_file {
   background: black;
@@ -484,19 +474,7 @@ aside .friends_list .friend .timeago p {
   left: 10px;
   border: 2px solid rgba(255, 255, 255, 0.8);
 }
-/* .avatarbox::before {
-  content: "";
-  width: 12px;
-  height: 12px;
-  background-color: #3ec649;
-  display: block;
-  position: absolute;
-  z-index: 99;
-  border-radius: 50%;
-  top: 5px;
-  left: 10px;
-  border: 2px solid rgba(255, 255, 255, 0.8);
-} */
+
 .avatarbox .avatar_overlay {
   width: 45px;
   height: 45px;
@@ -509,7 +487,7 @@ aside .friends_list .friend .timeago p {
   min-height: 100%;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 789px) {
   body {
     height: auto;
   }
@@ -570,9 +548,12 @@ aside .friends_list .friend .timeago p {
     height: 40px;
   }
   .midcont .messagescont {
-    /* overflow: hidden; */
     height: 67vh;
-    /* max-height: 68vh; */
+  }
+  .midcont .messagescont .user {
+    display: flex;
+    flex-direction: row;
+    max-width: 80%;
   }
   .midcont .configschat i {
     font-size: 18px !important;
@@ -665,10 +646,4 @@ aside .friends_list .friend .timeago p {
 }
 .emoji.ramem {
   background-image: url("https://emojipedia-us.s3.amazonaws.com/cache/b6/d7/b6d781171f5e7f5b5fc723076a810e76.png");
-}
-
-@media screen and (max-width: 500px) {
-  .content {
-    /* max-width: 360px; */
-  }
 }

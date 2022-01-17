@@ -708,8 +708,7 @@ const ChatPage = (props) => {
                 </div>
               </div>
               <div className="text">
-                {item.message}
-
+                <div>{item.message}</div>
                 <div className="file-box">
                   {files &&
                     files.map((item, key) => (
