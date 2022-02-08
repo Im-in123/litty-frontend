@@ -11,6 +11,7 @@
 .slideshow-container .mySlides {
   display: none;
   height: 100%;
+  background: white;
 }
 
 .slideshow-container .iimm {
@@ -64,8 +65,8 @@
 
 /* görsel numaraları */
 .numbertext {
-  color: white;
-  color: gray;
+  color: gainsboro;
+
   font-size: 12px;
   padding: 8px 12px;
   position: absolute;
