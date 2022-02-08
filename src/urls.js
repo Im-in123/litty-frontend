@@ -13,8 +13,8 @@ export const BASE_URL2 = "litty-server.herokuapp.com";
 // export const CHAT_SOCKET_URL = "http://localhost:9000/";
 export const CHAT_SOCKET_URL = "https://litty-chat-server.herokuapp.com/";
 
-// export const LOCAL_CHECK = true;
-export const LOCAL_CHECK = false;
+export const LOCAL_CHECK = true;
+// export const LOCAL_CHECK = false;
 
 export const LOGIN_URL = BASE_URL + "user/login";
 export const SIGNUP_URL = BASE_URL + "user/signup";

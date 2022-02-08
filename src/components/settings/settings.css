@@ -1,14 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap");
-*,
-::after,
-::before {
-  margin: 0;
-  box-sizing: border-box;
-}
 
-body {
-  font-family: "Lato", sans-serif;
-}
+
 
 :root {
   --bg-color: #000811;
@@ -20,6 +12,8 @@ body {
 
 .settings-main {
   margin-top: 7vh;
+  font-family: "Lato", sans-serif;
+
 }
 .hamburger-menu {
   position: absolute;

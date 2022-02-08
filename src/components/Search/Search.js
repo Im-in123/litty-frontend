@@ -73,6 +73,13 @@ const Search = (props) => {
 
     return () => {
       window.removeEventListener("scroll", autoFetchSearch);
+      g_all=[]
+      new_users1 = []
+      new_users2 = [];
+      new_posts1 = []
+      new_posts2 = [];
+      gp1=[]
+      gu1=[]
       category = "All";
       setMode("all");
     };
@@ -307,7 +314,7 @@ const Search = (props) => {
           />
           <button onClick={() => setSearchb((u) => uuidv4())}>
             {fetching ? (
-              "searching"
+              "loading"
             ) : (
               <span class="material-icons-outlined">search</span>
             )}

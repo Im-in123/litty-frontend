@@ -56,7 +56,7 @@ const LoadComment = (props) => {
 
   useEffect(() => {
     if (postComment === props.post_id) {
-      getComments(1);
+      getComments(false, 1);
     } else {
       setRender(false);
     }
@@ -106,10 +106,23 @@ const LoadComment = (props) => {
     }
     return () => {};
   }, [delComment]);
-
-  const getComments = async (page = null, next = false) => {
+let error_data={
+page:null,
+next:false
+}
+  const getComments = async (error_occured=false, page = null, next = false ) => {
     setLoadingMore(true);
     setError(false);
+ 
+    if(error_occured){
+      page=error_data.page;
+      next = error_data.next
+    }else{
+      error_data={
+        page:page,
+        next:next
+      }
+    }
     let url;
     if (!page) {
       url = COMMENT_URL + `?post_id=${props.post_id}`;
@@ -128,10 +141,14 @@ const LoadComment = (props) => {
       token,
     }).catch((e) => {
       console.log("getComments error::::", e);
+    
       setError(true);
+      setRender(true);
+
     });
 
     if (result) {
+     
       setNextMsgs((n) => result.data);
       console.log("getComments data::::", result.data);
 
@@ -156,7 +173,11 @@ const LoadComment = (props) => {
       {render ? (
         <>
           {error ? (
-            "An error occured, reload comment!"
+            <button className="retry-btn" onClick={()=>{
+getComments(true)
+            }}>            An error occured, click to retry!
+          
+            </button>
           ) : (
             <div className="contenta" id={"contenta" + props.post_id}>
               {commentList.map((item, key) => {
@@ -178,7 +199,7 @@ const LoadComment = (props) => {
                     {loadingMore ? (
                       <span>loading more...</span>
                     ) : (
-                      <span onClick={() => getComments(null, true)}>
+                      <span onClick={() => getComments(false, null, true)}>
                         load more
                       </span>
                     )}

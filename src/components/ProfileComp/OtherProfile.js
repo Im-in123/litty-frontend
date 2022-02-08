@@ -1,9 +1,9 @@
 import "./myprofile.css";
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { axiosHandler, getToken } from "../helper";
-import { store } from "../stateManagement/store";
-import { UrlParser } from "../customs/others";
+import { axiosHandler, getToken } from "../../helper";
+import { store } from "../../stateManagement/store";
+import { UrlParser } from "../../customs/others";
 import {
   BASE_URL,
   BASE_URL1,
@@ -12,15 +12,15 @@ import {
   UPDATE_FOLLOW,
   LOCAL_CHECK,
   CHECK_FOLLOW,
-} from "../urls";
-import UserInfo from "./UserInfo";
-import PostContent from "./PostContent";
-import PostInfo from "./PostInfo";
-import { activeChatUserAction } from "../stateManagement/actions";
+} from "../../urls";
+import UserInfo from "../UserInfo";
+import PostContent from "../PostContent";
+import PostInfo from "../PostInfo";
+import { activeChatUserAction } from "../../stateManagement/actions";
 import { GalleryItem } from "./MyProfile";
-import PostDetail from "./PostDetail";
-import NewDetail from "./NewDetail/NewDetail";
-import { volumeAction } from "../stateManagement/actions";
+import PostDetail from "../PostDetail";
+import NewDetail from "../NewDetail/NewDetail";
+import { volumeAction } from "../../stateManagement/actions";
 
 let post = [];
 let otherUser = [];
@@ -79,6 +79,8 @@ const OtherProfile = (props) => {
 
     return () => {
       window.removeEventListener("scroll", autoFetchOtherProfile);
+      post=[]
+      p1=[]
     };
   }, []);
   // function atEnd() {
@@ -117,7 +119,6 @@ const OtherProfile = (props) => {
     }
   };
   useEffect(() => {
-    // console.log("overallAudio:::", overallAudio);
     dispatch({ type: volumeAction, payload: overallAudio });
 
     return () => {};
@@ -140,7 +141,6 @@ const OtherProfile = (props) => {
       setFollowers(gp.data.followers.length);
       setFollowing(gp.data.following.length);
 
-      //  otherUser = gp.data
       try {
         o_name = gp.data.user.username;
         await getMyPost(1);
@@ -195,7 +195,6 @@ const OtherProfile = (props) => {
       p1 = res.data;
 
       if (p1.next) {
-        // setCanGoNext(true);
         canGoNext = true;
 
         goneNext = false;
@@ -267,16 +266,12 @@ const OtherProfile = (props) => {
 
       if (rr1 === "unfollowed") {
         setIsFollowing(false);
-        // let fvalue = vv.textContent;
-        // fvalue = parseInt(fvalue) - 1;
+ 
         setFollowers((f) => f - 1);
-        // vv.textContent = fvalue;
       } else if (rr1 === "followed") {
         setIsFollowing(true);
         setFollowers((f) => f + 1);
-        // let fvalue = vv.textContent;
-        // fvalue = parseInt(fvalue) + 1;
-        // vv.textContent = fvalue;
+       
       }
     }
     setFollowError(false);

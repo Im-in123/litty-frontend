@@ -293,7 +293,9 @@ const PostInfo = (props) => {
           </span>
         </p>
       </div>
-      <div className="post-date">{created_at}</div>
+      <div className="post-date">
+        {/* {created_at} */}
+        </div>
     </>
   );
 };

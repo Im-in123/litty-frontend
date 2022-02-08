@@ -128,15 +128,16 @@ body {
 
 .dropdown-edit .summary {
   height: 30px;
-  /* background: aliceblue; */
-  /* border: 1px solid #ccc; */
+  padding-right: 0;
   background: none;
   outline: none;
   color: white;
   border: none;
   font-size: 30px;
 }
-
+.dropdown-edit .summary svg{
+  transform:rotateZ(270deg)
+}
 .dropdown-edit .summary[aria-expanded="true"] + .panel {
   display: block;
 }

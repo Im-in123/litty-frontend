@@ -395,7 +395,7 @@ const CommentCard = (props) => {
     return (
       <div className="comment">
         <div className="user-avatar">
-          <img alt="author avatar" src={userDetail.profile_picture}></img>
+          <img alt="author avatar" src={LOCAL_CHECK? userDetail.profile_picture:userDetail.profile_picture_url }></img>
         </div>
         <div className="comment-user-data">
           <div className="username"></div>

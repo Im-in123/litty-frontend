@@ -29,6 +29,8 @@ const Notitfication = (props) => {
 
     return () => {
       window.removeEventListener("scroll", autoFetchNotication);
+      g_noti=[]
+      p1=[]
     };
   }, []);
   useEffect(() => {
@@ -38,10 +40,10 @@ const Notitfication = (props) => {
 
   const autoFetchNotication = async () => {
     if (shouldHandleScroll) {
-      console.log("window.innerHeight:::", window.innerHeight);
-      console.log(" window.scrollY::", window.scrollY);
-      console.log("document.body.scrollHeight:::", document.body.scrollHeight);
-      console.log("added::", window.innerHeight + window.scrollY);
+      // console.log("window.innerHeight:::", window.innerHeight);
+      // console.log(" window.scrollY::", window.scrollY);
+      // console.log("document.body.scrollHeight:::", document.body.scrollHeight);
+      // console.log("added::", window.innerHeight + window.scrollY);
       if (
         window.innerHeight + window.scrollY >=
         document.body.scrollHeight - 100

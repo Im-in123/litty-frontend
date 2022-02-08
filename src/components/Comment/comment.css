@@ -42,7 +42,7 @@ h1 {
   transition: opacity 500ms;
   visibility: hidden;
   opacity: 0;
-  z-index: 1;
+  z-index: 5;
 
   /* height:100vh;
     width:100vw;
@@ -53,15 +53,15 @@ h1 {
   opacity: 1;
 }
 
+
 .popup {
   margin: 70px auto;
   padding: 20px;
   background: #fff;
   border-radius: 5px;
-  width: 80%;
+  width: 63%;
   position: relative;
   /* transition: all 5s ease-in-out; */
-  /* height: 70% !important; */
 }
 
 .popup h2 {
@@ -99,6 +99,14 @@ h1 {
 }
 .popup .close-reload .svg-reload:hover {
   fill: black;
+}
+.popup .retry-btn{
+  display: block;
+  margin: auto;
+  outline: none;
+  border: none;
+  background-color: white;
+  cursor: pointer;
 }
 .popup .contenta {
   max-height: 60vh !important;

@@ -1,17 +1,17 @@
 import "./myprofile.css";
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
-import { axiosHandler, getToken } from "../helper";
-import { store } from "../stateManagement/store";
-import { BASE_URL, BASE_URL1, LOCAL_CHECK, POST_URL, SAVED_URL } from "../urls";
-import UserInfo from "./UserInfo";
-import PostContent from "./PostContent";
-import PostInfo from "./PostInfo";
-import { logout } from "../customs/authController";
-import PostDetail from "./PostDetail";
-import NewDetail from "./NewDetail/NewDetail";
-import { volumeAction } from "../stateManagement/actions";
-import { UrlParser } from "../customs/others";
+import { axiosHandler, getToken } from "../../helper";
+import { store } from "../../stateManagement/store";
+import { BASE_URL, BASE_URL1, LOCAL_CHECK, POST_URL, SAVED_URL } from "../../urls";
+import UserInfo from "../UserInfo";
+import PostContent from "../PostContent";
+import PostInfo from "../PostInfo";
+import { logout } from "../../customs/authController";
+import PostDetail from "../PostDetail";
+import NewDetail from "../NewDetail/NewDetail";
+import { volumeAction } from "../../stateManagement/actions";
+import { UrlParser } from "../../customs/others";
 
 let post = [];
 
@@ -43,9 +43,7 @@ const MyProfile = (props) => {
   const [myPost, setMyPost] = useState([]);
 
   const [overallAudio, setOverallAudio] = useState(true);
-  // const [canGoNext, setCanGoNext] = useState(false);
-  // const [shouldHandleScroll, setShouldHandleScroll] = useState(false);
-
+ 
   useEffect(async () => {
     console.log("MyProfile props:::", props);
 
@@ -67,14 +65,11 @@ const MyProfile = (props) => {
 
     return () => {
       window.removeEventListener("scroll", autoFetchProfile);
+      post=[]
+      p1=[]
     };
   }, []);
-  // window.onscroll = function (ev) {
-  //   console.log("chi");
-  //   if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
-  //     alert("you're at the bottom of the page");
-  //   }
-  // };
+
   const autoFetchProfile = async () => {
     if (shouldHandleScroll) {
       if (

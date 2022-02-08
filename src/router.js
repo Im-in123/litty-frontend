@@ -3,13 +3,12 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import AuthController from "./customs/authController";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
-// import Application from "./components/other/Application";
 import Main from "./components/Main";
 
 import Header from "./components/Header";
 import PostDetail from "./components/PostDetail";
-import OtherProfile from "./components/OtherProfile";
-import MyProfile from "./components/MyProfile";
+import OtherProfile from "./components/ProfileComp/OtherProfile";
+import MyProfile from "./components/ProfileComp/MyProfile";
 import UserProfileUpdate from "./components/UserprofileUpdate";
 import Verify from "./components/Verify";
 import PostCreate from "./components/Create/PostCreate";
@@ -26,7 +25,6 @@ const Router = (props) => {
       <Switch>
         <Route path="/signup" component={Signup} exact />
         <Route path="/login" component={Login} exact />
-        {/* <Route path="/other" component={Application} exact /> */}
 
         <Route
           path="/"
@@ -50,7 +48,6 @@ const Router = (props) => {
               <Route path="/create" component={PostCreate} exact />
               <Route path="/search" component={Search} exact />
               <Route path="/notification" component={Notification} exact />
-              {/* <Route path="/chatpage/:username" component={ChatPage} exact /> */}
               <Route
                 path="/chatpage/username=:username-timeout=:timeout"
                 component={ChatPage}

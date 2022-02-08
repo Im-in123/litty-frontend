@@ -715,6 +715,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
 
 .overlay .popup-back {
   background: rgba(7, 6, 6, 0.6);
+  width:90%;
 }
 .popup .close-back {
   position: absolute;
