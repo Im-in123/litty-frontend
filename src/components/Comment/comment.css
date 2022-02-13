@@ -53,7 +53,6 @@ h1 {
   opacity: 1;
 }
 
-
 .popup {
   margin: 70px auto;
   padding: 20px;
@@ -100,7 +99,7 @@ h1 {
 .popup .close-reload .svg-reload:hover {
   fill: black;
 }
-.popup .retry-btn{
+.popup .retry-btn {
   display: block;
   margin: auto;
   outline: none;
@@ -124,14 +123,13 @@ h1 {
     margin-top: 15vh;
     width: 99% !important;
     height: 80vh;
-    /* overflow: hidden; */
+    padding: 1px;
+    padding-top: 20px;
   }
   .popup .contenta {
     max-height: 60%;
     height: 50%;
     overflow: auto;
-    /* height: 60vh; */
-    /* overflow: hidden; */
   }
 }
 
@@ -148,7 +146,6 @@ h1 {
   animation-name: fadeIn;
   display: flex;
   align-items: flex-start;
-  /* border-bottom: 1px solid #e6e6e6; */
   padding: 10px 5px;
 }
 
@@ -157,11 +154,6 @@ h1 {
   height: 25px;
   border-radius: 100px;
 }
-
-/* .comment {
-  width: 100%;
-  overflow: hidden;
-} */
 
 .comment .comment-user-data {
   /* max-width: 90%; */
@@ -177,7 +169,6 @@ h1 {
 }
 .comment-text {
   color: #2f2f2f;
-  /* font-size: 0.9rem; */
   word-break: break-all;
   font-size: 1rem;
   width: 70%;

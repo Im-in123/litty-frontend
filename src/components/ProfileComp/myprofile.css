@@ -61,13 +61,6 @@ p {
   -moz-font-feature-settings: "liga";
   -moz-osx-font-smoothing: grayscale;
 }
-/* ====================
-   3.1 Global classes
-  ==================== */
-
-/* ===============
-   3.1.1 Flexbox
-  =============== */
 
 .flexbox {
   display: flex;
@@ -136,18 +129,12 @@ p {
   width: 100%;
 }
 
-/* ======================
-   3.2.3.1 Profile Page
-  ====================== */
-
 /* Profile Header */
 .profile-header {
   margin-top: 2vh;
   width: 100%;
   position: relative;
   z-index: 1;
-
-  /* height:50vh; */
 }
 .profile-header-inner {
   width: 100%;
@@ -242,9 +229,6 @@ p {
 /* Profile Page */
 .profile-page {
   margin: 4em 0;
-  /* height: 50vh; */
-  /* max-height: 450px;
-  overflow: scroll; */
 }
 .profile-page > h3 {
   font-size: var(--paragraph);
@@ -263,7 +247,6 @@ p {
 }
 .profile-page-item {
   margin: 0;
-  /* height: 1vh; */
   flex-grow: 1;
   position: relative;
   cursor: pointer;
@@ -271,7 +254,6 @@ p {
 .profile-page-item-image {
   max-height: 160px;
   min-width: 100%;
-  /* object-fit: cover; */
   object-fit: fill;
 
   vertical-align: bottom;
@@ -291,7 +273,6 @@ p {
   .profile-page-inner {
     margin: 1.5em 0;
     display: grid;
-    /* flex-wrap: wrap; */
     grid-gap: 1px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     max-height: 450px;
@@ -300,7 +281,6 @@ p {
   }
   .profile-page-item {
     margin: 0;
-    /* height: 1vh; */
     flex-grow: 1;
     position: relative;
     cursor: pointer;
@@ -313,7 +293,6 @@ p {
   .profile-page-item-image {
     max-height: 160px;
     min-width: 100%;
-    /* object-fit: cover; */
     object-fit: fill;
 
     vertical-align: bottom;
@@ -358,7 +337,6 @@ p {
 }
 
 .ps-fm p {
-  /* padding:5px; */
   margin-bottom: 8px;
 }
 
@@ -367,15 +345,12 @@ p {
   grid-gap: 25px;
   /* gap: 50%; */
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  /* padding-left: 17%; */
-  /* width: 70%; */
 }
 .grid-headings h3 {
   padding-left: 30%;
 }
 .grid-headings h3:hover {
   cursor: pointer;
-  /* text-decoration: underline; */
 }
 
 /* Selection */
@@ -395,19 +370,6 @@ p {
   background-color: hsl(var(--primary));
 }
 
-/* ===============
-   5. @keyframes
-  =============== */
-
-/* =================
-   6. @media rules
-  ================= */
-
-/* =======================
-   6.1 max-width: 1660px
-  ======================= */
-
-/* @media only screen and (max-width: 756px) { */
 @media only screen and (max-width: 756px) {
   :root {
     /* Sizes */
@@ -418,12 +380,7 @@ p {
     --navbar-buttons: 2rem;
   }
 
-  /* ===============
-       3.2 Classes
-      =============== */
-
   .view-width {
-    /* width: calc(100% - 5em); */
     width: 95%;
   }
 
@@ -442,7 +399,6 @@ p {
     margin-top: 2vh;
     width: 100%;
     position: relative;
-    /* height:50vh; */
   }
   .profile-header-inner {
     width: 100%;
@@ -452,9 +408,6 @@ p {
     height: auto;
   }
   .phi-profile-picture {
-    /* min-width: 100%;
-      max-width: 105%;
-      min-height: 100%; */
     height: 30px;
     width: 30px;
     position: absolute;
@@ -465,8 +418,6 @@ p {
     height: 80px;
     position: relative;
     margin-top: 2px;
-
-    /* margin-top:7vh; */
   }
   .phi-profile-picture-inner {
     width: 70px;
@@ -483,9 +434,7 @@ p {
   }
 
   .profile-page-item-image {
-    /* max-height:70.5px; */
     object-fit: fill;
-    /* width:100%; */
     width: 112.5px;
     height: 95px;
   }
@@ -497,18 +446,6 @@ p {
 }
 
 @media only screen and (max-width: 1024px) {
-  :root {
-    /* Sizes */
-    --heading-large: 5rem;
-    --heading-medium: 3rem;
-    --heading-small: 1.8rem;
-  }
-
-  /* ===============
-       3.2 Classes
-      =============== */
-
-  /* Profile Info */
   .phi-info-wrapper {
     grid-template-columns: auto;
     place-items: center;
@@ -518,20 +455,10 @@ p {
     justify-content: center;
     align-items: center;
   }
-
-  /* ==============
-       3.2.4 Footer
-      ============== */
 }
 
-/* ======================
-   6.5 max-width: 756px
-  ====================== */
-
-/* griditem' */
 .containerz {
   max-width: 93.5rem;
-  /* max-width: 70vw; */
 
   margin: 0 auto;
   padding: 0 2rem;
@@ -606,7 +533,6 @@ p {
   position: absolute;
   top: 2px;
   right: 4px;
-  /* font-size: 2.5rem; */
   text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
 }
 
@@ -638,8 +564,6 @@ p {
   animation: loader 500ms linear infinite;
 }
 
-/* Media Query */
-
 @media screen and (max-width: 40rem) {
 }
 
@@ -664,16 +588,13 @@ Remove or comment-out the code block below to see how the browser will fall-back
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 1rem;
-    /* width: 77vw; */
     width: 70vw;
   }
 
   .containerz .gallery-item {
     width: auto;
     margin: 0;
-    /* width: 90%; */
     height: 250px;
-    /* max-height: 100%; */
   }
 
   @media (max-width: 40rem) {
@@ -682,9 +603,6 @@ Remove or comment-out the code block below to see how the browser will fall-back
 
 @media only screen and (max-width: 756px) {
   .containerz {
-    /* max-width: 93.5rem; */
-    /* max-width: 70vw; */
-
     margin: 0 auto;
     padding: 2px;
     width: 100%;
@@ -715,7 +633,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
 
 .overlay .popup-back {
   background: rgba(7, 6, 6, 0.6);
-  width:90%;
+  width: 90%;
 }
 .popup .close-back {
   position: absolute;

@@ -3,7 +3,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { axiosHandler, getToken } from "../../helper";
 import { store } from "../../stateManagement/store";
-import { BASE_URL, BASE_URL1, LOCAL_CHECK, POST_URL, SAVED_URL } from "../../urls";
+import {
+  BASE_URL,
+  BASE_URL1,
+  LOCAL_CHECK,
+  POST_URL,
+  SAVED_URL,
+} from "../../urls";
 import UserInfo from "../UserInfo";
 import PostContent from "../PostContent";
 import PostInfo from "../PostInfo";
@@ -43,7 +49,7 @@ const MyProfile = (props) => {
   const [myPost, setMyPost] = useState([]);
 
   const [overallAudio, setOverallAudio] = useState(true);
- 
+
   useEffect(async () => {
     console.log("MyProfile props:::", props);
 
@@ -65,8 +71,8 @@ const MyProfile = (props) => {
 
     return () => {
       window.removeEventListener("scroll", autoFetchProfile);
-      post=[]
-      p1=[]
+      post = [];
+      p1 = [];
     };
   }, []);
 
@@ -188,7 +194,7 @@ const MyProfile = (props) => {
                       className="btn-primary-gray button btn-primary flexbox"
                     >
                       <ion-icon name="heart-outline"></ion-icon>{" "}
-                      <Link to="/profile-update">Settings</Link>{" "}
+                      <Link to="/settings">Settings</Link>{" "}
                       <div className="btn-secondary"></div>
                     </button>
                     <button
@@ -243,10 +249,7 @@ const MyProfile = (props) => {
                       )}
                     </div>
                   </div>
-                  <link
-                    rel="stylesheet"
-                    href="https://fonts.googleapis.com/css?family=Roboto:300,400,500|Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-                  ></link>
+
                   <div className="phi-profile-username-wrapper flexbox-col-left">
                     <h3 className="phi-profile-username flexbox">
                       {userDetail.user.username}
@@ -262,7 +265,10 @@ const MyProfile = (props) => {
                     </div>
                     <p className="phi-profile-tagline">{userDetail.bio}</p>
                     <br></br>
-                    <p className="postnum">Posts 17k</p>
+                    <p className="postnum">
+                      {userDetail.post_count ? userDetail.post_count : "0"}
+                      {userDetail.post_count === 1 ? " Post" : " Posts"}
+                    </p>
                   </div>
                 </div>
                 <div className="phi-info-right flexbox-right">
@@ -272,7 +278,7 @@ const MyProfile = (props) => {
                       className="btn-primary-gray button btn-primary flexbox"
                     >
                       <ion-icon name="heart-outline"></ion-icon>{" "}
-                      <Link to="/profile-update">Settings</Link>{" "}
+                      <Link to="/settings">Settings</Link>{" "}
                       <div className="btn-secondary"></div>
                     </button>
                     <button

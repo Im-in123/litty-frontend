@@ -9,7 +9,7 @@ import Header from "./components/Header";
 import PostDetail from "./components/PostDetail";
 import OtherProfile from "./components/ProfileComp/OtherProfile";
 import MyProfile from "./components/ProfileComp/MyProfile";
-import UserProfileUpdate from "./components/UserprofileUpdate";
+import UserProfileUpdate from "./components/settings/UserprofileUpdate";
 import Verify from "./components/Verify";
 import PostCreate from "./components/Create/PostCreate";
 import Search from "./components/Search/Search";

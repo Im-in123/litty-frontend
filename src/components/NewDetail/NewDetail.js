@@ -13,15 +13,14 @@ import {
   COMMENT_URL,
   LOCAL_CHECK,
   REPLY_URL,
-  LIKE_URL,
+  POST_LIKE_URL,
   SAVED_URL,
 } from "../../urls";
 import {
   CommentTriggerAction,
-  bogusTriggerAction,
+  commentInputSetterAction,
   newReplyReplyAction,
   deleteCommentAction,
-  activeChatUserAction,
 } from "../../stateManagement/actions";
 import NewVid from "./NewVid";
 let post1 = [];
@@ -354,7 +353,7 @@ const NewDetail = (props) => {
     const token = await getToken();
     const result = await axiosHandler({
       method: "post",
-      url: LIKE_URL,
+      url: POST_LIKE_URL,
       token,
       data: like_data,
     }).catch((e) => {
@@ -948,7 +947,7 @@ const ContentLoadComment = (props) => {
     state: { postComment },
   } = useContext(store);
   const {
-    state: { bogus },
+    state: { commentInputSetter },
   } = useContext(store);
   const {
     state: { delComment },
@@ -982,7 +981,7 @@ const ContentLoadComment = (props) => {
 
   useEffect(() => {
     try {
-      setPlaceholder(bogus.placeholder);
+      setPlaceholder(commentInputSetter.placeholder);
       let pcont = document.getElementById("comment-input-new");
       pcont.style.background = "#edd2d6";
       pcont.focus();
@@ -993,7 +992,7 @@ const ContentLoadComment = (props) => {
       } catch (error) {}
       setPlaceholder("Say something nice..");
     }
-  }, [bogus]);
+  }, [commentInputSetter]);
 
   useEffect(() => {
     if (delComment) {
@@ -1025,10 +1024,30 @@ const ContentLoadComment = (props) => {
     }, 300);
   };
 
-  const getComments = async (id, page = null, next = false) => {
+  let error_data = {
+    page: null,
+    next: false,
+  };
+
+  const getComments = async (
+    id,
+    error_occured = false,
+    page = null,
+    next = false
+  ) => {
     setLoadingMore(true);
     setError(false);
     let url;
+
+    if (error_occured) {
+      page = error_data.page;
+      next = error_data.next;
+    } else {
+      error_data = {
+        page: page,
+        next: next,
+      };
+    }
     if (!page) {
       url = COMMENT_URL + `?post_id=${id}`;
     } else {
@@ -1047,6 +1066,7 @@ const ContentLoadComment = (props) => {
     }).catch((e) => {
       console.log("getComments error::::", e);
       setError(true);
+      setFetching(false);
     });
 
     if (result) {
@@ -1068,6 +1088,7 @@ const ContentLoadComment = (props) => {
       setFetching(false);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!commentData.comment) return;
@@ -1075,18 +1096,18 @@ const ContentLoadComment = (props) => {
     let bb;
     const token = await getToken();
     try {
-      bb = bogus.type;
+      bb = commentInputSetter.type;
     } catch (error) {
       bb = false;
     }
     if (bb) {
-      if (bogus.type === "comment-reply") {
+      if (commentInputSetter.type === "comment-reply") {
         const rdata = {
           to_id: "null",
-          comment_id: bogus.comment_id,
+          comment_id: commentInputSetter.comment_id,
           comment: commentData.comment,
           author_id: userDetail.user.id,
-          type: bogus.type,
+          type: commentInputSetter.type,
         };
         console.log("replycomment before send::::", rdata);
         const replyResult = await axiosHandler({
@@ -1103,19 +1124,19 @@ const ContentLoadComment = (props) => {
           setLoading(false);
           // props.setCurrentReply(replyResult.data);
 
-          dispatch({ type: bogusTriggerAction, payload: null });
+          dispatch({ type: commentInputSetterAction, payload: null });
 
           dispatch({ type: CommentTriggerAction, payload: replyResult.data });
           setCommentData({ post_id: props.id });
         }
-      } else if (bogus.type === "reply-reply") {
+      } else if (commentInputSetter.type === "reply-reply") {
         const rrdata = {
-          reply_id: bogus.reply_id,
-          to_id: bogus.reply_id,
+          reply_id: commentInputSetter.reply_id,
+          to_id: commentInputSetter.reply_id,
           comment: commentData.comment,
           author_id: userDetail.user.id,
-          parent_id: bogus.parent_id,
-          type: bogus.type,
+          parent_id: commentInputSetter.parent_id,
+          type: commentInputSetter.type,
         };
         console.log("reply-reply before send::::", rrdata);
         const replyReplyResult = await axiosHandler({
@@ -1130,7 +1151,7 @@ const ContentLoadComment = (props) => {
         if (replyReplyResult) {
           console.log("reply-reply results", replyReplyResult.data);
           // props.setCurrentReplyReply(replyReplyResult.data);
-          dispatch({ type: bogusTriggerAction, payload: null });
+          dispatch({ type: commentInputSetterAction, payload: null });
 
           dispatch({
             type: newReplyReplyAction,
@@ -1251,7 +1272,15 @@ const ContentLoadComment = (props) => {
         </div>
         <div className="contenta" id={"contenta" + props.id}>
           {error ? (
-            "An error occured., reload!"
+            <button
+              className="retry-btn"
+              onClick={() => {
+                getComments(props.id, true);
+              }}
+            >
+              {" "}
+              An error occured, click to retry!
+            </button>
           ) : (
             <>
               {commentList.map((item, key) => {
@@ -1266,8 +1295,10 @@ const ContentLoadComment = (props) => {
                 );
               })}
 
-              {commentList.length < 1 && (
+              {commentList.length < 1 && !fetching ? (
                 <span className="txt-white">No comments</span>
+              ) : (
+                ""
               )}
               {moreCmts && (
                 <>
@@ -1275,7 +1306,9 @@ const ContentLoadComment = (props) => {
                     {loadingMore ? (
                       <span>loading more...</span>
                     ) : (
-                      <span onClick={() => getComments(props.id, null, true)}>
+                      <span
+                        onClick={() => getComments(props.id, false, null, true)}
+                      >
                         load more
                       </span>
                     )}

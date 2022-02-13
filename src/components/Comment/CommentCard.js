@@ -14,7 +14,7 @@ import {
 } from "../../urls";
 import {
   CommentTriggerAction,
-  bogusTriggerAction,
+  commentInputSetterAction,
   deleteCommentAction,
   newReplyReplyAction,
   deleteReplyAction,
@@ -35,9 +35,9 @@ moment.locale("en", {
     d: "a day",
     dd: "%dd",
     M: "a month",
-    MM: "%dM",
+    MM: "%dm",
     y: "a year",
-    yy: "%dY",
+    yy: "%dy",
   },
 });
 // moment.locale("en", {
@@ -237,7 +237,7 @@ const CommentCard = (props) => {
       let placeholderText = "replying to " + who + " ...";
 
       dispatch({
-        type: bogusTriggerAction,
+        type: commentInputSetterAction,
         payload: {
           placeholder: placeholderText,
           comment_id: comment_id,
@@ -395,7 +395,14 @@ const CommentCard = (props) => {
     return (
       <div className="comment">
         <div className="user-avatar">
-          <img alt="author avatar" src={LOCAL_CHECK? userDetail.profile_picture:userDetail.profile_picture_url }></img>
+          <img
+            alt="author avatar"
+            src={
+              LOCAL_CHECK
+                ? userDetail.profile_picture
+                : userDetail.profile_picture_url
+            }
+          ></img>
         </div>
         <div className="comment-user-data">
           <div className="username"></div>

@@ -15,7 +15,7 @@ import {
 } from "../../urls";
 import {
   CommentTriggerAction,
-  bogusTriggerAction,
+  commentInputSetterAction,
   deleteCommentAction,
   newReplyReplyAction,
   deleteReplyAction,
@@ -197,7 +197,7 @@ const NewComCard = (props) => {
       e.target.style.color = "#ec0313";
       //   e.target.parentElement.style.background = "#ec0313";
       dispatch({
-        type: bogusTriggerAction,
+        type: commentInputSetterAction,
         payload: {
           placeholder: placeholderText,
           comment_id: comment_id,

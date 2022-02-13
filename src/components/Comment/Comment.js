@@ -12,7 +12,7 @@ import {
 } from "../../urls";
 import {
   CommentTriggerAction,
-  bogusTriggerAction,
+  commentInputSetterAction,
   deleteCommentAction,
   newReplyAction,
 } from "../../stateManagement/actions";
@@ -74,7 +74,7 @@ const Comment = (props) => {
                   onClick={() => {
                     document.documentElement.style.overflow = "auto";
 
-                    dispatch({ type: bogusTriggerAction, payload: null });
+                    dispatch({ type: commentInputSetterAction, payload: null });
                   }}
                   href="##"
                 >

@@ -22,8 +22,6 @@ import {
 } from "../../urls";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
-import { postTriggerAction } from "../../stateManagement/actions";
-import { activeChatUserAction } from "../../stateManagement/actions";
 import { io } from "socket.io-client";
 import useTyping from "./chatStuff/components/hooks/useTyping";
 import NewMessageForm from "./chatStuff/components/NewMessageForm";
@@ -100,9 +98,7 @@ const ChatPage = (props) => {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  const {
-    state: { activeChatUser },
-  } = useContext(store);
+
   const [small, setSmall] = useState(false);
 
   const [chatListObj, setChatListObj] = useState([]);
@@ -141,7 +137,11 @@ const ChatPage = (props) => {
   const { username, timeout } = props.match.params;
   let guessKey;
   let el;
-  useEffect(async () => {
+  useEffect(() => {
+    firstRun();
+  }, [username, timeout]);
+
+  const firstRun = async () => {
     checkSize();
 
     await getOtherProfile(username);
@@ -178,7 +178,8 @@ const ChatPage = (props) => {
           fileinput.siblings("span").text(value);
         });
     };
-  }, [username, timeout]);
+  };
+
   var mouseTimeout;
   var timeoutTime = true;
   const mouseMove = () => {

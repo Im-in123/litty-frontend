@@ -5,7 +5,7 @@ import {
   postCommentAction,
 } from "../stateManagement/actions";
 import Comment from "./Comment/Comment";
-import { LIKE_URL, SAVED_URL } from "../urls";
+import { POST_LIKE_URL, SAVED_URL } from "../urls";
 import { axiosHandler, getToken } from "../helper";
 import { Link } from "react-router-dom";
 
@@ -136,7 +136,7 @@ const PostInfo = (props) => {
     const token = await getToken();
     const result = await axiosHandler({
       method: "post",
-      url: LIKE_URL,
+      url: POST_LIKE_URL,
       token,
       data: like_data,
     }).catch((e) => {
@@ -293,9 +293,7 @@ const PostInfo = (props) => {
           </span>
         </p>
       </div>
-      <div className="post-date">
-        {/* {created_at} */}
-        </div>
+      <div className="post-date">{/* {created_at} */}</div>
     </>
   );
 };

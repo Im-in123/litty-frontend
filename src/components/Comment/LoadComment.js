@@ -36,10 +36,6 @@ const LoadComment = (props) => {
     state: { commentTrigger },
   } = useContext(store);
 
-  const {
-    state: { bogus },
-  } = useContext(store);
-
   const [render, setRender] = useState(false);
 
   const [commentList, setCommentList] = useState([]);
@@ -106,22 +102,26 @@ const LoadComment = (props) => {
     }
     return () => {};
   }, [delComment]);
-let error_data={
-page:null,
-next:false
-}
-  const getComments = async (error_occured=false, page = null, next = false ) => {
+  let error_data = {
+    page: null,
+    next: false,
+  };
+  const getComments = async (
+    error_occured = false,
+    page = null,
+    next = false
+  ) => {
     setLoadingMore(true);
     setError(false);
- 
-    if(error_occured){
-      page=error_data.page;
-      next = error_data.next
-    }else{
-      error_data={
-        page:page,
-        next:next
-      }
+
+    if (error_occured) {
+      page = error_data.page;
+      next = error_data.next;
+    } else {
+      error_data = {
+        page: page,
+        next: next,
+      };
     }
     let url;
     if (!page) {
@@ -141,14 +141,12 @@ next:false
       token,
     }).catch((e) => {
       console.log("getComments error::::", e);
-    
+
       setError(true);
       setRender(true);
-
     });
 
     if (result) {
-     
       setNextMsgs((n) => result.data);
       console.log("getComments data::::", result.data);
 
@@ -173,10 +171,14 @@ next:false
       {render ? (
         <>
           {error ? (
-            <button className="retry-btn" onClick={()=>{
-getComments(true)
-            }}>            An error occured, click to retry!
-          
+            <button
+              className="retry-btn"
+              onClick={() => {
+                getComments(true);
+              }}
+            >
+              {" "}
+              An error occured, click to retry!
             </button>
           ) : (
             <div className="contenta" id={"contenta" + props.post_id}>

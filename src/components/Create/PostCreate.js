@@ -4,7 +4,6 @@ import "./postcreate.css";
 import { POST_URL } from "../../urls";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
-import { postTriggerAction } from "../../stateManagement/actions";
 let tags = [];
 const PostCreate = (props) => {
   const [postData, setPostData] = useState({});
@@ -44,7 +43,7 @@ const PostCreate = (props) => {
     const tagnum = document.querySelector("#tagnum");
     inputTags.addEventListener("input", (e) => {
       if (tags.length >= 10) return;
-      const newTag = sanitizeNewTag(inputTags.textContent, e);
+      const newTag = sanitizeNewTag(inputTags.textContent);
       popupList(inputTags.textContent);
 
       if (!newTag) return;
@@ -66,19 +65,10 @@ const PostCreate = (props) => {
       setEditedTags(tags);
     });
 
-    const sanitizeNewTag = (newTag, e) => {
-      if (e.data === null) {
-        const tagy = newTag.trim().toLowerCase();
-        if (tagy !== "") {
-          return tagy;
-        } else {
-          return false;
-        }
-      } else {
-        const lastChar = newTag.slice(-1);
-        const tag = newTag.slice(0, -1).trim().toLowerCase();
-        return lastChar === "," && tag !== "" ? tag : false;
-      }
+    const sanitizeNewTag = (newTag) => {
+      const lastChar = newTag.slice(-1);
+      const tag = newTag.slice(0, -1).trim().toLowerCase();
+      return lastChar === "," && tag !== "" ? tag : false;
     };
 
     const addTag = (tagToAdd) => {
@@ -86,9 +76,7 @@ const PostCreate = (props) => {
 
       const tag = document.createElement("SPAN");
       tag.setAttribute("class", "tag");
-      // const x = document.createElement("SPAN");
-      // x.setAttribute("class", "x");
-      // x.innerHTML = "&times;";
+
       tag.innerHTML = `#${tagToAdd}  &times;`;
 
       tags.push(tagToAdd);
@@ -164,7 +152,10 @@ const PostCreate = (props) => {
     console.log("image:::", image_video, img_vid);
     formData.append("author_id", userDetail.user.id);
     formData.append("caption", postData.post);
-    formData.append("tags", tags);
+    // formData.append("tags", tags);
+    for (let i = 0; i < tags.length; i++) {
+      formData.append("tags", tags[i]);
+    }
     for (let i = 0; i < img_vid.length; i++) {
       if (img_vid[i].type.includes("image")) {
         formData.append("image", img_vid[i]);
@@ -211,8 +202,7 @@ const PostCreate = (props) => {
         console.log(error);
       }
       e.target.reset();
-      dispatch({ type: postTriggerAction, payload: props.id });
-      // window.location.href = "/my-profile";
+      // window.location.href = "/create";
     }
   };
 
@@ -249,7 +239,7 @@ const PostCreate = (props) => {
         onSubmit={submit}
       >
         <div className="widget-post__content">
-          <label for="post-content" className="sr-only">
+          <label htmlFor="post-content" className="sr-only">
             share your moments
           </label>
           <textarea
@@ -291,7 +281,7 @@ const PostCreate = (props) => {
               type="button"
               className="btn post-actions__upload attachments--btn"
             >
-              <label for="add-image-video" className="post-actions__label">
+              <label htmlFor="add-image-video" className="post-actions__label">
                 <i className="fa fa-upload" aria-hidden="true"></i>
                 &nbsp; image/video
                 <input

@@ -24,8 +24,6 @@ export const logout = (props) => {
 };
 
 export const checkAuthState = async (setChecking, dispatch, props) => {
-  console.log("setchecking::::", setChecking);
-  console.log("dispatch:::::", dispatch);
   console.log("props:::::", props);
   let token = localStorage.getItem(tokenName);
   if (!token) {

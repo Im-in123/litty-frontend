@@ -163,14 +163,6 @@ hr {
   font-size: 14px;
 }
 
-/* .gallery-actions-new .fa {
-  cursor: pointer;
-} */
-
-/* .gallery-actions-new .fa-heart {
-  color: #f50057;
-} */
-
 .gallery-tags-new {
   display: flex;
   flex-wrap: wrap;
@@ -272,7 +264,6 @@ hr {
   }
 }
 
-/* slideshow taşıyıcı */
 .post-content-new {
   height: 100%;
 }
@@ -281,11 +272,10 @@ hr {
   position: relative;
   margin: auto;
   height: 90%;
-  background: #ddd;
+  background: white;
   /* max-height: 320px; */
 }
 
-/* varsayılan olarak görselleri gizliyoruz */
 .mySlides-new {
   display: none;
   height: 100%;
@@ -344,7 +334,6 @@ hr {
   text-align: center;
 }
 
-/* görsel numaraları */
 .numbertext-new {
   color: #f2f2f2;
   font-size: 12px;
@@ -353,14 +342,12 @@ hr {
   top: 0;
 }
 
-/* nokta navigasyonu */
 .dot-new {
   cursor: pointer;
   height: 15px;
   width: 15px;
   margin: 0 2px;
-  /* background-color: rgb(155, 149, 149); */
-  /* background-color: rgb(224, 154, 222); */
+
   background-color: rgb(240, 212, 175);
 
   border-radius: 50%;
@@ -370,12 +357,9 @@ hr {
 
 .active-new,
 .dot-new:hover {
-  /* background-color: #717171; */
-  /* background-color: orchid; */
   background-color: burlywood;
 }
 
-/* geçiş animasyonu */
 .fade-new {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;
@@ -445,8 +429,7 @@ hr {
 
 .dropdown-edit-new .summary-new {
   height: 30px;
-  /* background: aliceblue; */
-  /* border: 1px solid #ccc; */
+
   background: none;
   outline: none;
   color: white;
@@ -557,7 +540,6 @@ hr {
 .tag {
   margin: 0.25rem;
   padding: 0.05rem 0.5rem;
-  /* border: 1px solid #c0c0c0; */
   border-radius: 4px;
   white-space: nowrap;
   color: black;

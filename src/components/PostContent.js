@@ -89,6 +89,7 @@ const PostContent = (props) => {
         try {
           let sl = slides[slideIndex - 1].children[1].lastChild;
           // console.log("second slide video::", sl);
+          sl.currentTime = 0;
           sl.play();
           alreadyPlaying = true;
         } catch (error) {}
@@ -241,6 +242,7 @@ const PostContent = (props) => {
                   nid={item.id}
                   setOverallAudio={props.setOverallAudio}
                   overallAudio={props.overallAudio}
+                  thumbnail={item.thumbnail}
                 />
               ) : null}
 
@@ -283,7 +285,6 @@ const PostContent = (props) => {
                   className={`dot dotget${props.id}`}
                   key={key}
                   onClick={(e) => currentSlide(key + 1, true)}
-                  // onClick={(e) => currentSlide(item.id)}
                 ></span>
               ))}
             </>
@@ -523,12 +524,10 @@ const VideoComp = (props) => {
       <video
         id={`video${props.id}`}
         src={props.video}
-        // autoPlay
-        // controls
+        // poster={props.thumbnail ? props.thumbnail : ""}
+
         preload="none"
         // preload="metadata"
-        // style={{ width: "600px", height: "338px" }}
-        // object-fit:fill, flex-shrink:0,
       ></video>
     </div>
   );

@@ -1,19 +1,11 @@
-@import url("https://use.fontawesome.com/releases/v5.7.2/css/all.css");
+/* @import url("https://use.fontawesome.com/releases/v5.7.2/css/all.css"); */
 
 body {
-  /* background: #e2e5ee; */
-  /* background: #0d0d0e; */
   background: black;
-  /* background: whitesmoke; */
-  /* background-color: rgb(0, 0, 0); */
-  /* background: linear-gradient(150deg, rgba(166,192,254,1) 0%, rgba(246,128,132,1) 100%); */
-  /* background:whitesmoke; */
 
   font-family: "Segoe UI";
   margin: 0;
   padding: 0;
-  /* overflow: hidden; */
-  /* overflow-x: hidden; */
 }
 
 .scroll-indicator {
@@ -61,12 +53,11 @@ body {
 
 .post {
   /* box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2); */
-  /* width: 600px; */
+
   width: 460px;
   height: auto;
   margin: 15px auto;
   background: #fff;
-  /* background: #404040; */
   position: relative;
   animation-name: fadeIn;
   animation-duration: 1s;
@@ -84,7 +75,6 @@ body {
 .user-info {
   padding: 10px;
   display: flex;
-  /* justify-content: flex-start; */
   padding: 10px 5px 10px 15px;
   justify-content: space-between;
 }
@@ -135,8 +125,8 @@ body {
   border: none;
   font-size: 30px;
 }
-.dropdown-edit .summary svg{
-  transform:rotateZ(270deg)
+.dropdown-edit .summary svg {
+  transform: rotateZ(270deg);
 }
 .dropdown-edit .summary[aria-expanded="true"] + .panel {
   display: block;
@@ -175,8 +165,7 @@ body {
 .post-content {
   background: whitesmoke;
   width: 100%;
-  /* max-height: 387px; */
-  /* max-height: 352px; */
+
   height: 70vh;
 
   overflow: hidden;
@@ -206,7 +195,6 @@ body {
 }
 
 .post-info .icon {
-  /* margin-right: 10px; */
 }
 
 .post-info a {
@@ -214,10 +202,8 @@ body {
   width: 140px;
   justify-content: center;
   text-decoration: none;
-  /* color: #604d92; */
   color: black;
   color: salmon;
-  /* color: whitesmoke; */
   color: white;
 
   padding: 5px 0;
@@ -231,16 +217,13 @@ body {
 .save .icon2 {
   color: whitesmoke;
 }
-/* .save .icon1 {
-  color: rgb(248, 138, 156);
-} */
+
 .post-info a .icon {
   margin-right: 10px;
 }
 .post-date {
   color: #616770;
   font-size: 10px;
-  /* padding: 10px 20px; */
   padding-left: 15px;
   background: black;
   border-bottom: 1px solid #e7e7e7;
@@ -250,8 +233,6 @@ body {
 }
 
 .post-info a:hover {
-  /* background: rgba(182, 167, 222, 0.4); */
-  /* cursor: pointer; */
   background: rgb(10, 10, 10);
 }
 
@@ -269,18 +250,14 @@ body {
   }
   .post-content {
     width: 100%;
-    /* max-height: 68vh; */
     overflow: hidden;
-    /* min-height: 50vh; */
     height: 72vh;
     background: black;
   }
   .post-info a {
     display: flex;
-    /* width: 100px; */
     justify-content: center;
     text-decoration: none;
-    /* color: #604d92; */
     padding: 5px 0;
     font-size: 17px;
   }
@@ -299,7 +276,6 @@ body {
 
 .caption {
   padding: 10px 15px;
-  /* border-top: 1px solid #e7e7e7; */
   display: flex;
   justify-content: space-between;
   align-items: center;

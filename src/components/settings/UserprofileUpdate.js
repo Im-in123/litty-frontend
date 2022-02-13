@@ -1,16 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { PROFILE_URL, PROFILE_PIC_URL } from "../urls";
-import { store } from "../stateManagement/store";
-import { axiosHandler, getToken } from "../helper";
+import { PROFILE_URL, PROFILE_PIC_URL } from "../../urls";
+import { store } from "../../stateManagement/store";
+import { axiosHandler, getToken } from "../../helper";
 import "./userProfileUpdate.css";
-import {
-  userDetailAction,
-  bogusTriggerAction,
-} from "../stateManagement/actions";
-import { VerifyFunc } from "../customs/others";
-import { logout } from "../customs/authController";
+import { userDetailAction } from "../../stateManagement/actions";
 
-let profileRef;
+// let profileRef;
 
 const UserProfileUpdate = (props) => {
   const {
@@ -55,7 +50,6 @@ const UserProfileUpdate = (props) => {
       console.log();
       // setPP(result.data.file_upload);
       alert("Profile pic added. scroll down to save changes!!");
-      // dispatch({ type:bogusTriggerAction, payload:result.data.id });
       setProfileData({ ...profileData, id: result.data.id });
 
       console.log(result.data);
@@ -100,9 +94,6 @@ const UserProfileUpdate = (props) => {
   return (
     <div className="ProfileMain">
       <div className="container1">
-        {/* <div style={{background:""}}>   
-      <a href="#" style={{color:"red", textDecoration:"underline"}} onClick={() => logout(props)}>Logout</a>
-</div> */}
         <form onSubmit={propicSubmit}>
           <h1 className="title">Modify your profile</h1>
           <label style={{ color: "white", margin: "4px" }} for="propic">
@@ -208,15 +199,6 @@ const UserProfileUpdate = (props) => {
         <label for="zip">Code postal</label>
         <input id="zip" type="text"/>
     </div> */}
-          </div>
-
-          <div className="checkboxes">
-            <div className="checkbox-group">
-              <input id="newsletter" type="checkbox" />
-              <label for="newsletter">
-                Do you wanna recieve newsletter updates
-              </label>
-            </div>
           </div>
 
           <div className="button-container">

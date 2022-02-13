@@ -16,7 +16,6 @@ import {
 import UserInfo from "../UserInfo";
 import PostContent from "../PostContent";
 import PostInfo from "../PostInfo";
-import { activeChatUserAction } from "../../stateManagement/actions";
 import { GalleryItem } from "./MyProfile";
 import PostDetail from "../PostDetail";
 import NewDetail from "../NewDetail/NewDetail";
@@ -43,9 +42,7 @@ const OtherProfile = (props) => {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  const {
-    state: { activeChatUser },
-  } = useContext(store);
+
   const {
     state: { volumeTrigger },
   } = useContext(store);
@@ -79,8 +76,8 @@ const OtherProfile = (props) => {
 
     return () => {
       window.removeEventListener("scroll", autoFetchOtherProfile);
-      post=[]
-      p1=[]
+      post = [];
+      p1 = [];
     };
   }, []);
   // function atEnd() {
@@ -266,12 +263,11 @@ const OtherProfile = (props) => {
 
       if (rr1 === "unfollowed") {
         setIsFollowing(false);
- 
+
         setFollowers((f) => f - 1);
       } else if (rr1 === "followed") {
         setIsFollowing(true);
         setFollowers((f) => f + 1);
-       
       }
     }
     setFollowError(false);
@@ -392,7 +388,10 @@ const OtherProfile = (props) => {
                     </div>
                     <p className="phi-profile-tagline">{otherUser.bio}</p>
                     <br />
-                    <p className="postnum">Posts 17k</p>
+                    <p className="postnum">
+                      {otherUser.post_count ? otherUser.post_count : "0"}
+                      {otherUser.post_count === 1 ? " Post" : " Posts"}
+                    </p>
                   </div>
                 </div>
                 <div className="phi-info-right flexbox-right">

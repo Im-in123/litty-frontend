@@ -12,7 +12,7 @@ import {
 } from "../../urls";
 import {
   CommentTriggerAction,
-  bogusTriggerAction,
+  commentInputSetterAction,
   newReplyReplyAction,
 } from "../../stateManagement/actions";
 const CommentComp = (props) => {
@@ -34,7 +34,7 @@ const CommentComp = (props) => {
     state: { postComment },
   } = useContext(store);
   const {
-    state: { bogus },
+    state: { commentInputSetter },
   } = useContext(store);
   let pcont = "";
 
@@ -42,16 +42,18 @@ const CommentComp = (props) => {
     // if(postComment===props.post_id){
 
     try {
-      setPlaceholder(bogus.placeholder);
-      pcont = document.getElementById("placeholder" + bogus.postComment);
+      setPlaceholder(commentInputSetter.placeholder);
+      pcont = document.getElementById(
+        "placeholder" + commentInputSetter.postComment
+      );
       // pcont.style.background="yellow"
-      // dispatch({type:bogusTriggerAction,payload:null})
+      // dispatch({type:commentInputSetterAction,payload:null})
     } catch (error) {
       // console.log(error)
       setPlaceholder("Write a comment ...");
     }
     // }
-  }, [bogus]);
+  }, [commentInputSetter]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,18 +63,18 @@ const CommentComp = (props) => {
     let bb;
     const token = await getToken();
     try {
-      bb = bogus.postComment;
+      bb = commentInputSetter.postComment;
     } catch (error) {
       bb = false;
     }
     if (bb) {
-      if (bogus.type === "comment-reply") {
+      if (commentInputSetter.type === "comment-reply") {
         const rdata = {
           to_id: "null",
-          comment_id: bogus.comment_id,
+          comment_id: commentInputSetter.comment_id,
           comment: commentData.comment,
           author_id: props.author_id,
-          type: bogus.type,
+          type: commentInputSetter.type,
         };
         console.log("replycomment before send::::", rdata);
         const replyResult = await axiosHandler({
@@ -89,19 +91,19 @@ const CommentComp = (props) => {
           setLoading(false);
           // props.setCurrentReply(replyResult.data);
 
-          dispatch({ type: bogusTriggerAction, payload: null });
+          dispatch({ type: commentInputSetterAction, payload: null });
 
           dispatch({ type: CommentTriggerAction, payload: replyResult.data });
           setCommentData({ post_id: props.id });
         }
-      } else if (bogus.type === "reply-reply") {
+      } else if (commentInputSetter.type === "reply-reply") {
         const rrdata = {
-          reply_id: bogus.reply_id,
-          to_id: bogus.reply_id,
+          reply_id: commentInputSetter.reply_id,
+          to_id: commentInputSetter.reply_id,
           comment: commentData.comment,
           author_id: props.author_id,
-          parent_id: bogus.parent_id,
-          type: bogus.type,
+          parent_id: commentInputSetter.parent_id,
+          type: commentInputSetter.type,
         };
         console.log("reply-reply before send::::", rrdata);
         const replyReplyResult = await axiosHandler({
@@ -116,7 +118,7 @@ const CommentComp = (props) => {
         if (replyReplyResult) {
           console.log("reply-reply results", replyReplyResult.data);
           //   props.setCurrentReplyReply(replyReplyResult.data);
-          dispatch({ type: bogusTriggerAction, payload: null });
+          dispatch({ type: commentInputSetterAction, payload: null });
 
           dispatch({
             type: newReplyReplyAction,

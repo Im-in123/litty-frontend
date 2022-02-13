@@ -31,9 +31,7 @@ const Feed = (props) => {
   const {
     state: { volumeTrigger },
   } = useContext(store);
-  const {
-    state: { postTrigger },
-  } = useContext(store);
+
   const {
     state: { refreshFeed },
   } = useContext(store);
@@ -59,7 +57,7 @@ const Feed = (props) => {
     console.log("postContainer:::", postContainer);
 
     if (refreshFeed) {
-      getPostContent(postTrigger);
+      getPostContent(1);
     } else {
       setFetching(false);
       shouldHandleScroll = true;
@@ -124,7 +122,7 @@ const Feed = (props) => {
 
       if (post.length >= 0 && post.length <= 27) {
         console.log("herep:", post.length, "  herep1:", postList.length);
-      
+
         for (var i in res.data.results) {
           post.push(res.data.results[i]);
         }
@@ -172,62 +170,60 @@ const Feed = (props) => {
   };
   if (fetching) {
     return (
-      <div id="maina-feed">
-        <div id="feed">
-          <div className="content-wrapper feed-wrapper">
-            <div className="post-wall">
-              <div className="post">
-                <div className="post-wrapper">
-                  <UserInfo />
+      <div id="feed">
+        <div className="content-wrapper feed-wrapper">
+          <div className="post-wall">
+            <div className="post">
+              <div className="post-wrapper">
+                <UserInfo />
 
-                  <div className="post-content">
-                    <div className="slideshow-container">
-                      <div className="fade mySlides mySlidesget">
-                        <div className="numbertext">loading..</div>
-                        <img
-                          src=""
-                          alt="loading.."
-                          className="iimm"
-                          style={{ width: "100%" }}
-                        />
-                        <div className="text">loading..</div>
-                      </div>
-                    </div>
-                    <br />
-                  </div>
-
-                  <div className="post-info">
-                    <div className="likes">
-                      <a onClick={(e) => e.preventDefault()}>
-                        <div className="icon">
-                          <i className="far fa-heart"></i>
-                        </div>
-                      </a>
-                    </div>
-                    <div className="comments" id="##">
-                      <a href="#">
-                        <div className="icon">
-                          <i className="far fa-comment-alt"></i>
-                        </div>
-                      </a>
-                    </div>
-                    <div className="share" id="##">
-                      <a href="#">
-                        <div className="icon">
-                          <i className="far fa-save"></i>
-                        </div>
-                      </a>
+                <div className="post-content">
+                  <div className="slideshow-container">
+                    <div className="fade mySlides mySlidesget">
+                      <div className="numbertext">loading..</div>
+                      <img
+                        src=""
+                        alt="loading.."
+                        className="iimm"
+                        style={{ width: "100%" }}
+                      />
+                      <div className="text">loading..</div>
                     </div>
                   </div>
-
-                  <div className="caption">
-                    <p>
-                      <b></b>
-                      loading...
-                    </p>
-                  </div>
-                  <div className="post-date"> </div>
+                  <br />
                 </div>
+
+                <div className="post-info">
+                  <div className="likes">
+                    <a onClick={(e) => e.preventDefault()}>
+                      <div className="icon">
+                        <i className="far fa-heart"></i>
+                      </div>
+                    </a>
+                  </div>
+                  <div className="comments" id="##">
+                    <a href="#">
+                      <div className="icon">
+                        <i className="far fa-comment-alt"></i>
+                      </div>
+                    </a>
+                  </div>
+                  <div className="share" id="##">
+                    <a href="#">
+                      <div className="icon">
+                        <i className="far fa-save"></i>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+
+                <div className="caption">
+                  <p>
+                    <b></b>
+                    loading...
+                  </p>
+                </div>
+                <div className="post-date"> </div>
               </div>
             </div>
           </div>

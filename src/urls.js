@@ -35,11 +35,14 @@ export const COMMENT_URL = BASE_URL + "comment/";
 export const REPLY_URL = BASE_URL + "reply/";
 export const SAVED_URL = BASE_URL + "saved/";
 
-export const LIKE_URL = BASE_URL + "like-view";
+export const POST_LIKE_URL = BASE_URL + "liked/";
+
+// export const LIKE_URL = BASE_URL + "like-view";
 export const POST_DELETE = BASE_URL + "post-delete";
 
 export const COMMENT_LIKE_URL = BASE_URL + "comment-like";
 export const REPLY_LIKE_URL = BASE_URL + "reply-like";
+export const USER_SAVED_URL = BASE_URL + "user-saved";
 
 export const COMMENT_DELETE_URL = BASE_URL + "comment-delete";
 export const REPLY_DELETE_URL = BASE_URL + "reply-delete";

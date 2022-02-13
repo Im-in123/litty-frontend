@@ -1,19 +1,6 @@
 .ProfileMain {
-  /* margin-top: 1vh; */
 }
 
-/* @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap"); */
-/* body {
-	box-sizing: border-box;
-	background: #f2f2f2;
-	font-family: "Roboto", sans-serif;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-} */
-/* input[type="file"] {
-    display: block;
-} */
 .container1 {
   background: black;
   width: 100%;
@@ -94,7 +81,6 @@
 }
 
 .checkbox-group input[type="checkbox"] {
-  /* ici on ne doit pas mettre de display: none afin de pouvoir "tabber" */
   position: absolute;
   width: 1px;
   height: 1px;
@@ -119,11 +105,9 @@
   line-height: 19px;
   background: #5850eb;
   border: none;
-  /* padding: 15px 25px; */
   border-radius: 6px;
   color: white;
   width: 50%;
-  /* margin-top: 24px; */
 }
 .buttonp:hover {
   background: #6e67ee;
@@ -205,9 +189,6 @@
   }
 
   .container1 .button {
-    /* bon, bon, bon
-		c'est pas tout mais j'ai faim moi ^^
-		*/
     width: auto;
   }
 }

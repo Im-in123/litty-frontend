@@ -89,6 +89,6 @@ function time_ago(time) {
   return time;
 }
 
-var aDay = 24 * 60 * 60 * 1000;
-console.log(time_ago(new Date(Date.now() - aDay)));
-console.log(time_ago(new Date(Date.now() - aDay * 2)));
+// var aDay = 24 * 60 * 60 * 1000;
+// console.log(time_ago(new Date(Date.now() - aDay)));
+// console.log(time_ago(new Date(Date.now() - aDay * 2)));

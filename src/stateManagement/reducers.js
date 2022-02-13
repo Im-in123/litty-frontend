@@ -1,13 +1,9 @@
 import {
-  secondChangeAction,
   userDetailAction,
   CommentTriggerAction,
   postCommentAction,
-  postTriggerAction,
-  bogusTriggerAction,
-  activeChatUserAction,
+  commentInputSetterAction,
   refreshFeedAction,
-  refreshProfileAction,
   postContainerAction,
   newReplyReplyAction,
   deleteCommentAction,
@@ -31,20 +27,12 @@ export const postCommentState = {
   postComment: false,
 };
 
-export const postTriggerState = {
-  postTrigger: 1,
-};
-
-export const secondChangeState = {
-  secondChange: false,
-};
-
 export const userDetailState = {
   userDetail: null,
 };
 
-export const bogusState = {
-  bogus: null,
+export const commentInputSetterState = {
+  commentInputSetter: null,
 };
 
 export const delCommentState = {
@@ -57,16 +45,8 @@ export const newReplyReplyState = {
   newReplyReply: false,
 };
 
-export const activeChatUserState = {
-  activeChatUser: null,
-};
-
 export const refreshFeedState = {
   refreshFeed: true,
-};
-
-export const refreshProfileState = {
-  refreshProfile: null,
 };
 
 export const postContainerState = {
@@ -98,28 +78,6 @@ export const postCommentReducer = (state, action) => {
   }
 };
 
-export const postTriggerReducer = (state, action) => {
-  if (action.type === postTriggerAction) {
-    return {
-      ...state,
-      postTrigger: action.payload,
-    };
-  } else {
-    return state;
-  }
-};
-
-export const secondChangeReducer = (state, action) => {
-  if (action.type === secondChangeAction) {
-    return {
-      ...state,
-      secondChange: action.payload,
-    };
-  } else {
-    return state;
-  }
-};
-
 export const userDetailReducer = (state, action) => {
   if (action.type === userDetailAction) {
     return {
@@ -131,11 +89,11 @@ export const userDetailReducer = (state, action) => {
   }
 };
 
-export const bogusTriggerReducer = (state, action) => {
-  if (action.type === bogusTriggerAction) {
+export const commentInputSetterReducer = (state, action) => {
+  if (action.type === commentInputSetterAction) {
     return {
       ...state,
-      bogus: action.payload,
+      commentInputSetter: action.payload,
     };
   } else {
     return state;
@@ -175,33 +133,11 @@ export const newReplyReplyReducer = (state, action) => {
   }
 };
 
-export const activeChatUserReducer = (state, action) => {
-  if (action.type === activeChatUserAction) {
-    return {
-      ...state,
-      activeChatUser: action.payload,
-    };
-  } else {
-    return state;
-  }
-};
-
 export const refreshFeedReducer = (state, action) => {
   if (action.type === refreshFeedAction) {
     return {
       ...state,
       refreshFeed: action.payload,
-    };
-  } else {
-    return state;
-  }
-};
-
-export const refreshProfileReducer = (state, action) => {
-  if (action.type === refreshProfileAction) {
-    return {
-      ...state,
-      refreshProfile: action.payload,
     };
   } else {
     return state;

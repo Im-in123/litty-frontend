@@ -1,17 +1,14 @@
-import React, {useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Liked from "./Liked";
 import ProfileUpdate from "./ProfileUpdate";
 import Saved from "./Saved";
 import "./settings.css";
-
-
+import UserProfileUpdate from "./UserprofileUpdate";
 
 const Settings = () => {
-
   const [saved, setSaved] = useState(false);
-  const [liked, setLiked] = useState(true);
-  const [profile_update, setProfile_Update] = useState(false);
-
+  const [liked, setLiked] = useState(false);
+  const [profile_update, setProfile_Update] = useState(true);
 
   useEffect(() => {
     const hamburgerMenu = document.getElementById("hamburger-icon");
@@ -40,35 +37,29 @@ const Settings = () => {
     sidebar.classList.toggle("toggle");
   }
 
-  const switchView =(view)=>{
-    if(view==="liked"){
-      setSaved(false)
-      setProfile_Update(false)
+  const switchView = (view) => {
+    if (view === "liked") {
+      setSaved(false);
+      setProfile_Update(false);
 
-      setLiked(true)
-
+      setLiked(true);
     }
-    if(view==="saved"){
-      setProfile_Update(false)
-      setLiked(false)
+    if (view === "saved") {
+      setProfile_Update(false);
+      setLiked(false);
 
-      setSaved(true)
-
+      setSaved(true);
     }
-    if(view==="profile_update"){
-      setLiked(false)
-      setSaved(false)
+    if (view === "profile_update") {
+      setLiked(false);
+      setSaved(false);
 
-      setProfile_Update(true)
-     
+      setProfile_Update(true);
     }
-  }
- 
+  };
+
   return (
     <>
-    
-      
-
       <div className="settings-main">
         <div class="hamburger-menu">
           <span class="material-icons-outlined" id="hamburger-icon">
@@ -81,45 +72,50 @@ const Settings = () => {
           </div>
 
           <ul class="links">
-            <li class="link active">
+            {/* <li class="link active">
               <a href="#">
                 <span class="material-icons-outlined icon">home</span> Home
               </a>
-            </li>
-            <li class="link" 
-              onClick={()=>{ 
-                switchView("profile_update")
-              } }
+            </li> */}
+            <li
+              class="link active"
+              onClick={() => {
+                switchView("profile_update");
+              }}
             >
               <a href="#">
                 <span class="material-icons-outlined icon">settings</span>{" "}
                 Profile Settings
               </a>
             </li>
-            <li class="link">
+            {/* <li class="link">
               <a href="#">
                 <span class="material-icons-outlined icon">email</span>
                 Messages
               </a>
-            </li>
-            <li class="link">
+            </li> */}
+            {/* <li class="link">
               <a href="#">
                 <span class="material-icons-outlined icon">notifications</span>
                 Notification
               </a>
-            </li>
-            <li class="link"
-             onClick={()=>{ 
-              switchView("saved")
-            } }
+            </li> */}
+            <li
+              class="link"
+              onClick={() => {
+                switchView("saved");
+              }}
             >
               <a href="#">
                 <span class="material-icons-outlined icon">save</span>Saved
               </a>
             </li>
-            <li class="link"   onClick={()=>{ 
-              switchView("liked")
-            } }>
+            <li
+              class="link"
+              onClick={() => {
+                switchView("liked");
+              }}
+            >
               <a href="#">
                 <span class="material-icons-outlined icon">
                   favorite_border
@@ -127,30 +123,23 @@ const Settings = () => {
                 Liked{" "}
               </a>
             </li>
-            <li class="link" 
-              onClick={()=>{ 
-                switchView("profile_update")
-              } }
+            {/* <li
+              class="link"
+              onClick={() => {
+                switchView("profile_update");
+              }}
             >
               <a href="#">
                 <span class="material-icons-outlined icon">settings</span>{" "}
                 Account Settings
               </a>
-            </li>
-            
+            </li> */}
           </ul>
         </div>
         <div className="settings-content">
-          {liked && (
-            <Liked />
-          )}
-            {saved && (
-            <Saved />
-            )}
-              {profile_update && (
-            <ProfileUpdate/>
-            )}
-          
+          {liked && <Liked />}
+          {saved && <Saved />}
+          {profile_update && <UserProfileUpdate />}
         </div>
       </div>
     </>

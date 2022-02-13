@@ -14,7 +14,7 @@ import {
   REPLY_DELETE_URL,
 } from "../../urls";
 import {
-  bogusTriggerAction,
+  commentInputSetterAction,
   deleteCommentAction,
   deleteReplyAction,
 } from "../../stateManagement/actions";
@@ -61,7 +61,7 @@ const Reply = (props) => {
 
     console.log("sendreplyTo data::::", reply_id, who, parent_id);
     dispatch({
-      type: bogusTriggerAction,
+      type: commentInputSetterAction,
       payload: {
         placeholder: placeholderText,
         reply_id: reply_id,

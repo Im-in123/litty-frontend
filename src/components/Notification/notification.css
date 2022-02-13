@@ -62,8 +62,8 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
 }
 .notification .img-content img {
   width: 100%;
@@ -96,4 +96,28 @@ h3 {
     width: 100%;
     border-radius: 1rem;
   }
+}
+
+.post-like {
+  background: beige;
+}
+
+.comment-like {
+  background: antiquewhite;
+}
+
+.reply-like {
+  background: antiquewhite;
+}
+.post-comment {
+  background: aliceblue;
+}
+.comment-reply {
+  background: aliceblue;
+}
+.reply-reply {
+  background: aliceblue;
+}
+.user-follow {
+  background: blueviolet;
 }

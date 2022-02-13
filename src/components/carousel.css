@@ -1,13 +1,9 @@
-/* slideshow taşıyıcı */
 .slideshow-container {
-  /* max-width: 1000px; */
   position: relative;
   margin: auto;
   height: 90%;
-  /* max-height: 320px; */
 }
 
-/* varsayılan olarak görselleri gizliyoruz */
 .slideshow-container .mySlides {
   display: none;
   height: 100%;
@@ -17,13 +13,9 @@
 .slideshow-container .iimm {
   height: 100%;
   width: 100%;
-  /* max-height: 338px; */
-  /* max-width: 600px; */
   object-fit: contain;
-  /* max-width: 60px; */
 }
 
-/* sonraki ve önceki butonları */
 .prev,
 .next {
   cursor: pointer;
@@ -40,19 +32,16 @@
   user-select: none;
 }
 
-/* sonraki butonunun pozisyonu */
 .next {
   right: 0;
   border-radius: 3px 0 0 3px;
 }
 
-/* üzerine gelince hafif bir efekt verelim */
 .prev:hover,
 .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* görsel başlığı */
 .slideshow-container .text {
   color: #f2f2f2;
   font-size: 15px;
@@ -63,7 +52,6 @@
   text-align: center;
 }
 
-/* görsel numaraları */
 .numbertext {
   color: gainsboro;
 
@@ -73,7 +61,6 @@
   top: 0;
 }
 
-/* nokta navigasyonu */
 .dots-div {
   text-align: center;
   background: black;
@@ -87,8 +74,7 @@
   height: 15px;
   width: 15px;
   margin: 0 2px;
-  /* background-color: rgb(155, 149, 149); */
-  /* background-color: rgb(224, 154, 222); */
+
   background-color: rgb(240, 212, 175);
 
   border-radius: 50%;
@@ -98,12 +84,9 @@
 
 .dots-div .active,
 .dots-div .dot:hover {
-  /* background-color: #717171; */
-  /* background-color: orchid; */
   background-color: burlywood;
 }
 
-/* geçiş animasyonu */
 .fade {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 1.5s;

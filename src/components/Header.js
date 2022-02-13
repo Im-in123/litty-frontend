@@ -9,9 +9,6 @@ const Header = (props) => {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  const {
-    state: { bogus },
-  } = useContext(store);
 
   const [loading, setLoading] = useState(false);
 

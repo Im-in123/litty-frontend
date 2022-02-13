@@ -29,8 +29,8 @@ const Notitfication = (props) => {
 
     return () => {
       window.removeEventListener("scroll", autoFetchNotication);
-      g_noti=[]
-      p1=[]
+      g_noti = [];
+      p1 = [];
     };
   }, []);
   useEffect(() => {
@@ -132,7 +132,7 @@ const Noti = (props) => {
   const data = props.data;
   if (!data) return <></>;
   return (
-    <div className="notification">
+    <div className={` notification ${data.action}`}>
       <div className="message">
         <div className="user-image">
           <Link to={`/other-profile/` + data.sender.username}>

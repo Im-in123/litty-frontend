@@ -2,13 +2,11 @@
   height: 4rem;
   width: 100%;
   position: relative;
-  /* margin-bottom: 1rem; */
 }
 
 .fixed-header {
   position: fixed;
   width: 100%;
-  /* background: #4e4764; */
 
   background: black;
   z-index: 100;
@@ -50,8 +48,7 @@
   display: flex;
   align-items: center;
   padding: 0 20px;
-  /* margin: 20px; */
-  /* margin: 20px 0px 20px 20px ; */
+
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 2px;
@@ -62,7 +59,6 @@
 
 .navmenu .diva img {
   height: 22px;
-  /* display: block; */
 }
 
 @media only screen and (max-width: 768px) {
@@ -75,9 +71,7 @@
   .navmenu .diva {
     display: flex;
     align-items: center;
-    /* padding: 0 10px; */
     margin: 0px;
-    /* margin-top: 5px; */
     margin: 0px 0px 5px 5px;
     padding-left: 15px;
     padding-right: 15px;
@@ -138,10 +132,8 @@
   .header-content {
     justify-content: space-around;
     max-width: 99vw;
-    /* width: 73vw; */
     margin-left: 10%;
     line-height: 3rem;
-    /* margin-right: auto; */
   }
   /*side-menu*/
   .right-side {
@@ -164,7 +156,5 @@
   .header-right-side {
     display: flex;
     align-items: center;
-    /* margin-right: -15px; */
-    /* padding-left: 10px; */
   }
 }
