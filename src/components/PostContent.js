@@ -353,10 +353,10 @@ const VideoComp = (props) => {
     };
     video.onerror = (e) => {
       console.log("video error:::", e);
-      video.setAttribute("poster", props.thumbnail);
       console.log(video.error);
       // alert("video error");
       video.load();
+      playPause();
     };
 
     popPlayBtn.onclick = () => {
