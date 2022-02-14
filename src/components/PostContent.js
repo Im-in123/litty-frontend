@@ -354,7 +354,7 @@ const VideoComp = (props) => {
     video.onerror = (e) => {
       console.log("video error:::", e);
       console.log(video.error);
-      alert("video error");
+      // alert("video error");
       video.load();
     };
 
