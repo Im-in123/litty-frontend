@@ -356,7 +356,7 @@ const VideoComp = (props) => {
       console.log(video.error);
       // alert("video error");
       video.load();
-      playPause();
+      video.play();
     };
 
     popPlayBtn.onclick = () => {
