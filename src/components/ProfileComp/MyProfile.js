@@ -13,7 +13,7 @@ import {
 import UserInfo from "../UserInfo";
 import PostContent from "../PostContent";
 import PostInfo from "../PostInfo";
-import { logout } from "../../customs/authController";
+import { fetchMyProfile, logout } from "../../customs/authController";
 import PostDetail from "../PostDetail";
 import NewDetail from "../NewDetail/NewDetail";
 import { volumeAction } from "../../stateManagement/actions";
@@ -58,6 +58,7 @@ const MyProfile = (props) => {
 
     let r = await getMyPost(1);
     setFetching(false);
+    fetchMyProfile(dispatch);
 
     return () => {};
   }, []);
@@ -134,7 +135,6 @@ const MyProfile = (props) => {
         for (var i in res.data.results) {
           post.push(res.data.results[i]);
         }
-        // setMyPost([...myPost, ...res.data.results]);
 
         setMyPost(post);
       } else {
@@ -259,8 +259,14 @@ const MyProfile = (props) => {
                     </h3>
 
                     <div className="ps-fm">
-                      <p className="">Followers {followers}</p>
-                      <p className="">Following {following}</p>
+                      <Link to="/myfollow/followers">
+                        {" "}
+                        <p className="">Followers {followers}</p>
+                      </Link>
+                      <Link to="/myfollow/following">
+                        {" "}
+                        <p className="">Following {following}</p>
+                      </Link>
                       <p className="">Likes 2B</p>
                     </div>
                     <p className="phi-profile-tagline">{userDetail.bio}</p>

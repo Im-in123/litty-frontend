@@ -3,7 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { axiosHandler, getToken } from "../../helper";
 import { store } from "../../stateManagement/store";
-import { UrlParser } from "../../customs/others";
+import { UrlParser, uuidv4 } from "../../customs/others";
 import {
   BASE_URL,
   BASE_URL1,
@@ -19,7 +19,11 @@ import PostInfo from "../PostInfo";
 import { GalleryItem } from "./MyProfile";
 import PostDetail from "../PostDetail";
 import NewDetail from "../NewDetail/NewDetail";
-import { volumeAction } from "../../stateManagement/actions";
+import {
+  updateFollowAction,
+  volumeAction,
+} from "../../stateManagement/actions";
+import { fetchMyProfile } from "../../customs/authController";
 
 let post = [];
 let otherUser = [];
@@ -155,7 +159,6 @@ const OtherProfile = (props) => {
   };
 
   const getMyPost = async (page) => {
-    // setFetching(true);
     let extra = `keyword=${o_name}`;
     let url;
     if (page) {
@@ -182,7 +185,6 @@ const OtherProfile = (props) => {
         for (var i in res.data.results) {
           post.push(res.data.results[i]);
         }
-        // setMyPost([...myPost, ...res.data.results]);
 
         setMyPost([...post]);
       } else {
@@ -235,6 +237,7 @@ const OtherProfile = (props) => {
       }
     }
     setFollowError(false);
+    dispatch({ type: updateFollowAction, payload: uuidv4() });
   };
 
   const followHandler = async (e) => {
@@ -257,18 +260,18 @@ const OtherProfile = (props) => {
       setFollowLoading(false);
 
       console.log("handleFollow:::", res.data);
-      const rr1 = res.data["data"];
-      console.log("rr2:::::", rr1);
-      var vv = document.getElementById("followers");
+      const r1 = res.data["data"];
+      console.log("rr2:::::", r1);
 
-      if (rr1 === "unfollowed") {
+      if (r1 === "unfollowed") {
         setIsFollowing(false);
 
         setFollowers((f) => f - 1);
-      } else if (rr1 === "followed") {
+      } else if (r1 === "followed") {
         setIsFollowing(true);
         setFollowers((f) => f + 1);
       }
+      await fetchMyProfile(dispatch);
     }
     setFollowError(false);
   };
@@ -378,12 +381,20 @@ const OtherProfile = (props) => {
                     </h3>
 
                     <div className="ps-fm">
-                      <p className="">
-                        Followers <span id="followers">{followers}</span>
-                      </p>
-                      <p className="">
-                        Following <span id="following">{following}</span>
-                      </p>
+                      <Link
+                        to={`/otherfollow/username=${otherUser.user.username}-option=followers`}
+                      >
+                        <p className="">
+                          Followers <span id="followers">{followers}</span>
+                        </p>
+                      </Link>
+                      <Link
+                        to={`/otherfollow/username=${otherUser.user.username}-option=following`}
+                      >
+                        <p className="">
+                          Following <span id="following">{following}</span>
+                        </p>
+                      </Link>
                       <p className="">Likes 2B</p>
                     </div>
                     <p className="phi-profile-tagline">{otherUser.bio}</p>
@@ -406,7 +417,7 @@ const OtherProfile = (props) => {
                         {followLoading ? (
                           "..."
                         ) : (
-                          <>{isFollowing ? "Unfollow" : "Follow"}</>
+                          <>{isFollowing ? "Following" : "Follow"}</>
                         )}
                       </span>
                     </button>

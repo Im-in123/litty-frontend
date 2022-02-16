@@ -11,6 +11,7 @@ import {
   volumeAction,
   slideAction,
   checkAllFollowAction,
+  updateFollowAction,
 } from "./actions";
 
 export const checkAllFollowState = {
@@ -55,6 +56,9 @@ export const postContainerState = {
 
 export const volumeTriggerState = {
   volumeTrigger: true,
+};
+export const updateFollowTriggerState = {
+  updateFollowTrigger: true,
 };
 export const commentTriggerReducer = (state, action) => {
   if (action.type === CommentTriggerAction) {
@@ -182,6 +186,17 @@ export const checkAllFollowReducer = (state, action) => {
     return {
       ...state,
       checkAllFollow: action.payload,
+    };
+  } else {
+    return state;
+  }
+};
+
+export const updateFollowReducer = (state, action) => {
+  if (action.type === updateFollowAction) {
+    return {
+      ...state,
+      updateFollowTrigger: action.payload,
     };
   } else {
     return state;

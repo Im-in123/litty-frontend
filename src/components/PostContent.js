@@ -318,7 +318,6 @@ const VideoComp = (props) => {
 
     video = document.querySelector("#video" + props.id);
 
-    // popPlayBtn.style.display = "none";
     spin.style.display = "none";
     video.addEventListener("timeupdate", timeUpdate);
     if (props.overallAudio) {
@@ -375,7 +374,6 @@ const VideoComp = (props) => {
   useEffect(() => {
     try {
       let video = document.querySelector("#video" + props.id);
-      // video.play();
       if (volumeTrigger) {
         video.volume = 1;
         setVolume(true);

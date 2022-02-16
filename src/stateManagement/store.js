@@ -24,6 +24,8 @@ import {
   slideReducer,
   checkAllFollowState,
   checkAllFollowReducer,
+  updateFollowReducer,
+  updateFollowTriggerState,
 } from "./reducers";
 
 const reduceReducers =
@@ -48,7 +50,8 @@ const combinedReducers = reduceReducers(
   postContainerReducer,
   volumeReducer,
   slideReducer,
-  checkAllFollowReducer
+  checkAllFollowReducer,
+  updateFollowReducer
 );
 
 const initialState = {
@@ -65,6 +68,7 @@ const initialState = {
   ...volumeTriggerState,
   ...slideTriggerState,
   ...checkAllFollowState,
+  ...updateFollowTriggerState,
 };
 
 const store = createContext(initialState);

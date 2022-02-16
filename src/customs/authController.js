@@ -58,7 +58,6 @@ export const checkAuthState = async (setChecking, dispatch, props) => {
     let check = [];
     for (var i in pf) {
       let ii = pf[i];
-      console.log("vv::", ii);
       check.push({ user: ii.user.username, status: "yes" });
     }
     console.log("following check:::::", check);
@@ -68,7 +67,6 @@ export const checkAuthState = async (setChecking, dispatch, props) => {
     });
     setChecking(false);
     return;
-    // window.location.href = "/verify";
   }
   console.log("token.refresh::", token.refresh);
   // alert("getting bew access with refresh token");
@@ -133,3 +131,78 @@ const AuthController = (props) => {
 };
 
 export default AuthController;
+
+export const fetchMyProfile = async (dispatch) => {
+  let token = localStorage.getItem(tokenName);
+  if (!token) {
+    console.log("logging out");
+    logout();
+    return;
+  }
+  token = JSON.parse(token);
+  console.log("getting user profile");
+  const userProfile = await axiosHandler({
+    method: "get",
+    url: ME_URL,
+    token: token.access,
+  }).catch((e) => {
+    console.log(e, "error on getting userprofile");
+    if (e.response) {
+      console.log("Request made and server responded");
+      console.log("e response.data:::", e.response.data);
+      console.log("e response,status:::", e.response.status);
+      console.log(" response.headers:::", e.response.headers);
+    } else if (e.request) {
+      // The request was made but no response was received
+      console.log("e request:::", e.request);
+    }
+  });
+  if (userProfile) {
+    console.log("got userprofile22");
+    console.log(userProfile.data, "userprofiledata22..");
+    dispatch({ type: userDetailAction, payload: userProfile.data });
+    let pf = userProfile.data.following;
+    let check = [];
+    for (var i in pf) {
+      let ii = pf[i];
+      check.push({ user: ii.user.username, status: "yes" });
+    }
+    console.log("following check:::::", check);
+    dispatch({
+      type: checkAllFollowAction,
+      payload: check,
+    });
+    return;
+  }
+  console.log("token.refresh::", token.refresh);
+  const getNewAccess = await axiosHandler({
+    method: "post",
+    url: REFRESH_URL,
+    data: {
+      refresh: token.refresh,
+    },
+  }).catch((e) => {
+    console.log(e, "error on getting new access");
+    if (e.response) {
+      console.log("Request made and server responded");
+      console.log("e response.data2:::", e.response.data);
+      console.log("e response,status2:::", e.response.status);
+      console.log(" response.headers2:::", e.response.headers);
+
+      if (
+        e.response.data.error === "Token is invalid or has expired" ||
+        e.response.data.error === "refresh token not found"
+      ) {
+        logout();
+      }
+    } else if (e.request) {
+      // The request was made but no response was received
+      console.log("e request2:::", e.request);
+    }
+  });
+
+  if (getNewAccess) {
+    console.log("got new access:::", getNewAccess.data);
+    localStorage.setItem(tokenName, JSON.stringify(getNewAccess.data));
+  }
+};

@@ -1,0 +1,54 @@
+.follow-main {
+  display: flex;
+  flex-direction: column;
+  margin-top: 1vh;
+  align-items: center;
+  justify-content: center;
+}
+.follow-main h1 {
+  color: white;
+}
+.follow-main .item {
+  display: flex;
+  background: white;
+  color: black;
+  align-items: center;
+  justify-content: space-between;
+  width: 30%;
+  padding: 10px;
+}
+.item a {
+  text-decoration: none;
+  color: black;
+}
+.item .user {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  font-weight: bold;
+}
+.item .user img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.item .user .name {
+  padding: 0px 5px;
+}
+
+.item .option {
+  width: 35%;
+  max-width: 250px;
+}
+.item .option button {
+  background: crimson;
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  width: 100%;
+  padding: 10px;
+}

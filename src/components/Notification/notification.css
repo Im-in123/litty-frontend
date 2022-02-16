@@ -99,15 +99,15 @@ h3 {
 }
 
 .post-like {
-  background: beige;
+  background: antiquewhite;
 }
 
 .comment-like {
-  background: antiquewhite;
+  background: beige;
 }
 
 .reply-like {
-  background: antiquewhite;
+  background: beige;
 }
 .post-comment {
   background: aliceblue;

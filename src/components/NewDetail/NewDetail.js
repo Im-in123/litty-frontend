@@ -189,11 +189,8 @@ const NewDetail = (props) => {
 
       const tag = document.createElement("SPAN");
       tag.setAttribute("class", "tag");
-      // const x = document.createElement("SPAN");
-      // x.setAttribute("class", "x");
-      // x.innerHTML = "&times;";
+
       tag.innerHTML = `${tagToAdd} &times;`;
-      // tag.innerHTML = `${tagToAdd} <span class='x'>&times;<span>`;
 
       tags.push(tagToAdd);
       inputTags.insertAdjacentElement("beforebegin", tag);
@@ -532,22 +529,17 @@ const NewDetail = (props) => {
   if (!fetching) {
     return (
       <div>
-        <link
+        {/* <link
           rel="stylesheet"
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        />
+        /> */}
         <div className="wrapper-new">
           <div className="container-new">
             <article className="gallery-card-new">
-              {/* <button className="close-new">
-                <i className="fa fa-times"></i>
-              </button> */}
-
               <section className="gallery-image-new">
                 <ContentSlide image={post.image} video={post.video} />
               </section>
               <section className="gallery-info-new">
-                {/* <h2 className="gallery-title-new">Sunday Lunch! 🍔</h2> */}
                 <div className="gallery-over-new">
                   <div className="gallery-first-new">
                     <div className="gallery-author-new">
@@ -826,11 +818,7 @@ const ContentSlide = (props) => {
     }
     for (i = 0; i < slides.length; i++) {
       try {
-        // console.log("slide:::", slides[i]);
-        // console.log("childnode:::", slides[i].childNodes);
-        // console.log("children:::", slides[i].children);
         let sf = slides[i].children[1];
-        // console.log("slidefinal:::", sf.lastChild);
         sf.lastChild.pause();
       } catch (error) {}
       slides[i].style.display = "none";
@@ -972,7 +960,6 @@ const ContentLoadComment = (props) => {
     if (currentComment) {
       setCommentList([...commentList, currentComment]);
       scrollToBottom(props.id);
-      // alert("scrolled to bottom");
       props.setCommentCount(props.commentCount + 1);
       setCurrentComment(false);
     }
@@ -1170,7 +1157,6 @@ const ContentLoadComment = (props) => {
         author_id: userDetail.user.id,
       });
       console.log("comment data::::", commentData);
-      //     console.log("postcomment:::", postComment)
       let data = {
         ...commentData,
         post_id: props.id,

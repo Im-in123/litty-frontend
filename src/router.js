@@ -17,6 +17,8 @@ import ChatPage from "./components/chat/ChatPage";
 import Notification from "./components/Notification/Notification";
 import NewDetail from "./components/NewDetail/NewDetail";
 import Settings from "./components/settings/settings";
+import MyFollow from "./components/ProfileComp/MyFollow";
+import OtherFollow from "./components/ProfileComp/OtherFollow";
 
 const Router = (props) => {
   return (
@@ -51,6 +53,12 @@ const Router = (props) => {
               <Route
                 path="/chatpage/username=:username-timeout=:timeout"
                 component={ChatPage}
+                exact
+              />
+              <Route path="/myfollow/:option" component={MyFollow} exact />
+              <Route
+                path="/otherfollow/username=:username-option=:option"
+                component={OtherFollow}
                 exact
               />
 

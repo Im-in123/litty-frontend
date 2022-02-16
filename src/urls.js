@@ -37,7 +37,6 @@ export const SAVED_URL = BASE_URL + "saved/";
 
 export const POST_LIKE_URL = BASE_URL + "liked/";
 
-// export const LIKE_URL = BASE_URL + "like-view";
 export const POST_DELETE = BASE_URL + "post-delete";
 
 export const COMMENT_LIKE_URL = BASE_URL + "comment-like";

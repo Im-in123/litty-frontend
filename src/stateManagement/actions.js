@@ -15,3 +15,4 @@ export const volumeAction = "volumeAction";
 export const slideAction = "slideAction";
 
 export const checkAllFollowAction = "checkAllFollowAction";
+export const updateFollowAction = "updateFollowAction";

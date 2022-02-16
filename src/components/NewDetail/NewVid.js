@@ -150,11 +150,9 @@ const NewVid = (props) => {
       if (!volume) {
         video.volume = 1;
         setVolume(true);
-        // props.setOverallAudio(true);
       } else {
         video.volume = 0;
         setVolume(false);
-        // props.setOverallAudio(false);
       }
     } catch (error) {
       console.log(error);
