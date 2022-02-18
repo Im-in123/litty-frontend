@@ -16,7 +16,10 @@ import PostInfo from "../PostInfo";
 import { fetchMyProfile, logout } from "../../customs/authController";
 import PostDetail from "../PostDetail";
 import NewDetail from "../NewDetail/NewDetail";
-import { volumeAction } from "../../stateManagement/actions";
+import {
+  commentInputSetterAction,
+  volumeAction,
+} from "../../stateManagement/actions";
 import { UrlParser } from "../../customs/others";
 
 let post = [];
@@ -49,7 +52,7 @@ const MyProfile = (props) => {
   const [myPost, setMyPost] = useState([]);
 
   const [overallAudio, setOverallAudio] = useState(true);
-
+  const [end, setEnd] = useState(false);
   useEffect(async () => {
     console.log("MyProfile props:::", props);
 
@@ -147,9 +150,10 @@ const MyProfile = (props) => {
         canGoNext = true;
 
         goneNext = false;
-
+        setEnd(false);
         shouldHandleScroll = true;
       } else {
+        setEnd(true);
         shouldHandleScroll = false;
         canGoNext = true;
       }
@@ -409,13 +413,16 @@ const MyProfile = (props) => {
               )}
             </>
           </div>
-          <div className="load-more-post">
+          {/* <div className="load-more-post">
             <span>{p1 && p1.next ? "Loading more..." : ""}</span>
           </div>
           <div className="load-more-post">
             <span>
               {myPost.length < 1 || !p1?.next ? "No more posts!" : ""}
             </span>
+          </div> */}
+          <div className="load-more-post">
+            <span>{end ? "No more posts!" : "Loading more..."}</span>
           </div>
         </div>
       </div>
@@ -431,6 +438,8 @@ const MyProfile = (props) => {
               setClose(true);
               setId(null);
               setUser(null);
+              dispatch({ type: commentInputSetterAction, payload: null });
+
               const popup1Cont = document.querySelector("#popup1");
               popup1Cont.style.visibility = "hidden";
               popup1Cont.style.opacity = 0;

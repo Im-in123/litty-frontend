@@ -20,6 +20,7 @@ import { GalleryItem } from "./MyProfile";
 import PostDetail from "../PostDetail";
 import NewDetail from "../NewDetail/NewDetail";
 import {
+  commentInputSetterAction,
   updateFollowAction,
   volumeAction,
 } from "../../stateManagement/actions";
@@ -39,6 +40,7 @@ const OtherProfile = (props) => {
   const [close, setClose] = useState(false);
   const [id, setId] = useState(null);
   const [user, setUser] = useState(null);
+  const [end, setEnd] = useState(false);
 
   const [error, setError] = useState(false);
   const [myPost, setMyPost] = useState([]);
@@ -197,10 +199,11 @@ const OtherProfile = (props) => {
         canGoNext = true;
 
         goneNext = false;
-
+        setEnd(false);
         shouldHandleScroll = true;
       } else {
         shouldHandleScroll = false;
+        setEnd(true);
         canGoNext = true;
       }
     }
@@ -543,14 +546,17 @@ const OtherProfile = (props) => {
               </>
             )}
           </div>
-          <div className="load-more-post">
+          {/* <div className="load-more-post">
             <span>{p1 && p1.next ? "Loading more..." : ""}</span>
-          </div>
+          </div> */}
           <div className="load-more-post">
+            <span>{end ? "No more posts!" : "Loading more..."}</span>
+          </div>
+          {/* <div className="load-more-post">
             <span>
               {myPost.length < 1 || !p1?.next ? "No more posts!" : ""}
             </span>
-          </div>
+          </div> */}
         </div>
       </div>
       <div id="popup1" className="overlay overlay-back">
@@ -565,6 +571,8 @@ const OtherProfile = (props) => {
               setClose(true);
               setId(null);
               setUser(null);
+              dispatch({ type: commentInputSetterAction, payload: null });
+
               const popup1Cont = document.querySelector("#popup1");
               popup1Cont.style.visibility = "hidden";
               popup1Cont.style.opacity = 0;

@@ -41,7 +41,8 @@ export const POST_DELETE = BASE_URL + "post-delete";
 
 export const COMMENT_LIKE_URL = BASE_URL + "comment-like";
 export const REPLY_LIKE_URL = BASE_URL + "reply-like";
-export const USER_SAVED_URL = BASE_URL + "user-saved";
+// export const USER_SAVED_URL = BASE_URL + "user-saved";
+export const NOTIFICATION_COUNT_URL = BASE_URL + "notification-count";
 
 export const COMMENT_DELETE_URL = BASE_URL + "comment-delete";
 export const REPLY_DELETE_URL = BASE_URL + "reply-delete";

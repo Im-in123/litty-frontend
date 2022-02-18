@@ -58,6 +58,11 @@ h3 {
 .notification .message .inner .username {
   font-weight: bold;
 }
+
+.notification .message .inner .s-p {
+  color: lightgray;
+  font-size: 11px;
+}
 .notification .img-content {
   display: flex;
   align-items: center;

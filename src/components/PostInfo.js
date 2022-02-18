@@ -31,7 +31,6 @@ const PostInfo = (props) => {
   let changed = false;
   let likeCount;
   let likevalue;
-  // console.log("PostInfo props:::", props)
   let like = props.like;
   let like_count = like.length;
   if (like_count === 0) {
@@ -41,7 +40,6 @@ const PostInfo = (props) => {
   let author = props.author.username;
   let created_at = props.created_at;
   let tags = props.tags;
-  // let comment_count = props.comment_count;
   let isliked = null;
   const [actiontype, setActiontype] = useState("unlike");
   useEffect(() => {
@@ -50,17 +48,13 @@ const PostInfo = (props) => {
   useEffect(() => {
     checkname();
     try {
-      // console.log("likeeeeeeeee maiin:::::::", like)
-
       for (var i in like) {
         let like1 = like[i];
         if (like1.user.username === userDetail.user.username) {
           isliked = like1.user.username;
-          // console.log("likeeeeeeeee:::::::", isliked)
-          // actiontype="like";
+
           setActiontype("like");
           setIsLiked1(true);
-          // alert(actiontype)
           break;
         } else {
           isliked = null;
@@ -99,7 +93,6 @@ const PostInfo = (props) => {
     if (!changed) {
       likeCount = document.querySelector("#likecount" + props.id);
       likevalue = likeCount.textContent;
-      console.log("likecount and value:::", likeCount, likevalue);
 
       changed = true;
     }
@@ -194,7 +187,6 @@ const PostInfo = (props) => {
               <div className="icon">
                 <i className="far fa-heart"></i>
               </div>
-              {/* <div id={"likecount"+props.id} className="count">{like_count}</div> */}
             </a>
           </div>
           <div className="comments" id="##">

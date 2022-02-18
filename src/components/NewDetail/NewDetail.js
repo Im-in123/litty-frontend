@@ -512,27 +512,113 @@ const NewDetail = (props) => {
       // }
     }
   };
+
   if (fetching) {
     return (
-      <div className="wrapper-new">
-        <div className="container-new">
-          <article className="gallery-card-new">
-            <section className="gallery-image-new">
-              {error ? "An error occured, reload!" : "loading.."}
-            </section>
-            <section className="gallery-info-new"></section>
-          </article>
-        </div>
-      </div>
+      <>
+        {error ? (
+          <>An error occured, reload!</>
+        ) : (
+          <div>
+            <div className="wrapper-new">
+              <div className="container-new">
+                <article className="gallery-card-new">
+                  <section className="gallery-image-new">Loading...</section>
+                  <section className="gallery-info-new">
+                    <div className="gallery-over-new">
+                      <div className="gallery-first-new">
+                        <div className="gallery-author-new">
+                          <>
+                            <img alt="" />
+                          </>
+                        </div>
+                        <div className="gallery-follow">
+                          <>
+                            <span>
+                              <i className="fas fa-plus profile-icons"></i>
+                            </span>
+                          </>
+                        </div>
+                      </div>
+                      <div className="drop-parent-new">
+                        <div className="gallery-saved">
+                          <i class="far fa-bookmark"></i>
+                        </div>
+                        <div className="dm-new">
+                          <div>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="24px"
+                              viewBox="0 0 24 24"
+                              width="24px"
+                              fill="#FFFFFF"
+                            >
+                              <path d="M0 0h24v24H0z" fill="none" />
+                              <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                            </svg>
+                          </div>
+                        </div>
+                        <div className="dropdown-edit-new">
+                          <button
+                            className="summary-new"
+                            aria-expanded="false"
+                            aria-controls="mypanel-new"
+                            aria-label="Accessibility parameters"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="24px"
+                              viewBox="0 0 24 24"
+                              width="24px"
+                              fill="#FFFFFF"
+                            >
+                              <path d="M0 0h24v24H0z" fill="none" />
+                              <path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                            </svg>
+                          </button>
+                          <div className="panel-new" id="mypanel-new"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="gallery-descr-new"></p>
+
+                    <div className="gallery-actions-new">
+                      <span>
+                        <i className="far fa-heart icon-size"></i>
+                      </span>
+                      <span>
+                        <i className="fa fa-comment icon-size-comment"></i>
+                        &nbsp;
+                      </span>
+                    </div>
+
+                    <div className="gallery-tags-new">
+                      <a href="#">#</a>
+                    </div>
+
+                    <div className="gallery-edit">
+                      <span className="close"> &times;</span>
+                    </div>
+
+                    <hr />
+                    <ContentLoadComment
+                      // id={post_id}
+                      setCommentCount={setCommentCount}
+                      commentCount={commentCount}
+                      close={props.close}
+                    />
+                  </section>
+                </article>
+              </div>
+            </div>
+          </div>
+        )}
+      </>
     );
   }
   if (!fetching) {
     return (
       <div>
-        {/* <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        /> */}
         <div className="wrapper-new">
           <div className="container-new">
             <article className="gallery-card-new">
@@ -965,7 +1051,16 @@ const ContentLoadComment = (props) => {
     }
     return () => {};
   }, [currentComment]);
+  useEffect(() => {
+    console.log("props.close 222222");
 
+    return () => {
+      console.log("props.close 333333");
+      setCommentList([]);
+      setCommentData({});
+      setFetching(true);
+    };
+  }, [props.close]);
   useEffect(() => {
     try {
       setPlaceholder(commentInputSetter.placeholder);

@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./notification.css";
-import { BASE_URL1, NOTIFICATION_URL, LOCAL_CHECK } from "../../urls";
+import {
+  BASE_URL1,
+  NOTIFICATION_URL,
+  LOCAL_CHECK,
+  NOTIFICATION_COUNT_URL,
+} from "../../urls";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
+import moment from "moment";
 
 let g_noti = [];
 
@@ -14,7 +20,8 @@ let shouldHandleScroll = false;
 
 const Notitfication = (props) => {
   const [notification, setNotification] = useState([]);
-  const [fetching, setFetching] = useState([]);
+  const [fetching, setFetching] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const {
     state: { userDetail },
@@ -104,8 +111,37 @@ const Notitfication = (props) => {
         canGoNext = true;
       }
       setFetching(false);
+      readNotifications();
+      setLoading(false);
     }
   };
+  const readNotifications = async () => {
+    const data = { keyword: "mark-all-as-read" };
+    const token = await getToken();
+    const gp = await axiosHandler({
+      method: "post",
+      url: `${NOTIFICATION_COUNT_URL}`,
+      data: data,
+      token,
+    }).catch((e) => {
+      console.log("Error in readNotification ::::", e);
+    });
+
+    if (gp) {
+      console.log(" readNotification::::", gp.data);
+    }
+  };
+  if (loading) {
+    return (
+      <div className="containerNotification">
+        <h3>Notifications</h3>
+        <div className="notification-main">Loading...</div>
+        <div className="load-more-post">
+          <span></span>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="containerNotification">
       <h3>Notifications</h3>
@@ -153,12 +189,22 @@ const Noti = (props) => {
             </Link>
           </div>
           {data.action === "post-like" && (
-            <div className="user-msg">{data.message}</div>
+            <div className="user-msg">
+              {data.message}
+              <p className="s-p">
+                {moment(data.created_at).format("DD/MM/YYYY")}{" "}
+                {moment(data.created_at).format("hh:mm a")}
+              </p>
+            </div>
           )}
           {data.action === "comment-like" && (
             <div className="user-msg">
               {data.message}
               <p>{data.comment.comment}</p>
+              <p className="s-p">
+                {moment(data.created_at).format("DD/MM/YYYY")}{" "}
+                {moment(data.created_at).format("hh:mm a")}
+              </p>
             </div>
           )}
           {data.action === "reply-like" && (
@@ -171,6 +217,10 @@ const Noti = (props) => {
             <div className="user-msg">
               {data.message}
               <p>{data.comment.comment}</p>
+              <p className="s-p">
+                {moment(data.created_at).format("DD/MM/YYYY")}{" "}
+                {moment(data.created_at).format("hh:mm a")}
+              </p>
             </div>
           )}
           {data.action === "comment-reply" && (
@@ -183,19 +233,43 @@ const Noti = (props) => {
             <div className="user-msg">
               {data.message}
               <p>{data.reply.comment}</p>
+              <p className="s-p">
+                {moment(data.created_at).format("DD/MM/YYYY")}{" "}
+                {moment(data.created_at).format("hh:mm a")}
+              </p>
             </div>
           )}
 
           {data.action === "user-follow" && (
-            <div className="user-msg">{data.message}</div>
+            <div className="user-msg">
+              {data.message}
+              <p className="s-p">
+                {moment(data.created_at).format("DD/MM/YYYY")}{" "}
+                {moment(data.created_at).format("hh:mm a")}
+              </p>
+            </div>
+          )}
+
+          {data.action === "message" && (
+            <Link
+              to={`/chatpage/username=${data.sender.username}-timeout=${data.sender.id}`}
+            >
+              <div className="user-msg">
+                {data.message}
+                <p className="s-p">
+                  {moment(data.created_at).format("DD/MM/YYYY")}{" "}
+                  {moment(data.created_at).format("hh:mm a")}
+                </p>
+              </div>
+            </Link>
           )}
         </div>
       </div>
 
       <PostCont item={data.post} />
-      <div className="action">
+      {/* <div className="action">
         <span class="material-icons-outlined close">cancel</span>
-      </div>
+      </div> */}
     </div>
   );
 };

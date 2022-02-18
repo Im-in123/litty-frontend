@@ -60,7 +60,13 @@
 .navmenu .diva img {
   height: 22px;
 }
-
+.navmenu .diva span {
+  color: white;
+  background: #d53535;
+  border-radius: 50%;
+  font-size: 11px;
+  padding: 0px 3px;
+}
 @media only screen and (max-width: 768px) {
   .navmenu {
     margin-left: 8px;

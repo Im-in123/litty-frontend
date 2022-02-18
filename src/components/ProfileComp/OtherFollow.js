@@ -116,9 +116,8 @@ const OtherFollow = (props) => {
 
   return (
     <div className="follow-main">
-      <h1>
-        {username}'s {option}
-      </h1>
+      {option === "following" && <h1>People {username} follows</h1>}
+      {option === "followers" && <h1> {username}'s followers</h1>}
       {option === "followers" &&
         followers.map((item, key) => (
           <>

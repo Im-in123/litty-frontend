@@ -17,7 +17,7 @@ export const axiosHandler = ({
     let axiosProps = { method: methodType, url, data };
 
     if (token) {
-      console.log(token, "token");
+      // console.log(token, "token");
       axiosProps.headers = { Authorization: `Bearer ${token}` };
     }
     if (extra) {

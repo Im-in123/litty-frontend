@@ -1,9 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
-import { BASE_URL, BASE_URL1, LOCAL_CHECK } from "../urls";
+import {
+  BASE_URL,
+  BASE_URL1,
+  LOCAL_CHECK,
+  NOTIFICATION_COUNT_URL,
+  NOTIFICATION_URL,
+} from "../urls";
 import { UrlParser } from "../customs/others";
 import "./header.css";
+import { axiosHandler, getToken } from "../helper";
 const Header = (props) => {
   const {
     state: { userDetail },
@@ -11,13 +18,49 @@ const Header = (props) => {
   } = useContext(store);
 
   const [loading, setLoading] = useState(false);
-
+  const [notiNum, setNotiNum] = useState(null);
+  let itval;
   useEffect(() => {
+    getNotification();
+    autoNotification();
     return () => {};
   }, [userDetail]);
 
+  const autoNotification = () => {
+    clearInterval(itval);
+
+    itval = setInterval(() => {
+      console.log("::::");
+
+      getNotification();
+    }, 40000);
+  };
+  const getNotification = async () => {
+    if (!userDetail) return;
+    console.log("inner");
+    let extra = `?keyword=${"unread-count"}`;
+    const token = await getToken();
+    const gp = await axiosHandler({
+      method: "get",
+      url: `${NOTIFICATION_COUNT_URL}${extra}`,
+      token,
+    }).catch((e) => {
+      console.log("Error in getNotification in header::::", e);
+    });
+
+    if (gp) {
+      console.log(" getNotification in header res::::", gp.data);
+      const noti = gp.data["unread-count"];
+      if (noti !== 0) {
+        setNotiNum(noti);
+      } else {
+        setNotiNum(null);
+      }
+    }
+  };
+
   if (loading) {
-    return <>...</>;
+    return <></>;
   }
   return (
     <div id="header">
@@ -52,6 +95,10 @@ const Header = (props) => {
               <div className="diva">
                 <Link to="/notification">
                   <img src="/images/notifications.svg" alt="notifications" />
+
+                  {notiNum && (
+                    <span className="notification-number">{notiNum}</span>
+                  )}
                 </Link>
               </div>
             </div>

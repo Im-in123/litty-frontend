@@ -224,6 +224,7 @@ p {
 }
 .phi-profile-tagline {
   color: hsl(var(--grooble));
+  color: #e5dac6;
 }
 
 /* Profile Page */
