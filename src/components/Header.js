@@ -93,7 +93,7 @@ const Header = (props) => {
               </div>
 
               <div className="diva">
-                <Link to="/notification">
+                <Link to="/notification" onClick={() => setNotiNum(null)}>
                   <img src="/images/notifications.svg" alt="notifications" />
 
                   {notiNum && (

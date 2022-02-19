@@ -14,7 +14,7 @@
   color: black;
   align-items: center;
   justify-content: space-between;
-  width: 30%;
+  width: 40%;
   padding: 10px;
 }
 .item a {
@@ -27,6 +27,12 @@
   align-items: center;
   cursor: pointer;
   font-weight: bold;
+  width: 70%;
+}
+.item .user a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 .item .user img {
   width: 40px;
@@ -36,10 +42,11 @@
 }
 .item .user .name {
   padding: 0px 5px;
+  word-break: break-all;
 }
 
 .item .option {
-  width: 35%;
+  width: 30%;
   max-width: 250px;
 }
 .item .option button {
@@ -51,4 +58,22 @@
   cursor: pointer;
   width: 100%;
   padding: 10px;
+}
+@media only screen and (max-width: 768px) {
+  .follow-main .item {
+    display: flex;
+    background: white;
+    color: black;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    padding: 10px;
+  }
+  .item .user .name {
+    padding: 0px 5px;
+    word-break: break-all;
+  }
+  .item .option {
+    max-width: 250px;
+  }
 }

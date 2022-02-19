@@ -123,8 +123,8 @@ const OtherFollow = (props) => {
           <>
             {item.user.username === userDetail.user.username ? (
               <div className="item" key={key}>
-                <Link to={`/my-profile/`}>
-                  <div className="user">
+                <div className="user">
+                  <Link to={`/my-profile/`}>
                     <img
                       src={
                         LOCAL_CHECK
@@ -134,13 +134,13 @@ const OtherFollow = (props) => {
                       alt="user-pic"
                     ></img>
                     <div className="name">{item.user.username}</div>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               </div>
             ) : (
               <div className="item" key={key}>
-                <Link to={`/other-profile/${item.user.username}`}>
-                  <div className="user">
+                <div className="user">
+                  <Link to={`/other-profile/${item.user.username}`}>
                     <img
                       src={
                         LOCAL_CHECK
@@ -150,8 +150,9 @@ const OtherFollow = (props) => {
                       alt="user-pic"
                     ></img>
                     <div className="name">{item.user.username}</div>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
+
                 <div className="option">
                   <button onClick={(e) => followHandler(e, item.user.id)}>
                     {item.user.u_follow ? "Following" : "Follow"}
@@ -166,8 +167,8 @@ const OtherFollow = (props) => {
           <>
             {item.user.username === userDetail.user.username ? (
               <div className="item" key={key}>
-                <Link to={`/my-profile/`}>
-                  <div className="user">
+                <div className="user">
+                  <Link to={`/my-profile/`}>
                     <img
                       src={
                         LOCAL_CHECK
@@ -177,13 +178,13 @@ const OtherFollow = (props) => {
                       alt="user-pic"
                     ></img>
                     <div className="name">{item.user.username}</div>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
               </div>
             ) : (
               <div className="item" key={key}>
-                <Link to={`/other-profile/${item.user.username}`}>
-                  <div className="user">
+                <div className="user">
+                  <Link to={`/other-profile/${item.user.username}`}>
                     <img
                       src={
                         LOCAL_CHECK
@@ -193,8 +194,9 @@ const OtherFollow = (props) => {
                       alt="user-pic"
                     ></img>
                     <div className="name">{item.user.username}</div>
-                  </div>
-                </Link>
+                  </Link>
+                </div>
+
                 <div className="option">
                   <button onClick={(e) => followHandler(e, item.user.id)}>
                     {item.user.u_follow ? "Following" : "Follow"}

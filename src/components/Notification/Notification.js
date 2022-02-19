@@ -211,6 +211,10 @@ const Noti = (props) => {
             <div className="user-msg">
               {data.message}
               <p>{data.reply.comment}</p>
+              <p className="s-p">
+                {moment(data.created_at).format("DD/MM/YYYY")}{" "}
+                {moment(data.created_at).format("hh:mm a")}
+              </p>
             </div>
           )}
           {data.action === "post-comment" && (
@@ -227,6 +231,10 @@ const Noti = (props) => {
             <div className="user-msg">
               {data.message}
               <p>{data.reply.comment}</p>
+              <p className="s-p">
+                {moment(data.created_at).format("DD/MM/YYYY")}{" "}
+                {moment(data.created_at).format("hh:mm a")}
+              </p>
             </div>
           )}
           {data.action === "reply-reply" && (

@@ -84,8 +84,8 @@ const MyFollow = (props) => {
       {option === "followers" &&
         followers.map((item, key) => (
           <div className="item" key={key}>
-            <Link to={`/other-profile/${item.user.username}`}>
-              <div className="user">
+            <div className="user">
+              <Link to={`/other-profile/${item.user.username}`}>
                 <img
                   src={
                     LOCAL_CHECK
@@ -95,8 +95,9 @@ const MyFollow = (props) => {
                   alt="user-pic"
                 ></img>
                 <div className="name">{item.user.username}</div>
-              </div>
-            </Link>
+              </Link>
+            </div>
+
             <div className="option">
               <button onClick={(e) => followHandler(e, item.user.id)}>
                 {item.user.u_follow_back ? "Following" : "Follow Back"}
@@ -107,8 +108,8 @@ const MyFollow = (props) => {
       {option === "following" &&
         following.map((item, key) => (
           <div className="item" key={key}>
-            <Link to={`/other-profile/${item.user.username}`}>
-              <div className="user">
+            <div className="user">
+              <Link to={`/other-profile/${item.user.username}`}>
                 <img
                   src={
                     LOCAL_CHECK
@@ -118,8 +119,9 @@ const MyFollow = (props) => {
                   alt="user-pic"
                 ></img>
                 <div className="name">{item.user.username}</div>
-              </div>
-            </Link>
+              </Link>
+            </div>
+
             <div className="option">
               <button onClick={(e) => followHandler(e, item.user.id)}>
                 Following
