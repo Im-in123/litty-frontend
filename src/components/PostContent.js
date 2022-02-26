@@ -226,25 +226,52 @@ const PostContent = (props) => {
                   )}
                 </div>
               </div>
-              {item.image ? (
-                <img
-                  src={LOCAL_CHECK ? item.image : item.image_url}
-                  alt=""
-                  loading="lazy"
-                  className="iimm"
-                  style={{ width: "100%" }}
-                />
-              ) : null}
-              {item.video ? (
-                <VideoComp
-                  video={LOCAL_CHECK ? item.video : item.video_url}
-                  id={`vid${item.id}`}
-                  nid={item.id}
-                  setOverallAudio={props.setOverallAudio}
-                  overallAudio={props.overallAudio}
-                  thumbnail={item.thumbnail}
-                />
-              ) : null}
+
+              {LOCAL_CHECK ? (
+                <>
+                  {item.image ? (
+                    <img
+                      src={LOCAL_CHECK ? item.image : item.image_url}
+                      alt=""
+                      loading="lazy"
+                      className="iimm"
+                      style={{ width: "100%" }}
+                    />
+                  ) : null}
+                  {item.video ? (
+                    <VideoComp
+                      video={LOCAL_CHECK ? item.video : item.video_url}
+                      id={`vid${item.id}`}
+                      nid={item.id}
+                      setOverallAudio={props.setOverallAudio}
+                      overallAudio={props.overallAudio}
+                      thumbnail={item.thumbnail}
+                    />
+                  ) : null}
+                </>
+              ) : (
+                <>
+                  {item.image_url ? (
+                    <img
+                      src={LOCAL_CHECK ? item.image : item.image_url}
+                      alt=""
+                      loading="lazy"
+                      className="iimm"
+                      style={{ width: "100%" }}
+                    />
+                  ) : null}
+                  {item.video_url ? (
+                    <VideoComp
+                      video={LOCAL_CHECK ? item.video : item.video_url}
+                      id={`vid${item.id}`}
+                      nid={item.id}
+                      setOverallAudio={props.setOverallAudio}
+                      overallAudio={props.overallAudio}
+                      thumbnail={item.thumbnail}
+                    />
+                  ) : null}
+                </>
+              )}
 
               <div className="text">{showcount && <>şlide şhöw</>}</div>
             </div>
