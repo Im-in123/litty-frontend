@@ -279,7 +279,7 @@ const PostInfo = (props) => {
             {" "}
             &nbsp;
             {tags.map((item, key) => (
-              <>#{item.title}</>
+              <>&nbsp;#{item.title}</>
             ))}
             &nbsp;
           </span>
