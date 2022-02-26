@@ -1,14 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
-import {
-  BASE_URL,
-  BASE_URL1,
-  LOCAL_CHECK,
-  NOTIFICATION_COUNT_URL,
-  NOTIFICATION_URL,
-} from "../urls";
-import { UrlParser } from "../customs/others";
+import { LOCAL_CHECK, NOTIFICATION_COUNT_URL } from "../urls";
+
 import "./header.css";
 import { axiosHandler, getToken } from "../helper";
 const Header = (props) => {
@@ -26,13 +20,13 @@ const Header = (props) => {
     return () => {};
   }, [userDetail]);
 
-  const autoNotification = () => {
+  const autoNotification = async () => {
     clearInterval(itval);
 
-    itval = setInterval(() => {
+    itval = setInterval(async () => {
       console.log("::::");
 
-      getNotification();
+      await getNotification();
     }, 40000);
   };
   const getNotification = async () => {

@@ -17,7 +17,6 @@ import UserInfo from "../UserInfo";
 import PostContent from "../PostContent";
 import PostInfo from "../PostInfo";
 import { GalleryItem } from "./MyProfile";
-import PostDetail from "../PostDetail";
 import NewDetail from "../NewDetail/NewDetail";
 import {
   commentInputSetterAction,

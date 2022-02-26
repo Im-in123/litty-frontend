@@ -14,7 +14,6 @@ import UserInfo from "../UserInfo";
 import PostContent from "../PostContent";
 import PostInfo from "../PostInfo";
 import { fetchMyProfile, logout } from "../../customs/authController";
-import PostDetail from "../PostDetail";
 import NewDetail from "../NewDetail/NewDetail";
 import {
   commentInputSetterAction,

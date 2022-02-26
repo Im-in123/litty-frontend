@@ -1,19 +1,11 @@
-import React, {
-  useState,
-  useEffect,
-  useLayoutEffect,
-  useContext,
-  useRef,
-} from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./chatpage.css";
+import "./chatStuff/css/chat.css";
 import { UrlParser, uuidv4 } from "../../customs/others";
 import {
-  BASE_URL1,
-  BASE_URL2,
   CHAT_LIST_URL,
   CHAT_SOCKET_URL,
-  GET_FOLLOWING_CHAT,
   LOCAL_CHECK,
   MESSAGE_URL,
   OTHER_PROFILE_URL,
@@ -24,16 +16,12 @@ import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 import { io } from "socket.io-client";
 import useTyping from "./chatStuff/components/hooks/useTyping";
-import NewMessageForm from "./chatStuff/components/NewMessageForm";
-import InfoBar from "./chatStuff/components/InfoBar";
-import Indicator from "./chatStuff/components/Indicator";
-import Messages from "./chatStuff/components/Messages";
+
 import useOutsideClick from "./chatStuff/components/hooks/useOutsideClick";
 import moment from "moment";
-import "./chatStuff/css/input.css";
-import "./chatStuff/css/messages.css";
-import "./chatStuff/css/message.css";
+
 import { Picker } from "emoji-mart";
+import "emoji-mart/css/emoji-mart.css";
 
 let other_user_g = [];
 
@@ -93,6 +81,9 @@ const updateReadMsg = (user) => {
     console.log(error);
   }
 };
+
+//  = ({ message: { type, body, ownedByCurrentUser, fileName, user: { name } } }) => {
+
 const ChatPage = (props) => {
   const {
     state: { userDetail },
@@ -115,7 +106,6 @@ const ChatPage = (props) => {
 
   const [error, setError] = useState(false);
   const [activeUser, setActiveUser] = useState([]);
-  // const [chat_id, setChatId] = useState([]);
 
   const [activeUserProfile, setActiveUserProfile] = useState([]);
   const [sending, setSending] = useState(false);

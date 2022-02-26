@@ -6,7 +6,7 @@ import Login from "./components/Login";
 import Main from "./components/Main";
 
 import Header from "./components/Header";
-import PostDetail from "./components/PostDetail";
+
 import OtherProfile from "./components/ProfileComp/OtherProfile";
 import MyProfile from "./components/ProfileComp/MyProfile";
 import UserProfileUpdate from "./components/settings/UserprofileUpdate";
@@ -39,7 +39,7 @@ const Router = (props) => {
                 component={OtherProfile}
                 exact
               />
-              <Route path="/post-detail/:id" component={PostDetail} exact />
+
               <Route
                 path="/profile-update"
                 component={UserProfileUpdate}

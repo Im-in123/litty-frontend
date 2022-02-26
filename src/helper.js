@@ -106,7 +106,7 @@ export const getToken = async (props) => {
       } else if (e.request) {
         // The request was made but no response was received
         console.log("e help request:::", e.request);
-        alert("Slow Network connection");
+        // alert("Slow Network connection");
       }
     });
     if (getNewAccess) {

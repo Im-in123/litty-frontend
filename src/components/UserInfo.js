@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useLayoutEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
 import { POST_DELETE, LOCAL_CHECK, UPDATE_FOLLOW, CHECK_FOLLOW } from "../urls";
@@ -98,65 +98,6 @@ const UserInfo = (props) => {
       setLoading(false);
     }
   };
-  const checkFollowHandler = async (id) => {
-    let proceed = true;
-    for (var i in checkAllFollow) {
-      let ii = checkAllFollow[i];
-      if (ii.user === props.data.username) {
-        if (ii.status === "yes") {
-          proceed = false;
-          setFollowing(true);
-          return;
-        } else {
-          proceed = false;
-          setFollowing(false);
-          return;
-        }
-      }
-    }
-    if (!proceed) {
-      console.log("skipping");
-      return;
-    }
-
-    const token = await getToken();
-    const data = { other_id: id };
-    console.log("check followbefore data::::", data);
-
-    const res = await axiosHandler({
-      method: "post",
-      url: CHECK_FOLLOW,
-      data: data,
-      token,
-    }).catch((e) => {
-      console.log(e);
-    });
-
-    if (res) {
-      console.log("handleFollow:::", res.data);
-      const rr1 = res.data["data"];
-      console.log("rr2:::::", rr1);
-
-      if (rr1 === "false") {
-        setFollowing(false);
-
-        check = checkAllFollow.filter((e) => e.user !== props.data.username);
-        check.push({ user: props.data.username, status: "no" });
-        dispatch({
-          type: checkAllFollowAction,
-          payload: check,
-        });
-      } else if (rr1 === "true") {
-        setFollowing(true);
-        check = checkAllFollow.filter((e) => e.user !== props.data.username);
-        check.push({ user: props.data.username, status: "yes" });
-        dispatch({
-          type: checkAllFollowAction,
-          payload: check,
-        });
-      }
-    }
-  };
 
   const followHandler = async (id) => {
     setFollowing(!following);
@@ -240,25 +181,21 @@ const UserInfo = (props) => {
   } else {
     if (props.data) {
       // console.log("UserInfo props:::", props.data)
-      let pp;
-      try {
-        pp = LOCAL_CHECK
-          ? props.data.user_picture
-          : props.data.user_picture_url;
-      } catch (error) {
-        pp = ""; //userDetail.profile_picture.file_upload
-      }
+
       return (
         <div className="user-info">
           <div className="userdiv">
             <div className="user-avatar-div">
               <Link to={plink}>
                 <div className="user-avatar">
-                  {pp ? (
-                    <img src={pp} alt="author"></img>
-                  ) : (
-                    <img src="" alt="author"></img>
-                  )}
+                  <img
+                    src={
+                      LOCAL_CHECK
+                        ? props.data.user_picture
+                        : props.data.user_picture_url
+                    }
+                    alt="author"
+                  ></img>
                 </div>
               </Link>
             </div>
