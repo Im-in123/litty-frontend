@@ -960,20 +960,42 @@ const ContentSlide = (props) => {
               </div>
             </div>
 
-            {item.image && (
-              <img
-                src={LOCAL_CHECK ? item.image : item.image_url}
-                alt=""
-                className="iimm-new"
-              />
-            )}
-            {item.video && (
-              <NewVid
-                video={LOCAL_CHECK ? item.video : item.video_url}
-                id={`vid${item.id}`}
-                nid={item.id}
-                cover={LOCAL_CHECK ? item.thumbnail : item.thumbnail_url}
-              />
+            {LOCAL_CHECK ? (
+              <>
+                {item.image && (
+                  <img
+                    src={LOCAL_CHECK ? item.image : item.image_url}
+                    alt=""
+                    className="iimm-new"
+                  />
+                )}
+                {item.video && (
+                  <NewVid
+                    video={LOCAL_CHECK ? item.video : item.video_url}
+                    id={`vid${item.id}`}
+                    nid={item.id}
+                    cover={LOCAL_CHECK ? item.thumbnail : item.thumbnail_url}
+                  />
+                )}
+              </>
+            ) : (
+              <>
+                {item.image_url && (
+                  <img
+                    src={LOCAL_CHECK ? item.image : item.image_url}
+                    alt=""
+                    className="iimm-new"
+                  />
+                )}
+                {item.video_url && (
+                  <NewVid
+                    video={LOCAL_CHECK ? item.video : item.video_url}
+                    id={`vid${item.id}`}
+                    nid={item.id}
+                    cover={LOCAL_CHECK ? item.thumbnail : item.thumbnail_url}
+                  />
+                )}
+              </>
             )}
 
             <div className="text-new">{showcount && <>slide show</>}</div>
