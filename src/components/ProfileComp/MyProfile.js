@@ -197,7 +197,7 @@ const MyProfile = (props) => {
                       className="btn-primary-gray button btn-primary flexbox"
                     >
                       <ion-icon name="heart-outline"></ion-icon>{" "}
-                      <Link to="/settings">Settings</Link>{" "}
+                      <Link to="/settings">More</Link>{" "}
                       <div className="btn-secondary"></div>
                     </button>
                     <button
