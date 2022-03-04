@@ -26,7 +26,9 @@ export const GET_FOLLOWING_CHAT = BASE_URL + "user/get-following-chat";
 
 export const REFRESH_URL = BASE_URL + "user/refresh";
 export const LOGOUT_URL = BASE_URL + "user/logout";
+export const FORGOT_PASSWORD_URL = BASE_URL + "user/request-reset-password";
 
+export const CHANGE_PASSWORD_URL = BASE_URL + "user/change-password";
 export const POST_URL = BASE_URL + "post/";
 export const SEARCH_PTV_URL = BASE_URL + "search-ptv/";
 export const NOTIFICATION_URL = BASE_URL + "notification/";

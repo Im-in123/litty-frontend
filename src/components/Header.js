@@ -17,16 +17,18 @@ const Header = (props) => {
   useEffect(() => {
     getNotification();
     autoNotification();
-    return () => {};
+    return () => {
+      clearInterval(itval);
+    };
   }, [userDetail]);
 
-  const autoNotification = async () => {
+  const autoNotification = () => {
     clearInterval(itval);
 
-    itval = setInterval(async () => {
+    itval = setInterval(() => {
       console.log("::::");
 
-      await getNotification();
+      getNotification();
     }, 40000);
   };
   const getNotification = async () => {

@@ -19,6 +19,8 @@ import NewDetail from "./components/NewDetail/NewDetail";
 import Settings from "./components/settings/settings";
 import MyFollow from "./components/ProfileComp/MyFollow";
 import OtherFollow from "./components/ProfileComp/OtherFollow";
+import ForgotPassword from "./components/settings/ForgotPassword";
+import ChangePassword from "./components/settings/ChangePassword";
 
 const Router = (props) => {
   return (
@@ -27,6 +29,7 @@ const Router = (props) => {
       <Switch>
         <Route path="/signup" component={Signup} exact />
         <Route path="/login" component={Login} exact />
+        <Route path="/forgot-password" component={ForgotPassword} exact />
 
         <Route
           path="/"
@@ -63,6 +66,7 @@ const Router = (props) => {
               />
 
               <Route path="/new/:id" component={NewDetail} exact />
+              <Route path="/change-password" component={ChangePassword} exact />
             </AuthController>
           )}
         />

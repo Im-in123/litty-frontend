@@ -270,13 +270,15 @@ const MyProfile = (props) => {
                         {" "}
                         <p className="">Following {following}</p>
                       </Link>
-                      <p className="">Likes 2B</p>
+                      <p className="">Likes {userDetail.like_count}</p>
                     </div>
                     <p className="phi-profile-tagline">{userDetail.bio}</p>
                     <br></br>
                     <p className="postnum">
-                      {userDetail.post_count ? userDetail.post_count : "0"}
-                      {userDetail.post_count === 1 ? " Post" : " Posts"}
+                      {userDetail.all_post_count
+                        ? userDetail.all_post_count
+                        : "0"}
+                      {userDetail.all_post_count === 1 ? " Post" : " Posts"}
                     </p>
                   </div>
                 </div>
@@ -287,7 +289,7 @@ const MyProfile = (props) => {
                       className="btn-primary-gray button btn-primary flexbox"
                     >
                       <ion-icon name="heart-outline"></ion-icon>{" "}
-                      <Link to="/settings">Settings</Link>{" "}
+                      <Link to="/settings">More</Link>{" "}
                       <div className="btn-secondary"></div>
                     </button>
                     <button

@@ -120,6 +120,9 @@ const Login = (props) => {
                 {loading ? <span id="loadersignup"></span> : "Login"}
               </button>
             </form>
+            <p>
+              <Link to="/forgot-password">Forgot password?</Link>
+            </p>
           </div>
 
           <div className="content__submit">
@@ -141,6 +144,7 @@ const Login = (props) => {
                 </strong>
               </a>
             </p>
+
             <div className="content__footer">
               <p>
                 <a href="/">

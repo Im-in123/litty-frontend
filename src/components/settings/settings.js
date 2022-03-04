@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Liked from "./Liked";
 import ProfileUpdate from "./ProfileUpdate";
 import Saved from "./Saved";
@@ -8,7 +9,7 @@ import UserProfileUpdate from "./UserprofileUpdate";
 const Settings = () => {
   const [saved, setSaved] = useState(false);
   const [liked, setLiked] = useState(false);
-  const [profile_update, setProfile_Update] = useState(true);
+  const [profile, setProfile] = useState(true);
 
   useEffect(() => {
     const hamburgerMenu = document.getElementById("hamburger-icon");
@@ -40,21 +41,21 @@ const Settings = () => {
   const switchView = (view) => {
     if (view === "liked") {
       setSaved(false);
-      setProfile_Update(false);
+      setProfile(false);
 
       setLiked(true);
     }
     if (view === "saved") {
-      setProfile_Update(false);
+      setProfile(false);
       setLiked(false);
 
       setSaved(true);
     }
-    if (view === "profile_update") {
+    if (view === "profile") {
       setLiked(false);
       setSaved(false);
 
-      setProfile_Update(true);
+      setProfile(true);
     }
   };
 
@@ -80,7 +81,7 @@ const Settings = () => {
             <li
               class="link active"
               onClick={() => {
-                switchView("profile_update");
+                switchView("profile");
               }}
             >
               <a href="#">
@@ -139,7 +140,14 @@ const Settings = () => {
         <div className="settings-content">
           {liked && <Liked />}
           {saved && <Saved />}
-          {profile_update && <UserProfileUpdate />}
+
+          {profile && (
+            <div className="profile-links">
+              <Link to="/profile-update">Profile Update</Link>
+              <Link to="/change-password">Change Password</Link>
+              <Link to="/forgot-password">Forgot Password</Link>
+            </div>
+          )}
         </div>
       </div>
     </>

@@ -48,7 +48,7 @@ const UserProfileUpdate = (props) => {
     setUploading(false);
     if (result) {
       console.log();
-      // setPP(result.data.file_upload);
+
       alert("Profile pic added. scroll down to save changes!!");
       setProfileData({ ...profileData, id: result.data.id });
 
@@ -59,14 +59,19 @@ const UserProfileUpdate = (props) => {
     e.preventDefault();
     const token = await getToken();
     console.log("Profile data:::", profileData);
-    // console.log("idcheck", userDetail.user.id)
+    if (userDetail.user.username === "guest") {
+      alert("sorry, profile update is disabled for this account!");
+      return;
+    }
     let url =
       PROFILE_URL + `${userDetail.first_name ? `/${userDetail.id}` : ""}`;
-    url = PROFILE_URL + `${profileData.id ? `/${profileData.id}` : ""}`;
+
     console.log("url::::", url);
-    // const method = userDetail.first_name ? "patch" : "post";
+
     let method = userDetail.first_name ? "patch" : "post";
-    method = profileData.id ? "patch" : "post";
+    if (method === "patch") {
+      url = PROFILE_URL;
+    }
     console.log("method:::::", method);
     const profile = await axiosHandler({
       method,
@@ -96,7 +101,7 @@ const UserProfileUpdate = (props) => {
       <div className="container1">
         <form onSubmit={propicSubmit}>
           <h1 className="title">Modify your profile</h1>
-          <label style={{ color: "white", margin: "4px" }} for="propic">
+          <label style={{ color: "white", margin: "4px" }} htmlFor="propic">
             upload pic
           </label>
           <input
@@ -114,7 +119,7 @@ const UserProfileUpdate = (props) => {
 
         <form method="POST" onSubmit={submit}>
           <div className="form-group a">
-            <label for="name">Username</label>
+            <label htmlFor="name">Username</label>
             <input
               id="name"
               type="text"
@@ -127,7 +132,7 @@ const UserProfileUpdate = (props) => {
           </div>
           <div className="grid">
             <div className="form-group a">
-              <label for="name">Name</label>
+              <label htmlFor="name">Name</label>
               <input
                 id="name"
                 type="text"
@@ -139,7 +144,7 @@ const UserProfileUpdate = (props) => {
             </div>
 
             <div className="form-group b">
-              <label for="first-name">First name</label>
+              <label htmlFor="first-name">First name</label>
               <input
                 id="first-name"
                 type="text"
@@ -151,12 +156,12 @@ const UserProfileUpdate = (props) => {
             </div>
 
             {/* <div className="form-group email-group">
-        <label for="email">Email</label>
+        <label htmlFor="email">Email</label>
         <input id="email" type="text"/>
     </div> */}
 
             <div className="form-group phone-group">
-              <label for="phone">Telephone (mobile)</label>
+              <label htmlFor="phone">Telephone (mobile)</label>
               <input
                 id="phone"
                 type="text"
@@ -168,7 +173,7 @@ const UserProfileUpdate = (props) => {
             </div>
 
             <div className="textarea-group">
-              <label for="bio">Bio</label>
+              <label htmlFor="bio">Bio</label>
               <textarea
                 id="bio"
                 value={profileData.bio}
@@ -179,12 +184,12 @@ const UserProfileUpdate = (props) => {
             </div>
 
             {/* <div className="form-group">
-        <label for="address">Adress</label>
+        <label htmlFor="address">Adress</label>
         <input id="address" type="text"/>
     </div> */}
 
             <div className="form-group">
-              <label for="city">City</label>
+              <label htmlFor="city">City</label>
               <input
                 id="city"
                 type="text"
@@ -196,7 +201,7 @@ const UserProfileUpdate = (props) => {
             </div>
 
             {/* <div className="form-group">
-        <label for="zip">Code postal</label>
+        <label htmlFor="zip">Code postal</label>
         <input id="zip" type="text"/>
     </div> */}
           </div>

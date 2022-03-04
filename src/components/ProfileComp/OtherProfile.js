@@ -397,13 +397,15 @@ const OtherProfile = (props) => {
                           Following <span id="following">{following}</span>
                         </p>
                       </Link>
-                      <p className="">Likes 2B</p>
+                      <p className="">Likes {otherUser.like_count}</p>
                     </div>
                     <p className="phi-profile-tagline">{otherUser.bio}</p>
                     <br />
                     <p className="postnum">
-                      {otherUser.post_count ? otherUser.post_count : "0"}
-                      {otherUser.post_count === 1 ? " Post" : " Posts"}
+                      {otherUser.all_post_count
+                        ? otherUser.all_post_count
+                        : "0"}
+                      {otherUser.all_post_count === 1 ? " Post" : " Posts"}
                     </p>
                   </div>
                 </div>
