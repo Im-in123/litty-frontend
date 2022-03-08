@@ -284,14 +284,11 @@ hr {
 .iimm-new {
   height: 100%;
   width: 100%;
-  /* max-height: 338px; */
-  /* max-width: 600px; */
+
   object-fit: contain;
   /* object-fit: cover; */
-  /* max-width: 60px; */
 }
 
-/* sonraki ve önceki butonları */
 .prev-new,
 .next-new {
   cursor: pointer;
@@ -300,7 +297,7 @@ hr {
   width: auto;
   margin-top: -22px;
   padding: 16px;
-  color: white;
+  color: whitesmoke;
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
@@ -308,7 +305,6 @@ hr {
   user-select: none;
 }
 
-/* sonraki butonunun pozisyonu */
 .next-new {
   right: 0;
   border-radius: 3px 0 0 3px;
@@ -317,13 +313,12 @@ hr {
   left: 0;
   border-radius: 3px 0 0 3px;
 }
-/* üzerine gelince hafif bir efekt verelim */
+
 .prev-new:hover,
 .next-new:hover {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-/* görsel başlığı */
 .text-new {
   color: #f2f2f2;
   font-size: 15px;
@@ -398,9 +393,7 @@ hr {
   }
   .gallery-card-new {
     height: auto;
-    /* width: 100vw; */
-    /* width: 800px; */
-    /* margin-top: 0; */
+
     grid-template-columns: auto;
     /* grid-template-rows: 1fr 1fr; */
     grid-template-areas: "image" "info";
@@ -419,9 +412,9 @@ hr {
   align-items: center;
 }
 .drop-parent-new .gallery-saved {
-  align-items: center;
+  /* align-items: center;
   justify-content: center;
-  display: flex;
+  display: flex; */
 }
 .dropdown-edit-new {
   position: relative;
@@ -476,7 +469,6 @@ hr {
   padding: 3px;
 }
 .gallery-edit .close {
-  /* font-size: 25px; */
   position: inherit;
   color: red;
   cursor: pointer;

@@ -3,7 +3,6 @@ import { LOCAL_CHECK } from "../urls";
 import "./carousel.css";
 import "./vidcomp.css";
 import { store } from "../stateManagement/store";
-import { slideAction } from "../stateManagement/actions";
 
 const PostContent = (props) => {
   const {
@@ -52,10 +51,6 @@ const PostContent = (props) => {
     try {
       var i;
 
-      // console.log("########start##########");
-
-      // console.log("n::", n);
-      // console.log("slide-index1::", slideIndex);
       var slides = document.getElementsByClassName("mySlidesget" + props.id);
       var dots = document.getElementsByClassName("dotget" + props.id);
       if (n > slides.length) {
@@ -105,10 +100,6 @@ const PostContent = (props) => {
         }
       }
 
-      // console.log("slide-index2:::", slideIndex);
-
-      // console.log("#########end#########");
-
       try {
         dots[slideIndex - 1].className += " active";
       } catch (error) {}
@@ -127,11 +118,10 @@ const PostContent = (props) => {
       //   document.documentElement.clientHeight,
 
       if (numb.top >= -210 && numb.top <= 250) {
-        console.log("feed" + props.id + ": element is visible");
-        // console.log("numb:", numb);
+        // console.log("feed" + props.id + ": element is visible");
 
         if (alreadyPlaying) {
-          console.log("already playing");
+          // console.log("already playing");
           return;
         }
 
@@ -182,8 +172,7 @@ const PostContent = (props) => {
           // console.log("yu:::", yu);
           if (yu.num) slideIndex = yu.num;
         } catch (error) {}
-        console.log("element is not visible");
-        // console.log("global slideindex::", slideIndex);
+        // console.log("element is not visible");
         slideIndex = await currentSlide(slideIndex, true, false);
       }
     } catch (error) {}
@@ -283,7 +272,7 @@ const PostContent = (props) => {
                 className="prev"
                 onClick={async (e) => {
                   var prev = await plusSlides(-1, true);
-                  console.log("next:::", prev);
+
                   var g = slideTrigger;
                   g.push({ id: props.id, num: prev });
                 }}
@@ -294,7 +283,7 @@ const PostContent = (props) => {
                 className="next"
                 onClick={async (e) => {
                   var next = await plusSlides(1, true);
-                  console.log("next:::", next);
+
                   var g = slideTrigger;
                   g.push({ id: props.id, num: next });
                 }}
@@ -337,7 +326,7 @@ const VideoComp = (props) => {
   let spin;
   let numbertext;
   useEffect(() => {
-    console.log("props.video", props.video);
+    // console.log("props.video", props.video);
     vidpop = document.querySelector("#vidpop" + props.id);
     popPlayBtn = document.querySelector(".pop-play" + props.id);
     spin = document.querySelector(".spin" + props.id);

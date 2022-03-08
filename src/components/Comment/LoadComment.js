@@ -2,18 +2,9 @@ import React, { useState, useContext, useEffect } from "react";
 import "./comment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
-import { UrlParser } from "../../customs/others";
-import {
-  BASE_URL,
-  BASE_URL1,
-  COMMENT_URL,
-  LOCAL_CHECK,
-  REPLY_URL,
-} from "../../urls";
-import {
-  CommentTriggerAction,
-  deleteCommentAction,
-} from "../../stateManagement/actions";
+
+import { COMMENT_URL } from "../../urls";
+import { deleteCommentAction } from "../../stateManagement/actions";
 
 import CommentCard from "./CommentCard";
 import CommentComp from "./CommentComp";
@@ -26,9 +17,7 @@ const LoadComment = (props) => {
   const {
     state: { delComment },
   } = useContext(store);
-  const {
-    state: { delReply },
-  } = useContext(store);
+
   const {
     state: { postComment },
   } = useContext(store);
@@ -44,11 +33,8 @@ const LoadComment = (props) => {
   const [currentComment, setCurrentComment] = useState([]);
   const [error, setError] = useState(false);
 
-  const [loader, setLoader] = useState([]);
   const [moreCmts, setMoreCmts] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
-
-  // let nextMsgs = [];
 
   useEffect(() => {
     if (postComment === props.post_id) {
@@ -150,7 +136,6 @@ const LoadComment = (props) => {
       setNextMsgs((n) => result.data);
       console.log("getComments data::::", result.data);
 
-      console.log("getComments results::::", result.data.results);
       if (result.data.next) {
         setMoreCmts(true);
       } else {

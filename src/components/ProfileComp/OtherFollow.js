@@ -90,7 +90,7 @@ const OtherFollow = (props) => {
     const token = await getToken();
     const data = { other_id: id };
     console.log("before data::::", data);
-
+    e.target.innerHTML = "...";
     const res = await axiosHandler({
       method: "post",
       url: UPDATE_FOLLOW,

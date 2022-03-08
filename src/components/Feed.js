@@ -118,17 +118,13 @@ const Feed = (props) => {
 
     if (res) {
       console.log(" Feed::::", res.data.results);
-      console.log("res.data:::", res.data);
 
       if (post.length >= 0 && post.length <= 27) {
-        console.log("herep:", post.length, "  herep1:", postList.length);
-
         for (var i in res.data.results) {
           post.push(res.data.results[i]);
         }
         setPostList(post);
       } else {
-        console.log("therep");
         setFetching(true);
         setPostList([]);
 

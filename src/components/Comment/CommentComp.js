@@ -2,22 +2,13 @@ import React, { useState, useContext, useEffect } from "react";
 import "./comment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
-import { UrlParser } from "../../customs/others";
-import {
-  BASE_URL,
-  BASE_URL1,
-  COMMENT_URL,
-  LOCAL_CHECK,
-  REPLY_URL,
-} from "../../urls";
+import { COMMENT_URL, LOCAL_CHECK, REPLY_URL } from "../../urls";
 import {
   CommentTriggerAction,
   commentInputSetterAction,
   newReplyReplyAction,
 } from "../../stateManagement/actions";
 const CommentComp = (props) => {
-  //     console.log("CommentComp props::::", props)
-  //     const [commentData, setCommentData] = useState({post_id:props.post_id, author_id:props.author_id})
   const [commentData, setCommentData] = useState({});
   const [loading, setLoading] = useState(false);
   const [placeholder, setPlaceholder] = useState("Write a comment ...");
@@ -136,8 +127,7 @@ const CommentComp = (props) => {
         post_id: postComment,
         author_id: props.author_id,
       });
-      console.log("comment data::::", commentData);
-      //     console.log("postcomment:::", postComment)
+
       let data = {
         ...commentData,
         post_id: postComment,

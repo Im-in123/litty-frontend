@@ -620,7 +620,7 @@ Remove or comment-out the code block below to see how the browser will fall-back
     width: auto;
     margin: 0;
     /* width: 70%; */
-    height: 150px;
+    height: 160px;
     max-height: 100%;
   }
   .containerz .gallery-item-info li {

@@ -17,8 +17,7 @@ const PostInfo = (props) => {
   const {
     state: { postComment },
   } = useContext(store);
-  const [loading, setLoading] = useState(true);
-  const [likeIconStyle, setLikeIconStyle] = useState("");
+
   const {
     state: { userDetail },
   } = useContext(store);
@@ -67,7 +66,6 @@ const PostInfo = (props) => {
       isliked = null;
       setActiontype("unlike");
     }
-    setLikeIconStyle(isliked ? "fas" : "far");
 
     for (var g in userDetail.saved) {
       if (userDetail.saved[g] === props.id) {
@@ -75,8 +73,6 @@ const PostInfo = (props) => {
       }
     }
     setCommentCount(props.comment_count);
-
-    setLoading(false);
   }, []);
 
   const checkname = async () => {
@@ -169,51 +165,13 @@ const PostInfo = (props) => {
       console.log("Save results::::", result.data);
       let res = result.data;
       if (res.success === "added") {
-        //   setIsSaved(true)
+        setIsSaved(true);
       }
       if (res.success === "removed") {
-        // setIsSaved(false)
+        setIsSaved(false);
       }
     }
   };
-
-  if (loading) {
-    return (
-      <>
-        <Comment />
-        <div className="post-info">
-          <div className="likes">
-            <a onClick={(e) => e.preventDefault()}>
-              <div className="icon">
-                <i className="far fa-heart"></i>
-              </div>
-            </a>
-          </div>
-          <div className="comments" id="##">
-            <a href="#">
-              <div className="icon">
-                <i className="far fa-comment-alt"></i>
-              </div>
-            </a>
-          </div>
-          <div className="share" id="##">
-            <a href="#">
-              <div className="icon">
-                <i class="far fa-bookmark"></i>
-              </div>
-            </a>
-          </div>
-        </div>
-
-        <div className="caption">
-          <p>
-            <b></b>
-          </p>
-        </div>
-        <div className="post-date"></div>
-      </>
-    );
-  }
 
   return (
     <>
@@ -227,9 +185,9 @@ const PostInfo = (props) => {
           <a onClick={(e) => e.preventDefault()}>
             <div className="icon">
               {isLiked1 ? (
-                <i className="fas fa-heart"></i>
+                <i className="fas fa-heart icon-red"></i>
               ) : (
-                <i className="far fa-heart"></i>
+                <i className="fas fa-heart icon-white"></i>
               )}
             </div>
             <div id={"likecount" + props.id} className="count">
@@ -248,7 +206,7 @@ const PostInfo = (props) => {
             }}
           >
             <div className="icon">
-              <i className="far fa-comment-alt"></i>
+              <i className="fas fa-comment-alt"></i>
             </div>
             <div className="count">{commentCount}</div>
           </a>

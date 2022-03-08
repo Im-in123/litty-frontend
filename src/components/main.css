@@ -211,8 +211,16 @@ body {
 .post-info .count {
   color: white;
 }
-.likes .icon {
+/* .likes .icon {
+  font-size: 17px;
+} */
+.likes .icon .icon-red {
   color: red;
+  /* font-size: 18px; */
+}
+.likes .icon .icon-white {
+  color: white;
+  /* font-size: 16px; */
 }
 .save .icon2 {
   color: whitesmoke;
@@ -284,6 +292,7 @@ body {
 
 .caption p {
   color: rgb(216, 205, 205);
+  font-size: 17px;
 }
 
 .caption a {

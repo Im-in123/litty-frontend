@@ -140,14 +140,14 @@ const ChatPage = (props) => {
     await getChatList();
 
     await getChatMsgs(other_user_g.id, 1);
-    document
-      .querySelector("input[type='file']")
-      .addEventListener("change mouseout", function () {
-        var fileinput = document.querySelector(this),
-          value = fileinput.value.split(/[\/]/g).pop();
+    // document
+    //   .querySelector("input[type='file']")
+    //   .addEventListener("change mouseout", function () {
+    //     var fileinput = document.querySelector(this),
+    //       value = fileinput.value.split(/[\/]/g).pop();
 
-        fileinput.siblings("span").text(value);
-      });
+    //     fileinput.siblings("span").text(value);
+    //   });
 
     try {
       el = document.querySelector(".content");

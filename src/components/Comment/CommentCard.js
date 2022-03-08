@@ -103,7 +103,6 @@ const CommentCard = (props) => {
   }, [newReplyReply]);
 
   useEffect(() => {
-    // console.log("reply Trigger:::", commentTrigger);
     if (commentTrigger) {
       console.log(
         "Comment reply trigger postcomment::",
@@ -139,7 +138,6 @@ const CommentCard = (props) => {
     try {
       for (var i in like) {
         if (like[i] === userDetail.user.id) {
-          console.log("found it:::", like[i]);
           setIsLiked(true);
           setLikeLength(props.data.like.length);
 
@@ -175,14 +173,8 @@ const CommentCard = (props) => {
   }, [delReply]);
 
   if (props.data) {
-    console.log("commentCard props.data:::", props.data);
-    // setPid(props.data.id);
-    console.log("456789765434567::111::", props.replyList);
-
     let comment = props.data.comment;
     let replies = props.data.reply;
-
-    console.log("commentCard replies:::", replies);
 
     const getReply = async (e, comment_id, next = false) => {
       e.preventDefault();
@@ -225,8 +217,6 @@ const CommentCard = (props) => {
         if (replyData.length > 0 && next) {
           let pp = [...replyData, ...result.data.results];
           setReplyData((r) => pp);
-          console.log("in here:::::::", replyData);
-          console.log("in here2:::::::", pp);
         } else {
           setReplyData((r) => result.data.results);
         }

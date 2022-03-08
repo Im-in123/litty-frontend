@@ -6,10 +6,7 @@ import "./newDetail.css";
 import "./newComment.css";
 import NewComCard from "./NewComCard";
 import { Link } from "react-router-dom";
-import { UrlParser } from "../../customs/others";
 import {
-  BASE_URL,
-  BASE_URL1,
   COMMENT_URL,
   LOCAL_CHECK,
   REPLY_URL,
@@ -35,10 +32,10 @@ const NewDetail = (props) => {
     } catch (error) {}
   } else {
     post_id = props.post_id;
-    user = props.user;
+    // user = props.user;
   }
 
-  console.log("vars::", post_id, user);
+  // console.log("vars::", post_id, user);
   const {
     state: { userDetail },
     dispatch,
@@ -50,7 +47,6 @@ const NewDetail = (props) => {
   const [isAuth, setIsAuth] = useState(false);
   const [commentCount, setCommentCount] = useState(0);
   const [likeCount, setLikeCount] = useState(0);
-  const [likeIconStyle, setLikeIconStyle] = useState("");
   const [isLiked, setIsLiked] = useState(false);
   const [actiontype, setActiontype] = useState("unlike");
   const [likesend, setLikeSend] = useState(false);
@@ -264,7 +260,6 @@ const NewDetail = (props) => {
     const token = await getToken();
     const res = await axiosHandler({
       method: "get",
-      // url: POST_URL + props.match.params.id + "/",
       url: POST_URL + id + "/",
 
       token,
@@ -280,9 +275,9 @@ const NewDetail = (props) => {
       if (res.data.author.username === userDetail.user.username) {
         setIsAuth(true);
       }
-      if (!props.user) {
-        user = res.data.author;
-      }
+
+      user = res.data.author;
+
       setCommentCount(res.data.comment_count);
       setLikeCount(res.data.like.length);
       await likeGet(res.data.like);
@@ -297,7 +292,6 @@ const NewDetail = (props) => {
         tagss.push(t.title);
       }
       setTags(tagss);
-      // setTagsEdited(tagss);
       setCaption(res.data.caption);
       setCaptionEdit(res.data.caption);
       setError(false);
@@ -326,7 +320,6 @@ const NewDetail = (props) => {
       isliked = null;
       setActiontype("unlike");
     }
-    setLikeIconStyle(isliked ? "fas" : "far");
   };
 
   const likeHandler = async (e) => {
@@ -436,7 +429,6 @@ const NewDetail = (props) => {
   const checkFollowHandler = async (id) => {
     const token = await getToken();
     const data = { other_id: id };
-    console.log("check followbefore data::::", data);
 
     const res = await axiosHandler({
       method: "post",
@@ -542,7 +534,16 @@ const NewDetail = (props) => {
                       </div>
                       <div className="drop-parent-new">
                         <div className="gallery-saved">
-                          <i class="far fa-bookmark"></i>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="24px"
+                            viewBox="0 0 24 24"
+                            width="24px"
+                            fill="#FFFFFF"
+                          >
+                            <path d="M0 0h24v24H0V0z" fill="none" />
+                            <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z" />
+                          </svg>
                         </div>
                         <div className="dm-new">
                           <div>
@@ -667,11 +668,11 @@ const NewDetail = (props) => {
                       {!isAuth && (
                         <>
                           {following ? (
-                            <span onClick={() => followHandler(user.id)}>
+                            <span onClick={() => followHandler(post.author.id)}>
                               <i className="fas fa-user-friends profile-icons"></i>
                             </span>
                           ) : (
-                            <span onClick={() => followHandler(user.id)}>
+                            <span onClick={() => followHandler(post.author.id)}>
                               <i className="fas fa-plus profile-icons"></i>
                             </span>
                           )}
@@ -682,9 +683,27 @@ const NewDetail = (props) => {
                   <div className="drop-parent-new">
                     <div className="gallery-saved" onClick={saveHandler}>
                       {isSaved ? (
-                        <i class="fas fa-bookmark"></i>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="24px"
+                          viewBox="0 0 24 24"
+                          width="24px"
+                          fill="white"
+                        >
+                          <path d="M0 0h24v24H0V0z" fill="none" />
+                          <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2z" />
+                        </svg>
                       ) : (
-                        <i class="far fa-bookmark"></i>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          height="24px"
+                          viewBox="0 0 24 24"
+                          width="24px"
+                          fill="#FFFFFF"
+                        >
+                          <path d="M0 0h24v24H0V0z" fill="none" />
+                          <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z" />
+                        </svg>
                       )}
                     </div>
                     <div className="dm-new">
@@ -835,7 +854,6 @@ const NewDetail = (props) => {
                         </div>
                         <div className="tags">
                           <span className="input-tags" contentEditable></span>
-                          {/* <span className="input-tags" contenteditable></span> */}
                           <ul className="tags-drop active"></ul>
                         </div>
                         <span className="spanny">
@@ -1032,16 +1050,10 @@ const ContentSlide = (props) => {
 
 const ContentLoadComment = (props) => {
   const {
-    state: { commentTrigger },
+    state: { userDetail },
     dispatch,
   } = useContext(store);
-  const {
-    state: { userDetail },
-  } = useContext(store);
 
-  const {
-    state: { postComment },
-  } = useContext(store);
   const {
     state: { commentInputSetter },
   } = useContext(store);
@@ -1226,7 +1238,6 @@ const ContentLoadComment = (props) => {
         if (replyResult) {
           console.log("CommentPost results", replyResult.data);
           setLoading(false);
-          // props.setCurrentReply(replyResult.data);
 
           dispatch({ type: commentInputSetterAction, payload: null });
 
@@ -1254,7 +1265,6 @@ const ContentLoadComment = (props) => {
         });
         if (replyReplyResult) {
           console.log("reply-reply results", replyReplyResult.data);
-          // props.setCurrentReplyReply(replyReplyResult.data);
           dispatch({ type: commentInputSetterAction, payload: null });
 
           dispatch({
@@ -1312,23 +1322,17 @@ const ContentLoadComment = (props) => {
         comment(s)
         <div className="comment-add-new">
           <div className="com-sub-new">
-            <form onSubmit={handleSubmit}>
+            <form>
               <input
                 id="comment-input-new"
                 autocomplete="off"
                 name="comment"
                 maxlength="60"
                 placeholder={placeholder}
-                value={commentData.comment || ""}
-                onChange={onChange}
+                value=""
               />
-              <button
-                className="submit-button"
-                type="submit"
-                onClick={handleSubmit}
-                disabled={loading}
-              >
-                {loading ? "commenting" : "comment"}
+              <button className="submit-button" type="submit" disabled={true}>
+                comment
               </button>
             </form>
           </div>

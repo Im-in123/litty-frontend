@@ -2,16 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 import "./newComment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
-import { UrlParser } from "../../customs/others";
 import moment from "moment";
 import {
-  BASE_URL,
-  BASE_URL1,
   COMMENT_URL,
   LOCAL_CHECK,
   REPLY_URL,
   COMMENT_LIKE_URL,
-  COMMENT_DELETE_URL,
 } from "../../urls";
 import {
   CommentTriggerAction,
@@ -28,7 +24,6 @@ const NewComCard = (props) => {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  // console.log("commentCard props::::", props);
   const {
     state: { commentTrigger },
   } = useContext(store);
@@ -54,10 +49,7 @@ const NewComCard = (props) => {
   } = useContext(store);
 
   useEffect(() => {
-    console.log("newReplyReply:::", newReplyReply);
     if (newReplyReply) {
-      console.log("newReplyReply postcomment::", newReplyReply.postcomment);
-      console.log("pid::", pid);
       if (pid === newReplyReply.postcomment) {
         setReplyData([...replyData, newReplyReply]);
         props.setCommentCount(props.commentCount + 1);
@@ -68,13 +60,11 @@ const NewComCard = (props) => {
   }, [newReplyReply]);
 
   useEffect(() => {
-    console.log("reply Trigger:::", commentTrigger);
     if (commentTrigger) {
       console.log(
         "Comment reply trigger postcomment::",
         commentTrigger.postcomment
       );
-      console.log("pid::", pid);
 
       setReplyData([commentTrigger, ...replyData]);
       props.setCommentCount(props.commentCount + 1);
@@ -103,7 +93,6 @@ const NewComCard = (props) => {
     try {
       for (var i in like) {
         if (like[i] === userDetail.user.id) {
-          console.log("found it:::", like[i]);
           setIsLiked(true);
           setLikeLength(props.data.like.length);
 
@@ -138,9 +127,6 @@ const NewComCard = (props) => {
   }, [delReply]);
 
   if (props.data) {
-    // console.log("commentCard props.data:::", props.data);
-    // console.log("456789765434567::111::", props.replyList);
-
     let comment = props.data.comment;
     let replies = props.data.reply;
 
@@ -162,7 +148,6 @@ const NewComCard = (props) => {
             REPLY_URL + `?post_id=${props.post_id}&comment_id=${comment_id}`;
         }
       }
-      console.log("url reply:::", url, next);
       const token = await getToken();
       const result = await axiosHandler({
         method: "get",
@@ -221,7 +206,6 @@ const NewComCard = (props) => {
         data: data,
       }).catch((e) => {
         console.log("sendcommentLike error::::", e.response.data);
-        //     setLoading(false)
       });
 
       if (result) {

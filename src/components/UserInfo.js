@@ -27,18 +27,14 @@ const UserInfo = (props) => {
         btn: ".summary",
       });
     }
-    if (props.data) {
-      // await checkFollowHandler(props.data.id);
-    }
+
     return () => {};
   }, [props.data]);
 
   useEffect(() => {
-    // console.log("checkAllFollow::::", checkAllFollow);
-    // console.log("check::::", check);
     if (!props.data) return;
     for (var i in checkAllFollow) {
-      console.log("checkAllFollow:::", checkAllFollow);
+      // console.log("checkAllFollow:::", checkAllFollow);
       let ii = check[i];
       if (ii.user === props.data.username) {
         if (ii.status === "yes") {
@@ -86,8 +82,6 @@ const UserInfo = (props) => {
     };
   }
 
-  /**/
-
   const checkname = async () => {
     if (props.data) {
       if (userDetail.user.username === props.data.username) {
@@ -103,7 +97,6 @@ const UserInfo = (props) => {
     setFollowing(!following);
     const token = await getToken();
     const data = { other_id: id };
-    console.log("before data::::", data);
 
     const res = await axiosHandler({
       method: "post",
@@ -180,8 +173,6 @@ const UserInfo = (props) => {
     );
   } else {
     if (props.data) {
-      // console.log("UserInfo props:::", props.data)
-
       return (
         <div className="user-info">
           <div className="userdiv">

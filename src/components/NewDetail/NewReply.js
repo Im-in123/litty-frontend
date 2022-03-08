@@ -2,22 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 // import "./comment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
-import {
-  BASE_URL,
-  BASE_URL1,
-  COMMENT_URL,
-  LOCAL_CHECK,
-  REPLY_URL,
-  REPLY_LIKE_URL,
-  REPLY_DELETE_URL,
-} from "../../urls";
+import { LOCAL_CHECK, REPLY_URL, REPLY_LIKE_URL } from "../../urls";
 import {
   commentInputSetterAction,
-  deleteCommentAction,
   deleteReplyAction,
 } from "../../stateManagement/actions";
 import { Link } from "react-router-dom";
-import { UrlParser } from "../../customs/others";
 import moment from "moment";
 
 const NewReply = (props) => {
@@ -42,7 +32,6 @@ const NewReply = (props) => {
     try {
       for (var i in like) {
         if (like[i] === userDetail.user.id) {
-          console.log("found it:::", like[i]);
           setIsLiked(true);
           setLikeLength(props.data.like.length);
 
@@ -84,7 +73,6 @@ const NewReply = (props) => {
       data: data,
     }).catch((e) => {
       console.log("sendreplyLike error::::", e.response.data);
-      //     setLoading(false)
     });
 
     if (result) {
@@ -145,7 +133,6 @@ const NewReply = (props) => {
     return (
       <>
         <div className="comment" key={reply.id}>
-          {/* {" "} */}
           {!reply.to ? (
             <>
               <div className="comment-avatar">
