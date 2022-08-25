@@ -159,11 +159,12 @@ const OtherProfile = (props) => {
 
     if (res) {
       if (post.length > 0) {
-        for (var i in res.data.results) {
-          post.push(res.data.results[i]);
-        }
+        // for (var i in res.data.results) {
+        //   post.push(res.data.results[i]);
+        // }
 
-        setMyPost([...post]);
+        // setMyPost([...post]);
+        setMyPost((items) => [...items, ...res.data.results]);
       } else {
         post = res.data.results;
         setMyPost(res.data.results);

@@ -34,6 +34,7 @@ const Saved = (props) => {
   const [myPost, setMyPost] = useState([]);
 
   const [overallAudio, setOverallAudio] = useState(true);
+  const [end, setEnd] = useState(false);
 
   useEffect(async () => {
     let r = await getMyPost(1);
@@ -105,11 +106,12 @@ const Saved = (props) => {
 
     if (res) {
       if (post.length > 0) {
-        for (var i in res.data.results) {
-          post.push(res.data.results[i]);
-        }
+        // for (var i in res.data.results) {
+        //   post.push(res.data.results[i]);
+        // }
 
-        setMyPost(post);
+        // setMyPost(post);
+        setMyPost((items) => [...items, ...res.data.results]);
       } else {
         post = res.data.results;
         setMyPost(res.data.results);
@@ -120,11 +122,12 @@ const Saved = (props) => {
         canGoNext = true;
 
         goneNext = false;
-
+        setEnd(false);
         shouldHandleScroll = true;
       } else {
         shouldHandleScroll = false;
-        canGoNext = true;
+        canGoNext = false;
+        setEnd(true);
       }
     }
   };
@@ -245,12 +248,10 @@ const Saved = (props) => {
             </>
           </div>
           <div className="load-more-post">
-            <span>{p1 && p1.next ? "Loading more..." : ""}</span>
+            <span>{end ? "No more posts!" : "Loading more..."}</span>
           </div>
           <div className="load-more-post">
-            <span>
-              {myPost.length < 1 || !p1?.next ? "No more posts!" : ""}
-            </span>
+            <span>{myPost.length < 1 ? "No more posts!" : ""}</span>
           </div>
         </div>
       </div>

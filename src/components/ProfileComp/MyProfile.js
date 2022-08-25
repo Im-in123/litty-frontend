@@ -122,11 +122,11 @@ const MyProfile = (props) => {
 
     if (res) {
       if (post.length > 0) {
-        for (var i in res.data.results) {
-          post.push(res.data.results[i]);
-        }
-
-        setMyPost(post);
+        // for (var i in res.data.results) {
+        //   post.push(res.data.results[i]);
+        // }
+        setMyPost((items) => [...items, ...res.data.results]);
+        // setMyPost(post);
       } else {
         post = res.data.results;
         setMyPost(res.data.results);

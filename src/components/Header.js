@@ -15,7 +15,7 @@ const Header = (props) => {
   let itval;
   useEffect(() => {
     getNotification();
-    autoNotification();
+    // autoNotification();
     return () => {
       clearInterval(itval);
     };

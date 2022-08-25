@@ -95,10 +95,11 @@ const Feed = (props) => {
     if (res) {
       //refresh number of post to 0 if number of posts on page is greater than or equal to 27
       if (post.length >= 0 && post.length <= 27) {
-        for (var i in res.data.results) {
-          post.push(res.data.results[i]);
-        }
-        setPostList(post);
+        // for (var i in res.data.results) {
+        //   post.push(res.data.results[i]);
+        // }
+        // setPostList(post);
+        setPostList((items) => [...items, ...res.data.results]);
       } else {
         setFetching(true);
         setPostList([]);
@@ -239,7 +240,7 @@ const Feed = (props) => {
           ))}
 
         <div className="load-more-post">
-          <span>{p1 && p1.next ? "Loading ..." : ""}</span>
+          <span>{p1?.next ? "Loading more ..." : ""}</span>
         </div>
         {!fetching ? (
           <div className="load-more-post">
