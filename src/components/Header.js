@@ -11,7 +11,6 @@ const Header = (props) => {
     dispatch,
   } = useContext(store);
 
-  const [loading, setLoading] = useState(false);
   const [notiNum, setNotiNum] = useState(null);
   let itval;
   useEffect(() => {
@@ -26,14 +25,12 @@ const Header = (props) => {
     clearInterval(itval);
 
     itval = setInterval(() => {
-      console.log("::::");
-
       getNotification();
-    }, 40000);
+    }, 50000);
   };
   const getNotification = async () => {
     if (!userDetail) return;
-    console.log("inner");
+
     let extra = `?keyword=${"unread-count"}`;
     const token = await getToken();
     const gp = await axiosHandler({
@@ -45,7 +42,6 @@ const Header = (props) => {
     });
 
     if (gp) {
-      console.log(" getNotification in header res::::", gp.data);
       const noti = gp.data["unread-count"];
       if (noti !== 0) {
         setNotiNum(noti);
@@ -55,9 +51,6 @@ const Header = (props) => {
     }
   };
 
-  if (loading) {
-    return <></>;
-  }
   return (
     <div id="header">
       <div className="fixed-header">

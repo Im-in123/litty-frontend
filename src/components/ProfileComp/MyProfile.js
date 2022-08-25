@@ -3,13 +3,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { axiosHandler, getToken } from "../../helper";
 import { store } from "../../stateManagement/store";
-import {
-  BASE_URL,
-  BASE_URL1,
-  LOCAL_CHECK,
-  POST_URL,
-  SAVED_URL,
-} from "../../urls";
+import { BASE_URL1, LOCAL_CHECK, POST_URL } from "../../urls";
 import UserInfo from "../UserInfo";
 import PostContent from "../PostContent";
 import PostInfo from "../PostInfo";
@@ -19,7 +13,6 @@ import {
   commentInputSetterAction,
   volumeAction,
 } from "../../stateManagement/actions";
-import { UrlParser } from "../../customs/others";
 
 let post = [];
 
@@ -53,8 +46,6 @@ const MyProfile = (props) => {
   const [overallAudio, setOverallAudio] = useState(true);
   const [end, setEnd] = useState(false);
   useEffect(async () => {
-    console.log("MyProfile props:::", props);
-
     setFollowers(userDetail.followers.length);
     setFollowing(userDetail.following.length);
 
@@ -86,7 +77,6 @@ const MyProfile = (props) => {
         document.body.scrollHeight - 100
       ) {
         console.log("reached");
-        console.log("finally", canGoNext, goneNext);
         if (canGoNext && !goneNext) {
           goneNext = true;
           shouldHandleScroll = false;
@@ -101,7 +91,6 @@ const MyProfile = (props) => {
     }
   };
   useEffect(() => {
-    console.log("overallAudio:::", overallAudio);
     dispatch({ type: volumeAction, payload: overallAudio });
 
     return () => {};
@@ -132,7 +121,6 @@ const MyProfile = (props) => {
     });
 
     if (res) {
-      console.log(" MyPost::::", res.data);
       if (post.length > 0) {
         for (var i in res.data.results) {
           post.push(res.data.results[i]);
@@ -158,8 +146,6 @@ const MyProfile = (props) => {
       }
     }
     setLoading(false);
-    console.log("PostList:::", myPost);
-    console.log("post:::", post);
   };
 
   if (fetching) {
@@ -348,7 +334,7 @@ const MyProfile = (props) => {
             <>
               {myPost &&
                 myPost.map((item, key) => (
-                  <div id="feed" id={`feed${item.id}`} key={key}>
+                  <div id={`feed${item.id}`} key={key}>
                     <div className="content-wrapper feed-wrapper">
                       <div className="post-wall">
                         <div className="post" id={"post" + item.id}>
@@ -414,14 +400,7 @@ const MyProfile = (props) => {
               )}
             </>
           </div>
-          {/* <div className="load-more-post">
-            <span>{p1 && p1.next ? "Loading more..." : ""}</span>
-          </div>
-          <div className="load-more-post">
-            <span>
-              {myPost.length < 1 || !p1?.next ? "No more posts!" : ""}
-            </span>
-          </div> */}
+
           <div className="load-more-post">
             <span>{end ? "No more posts!" : "Loading more..."}</span>
           </div>

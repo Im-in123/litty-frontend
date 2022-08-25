@@ -293,6 +293,7 @@ body {
 .caption p {
   color: rgb(216, 205, 205);
   font-size: 17px;
+  word-break: break-all;
 }
 
 .caption a {

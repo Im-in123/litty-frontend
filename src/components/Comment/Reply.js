@@ -2,27 +2,16 @@ import React, { useState, useContext, useEffect } from "react";
 import "./comment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
-import { UrlParser } from "../../customs/others";
 
-import {
-  BASE_URL,
-  BASE_URL1,
-  COMMENT_URL,
-  LOCAL_CHECK,
-  REPLY_URL,
-  REPLY_LIKE_URL,
-  REPLY_DELETE_URL,
-} from "../../urls";
+import { LOCAL_CHECK, REPLY_URL, REPLY_LIKE_URL } from "../../urls";
 import {
   commentInputSetterAction,
-  deleteCommentAction,
   deleteReplyAction,
 } from "../../stateManagement/actions";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
 const Reply = (props) => {
-  // console.log("Reply props::", props);
   const {
     state: { userDetail },
     dispatch,
@@ -42,7 +31,6 @@ const Reply = (props) => {
     try {
       for (var i in like) {
         if (like[i] === userDetail.user.id) {
-          console.log("found it:::", like[i]);
           setIsLiked(true);
           setLikeLength(props.data.like.length);
 
@@ -59,7 +47,6 @@ const Reply = (props) => {
   const SendReplyTo = async (reply_id, who, parent_id) => {
     let placeholderText = "replying to " + who + " ...";
 
-    console.log("sendreplyTo data::::", reply_id, who, parent_id);
     dispatch({
       type: commentInputSetterAction,
       payload: {
@@ -84,11 +71,9 @@ const Reply = (props) => {
       data: data,
     }).catch((e) => {
       console.log("sendreplyLike error::::", e.response.data);
-      //     setLoading(false)
     });
 
     if (result) {
-      console.log("sendreplyLike results", result.data);
       if (result.data.data === "success-added") {
         setIsLiked(true);
         setLikeLength(likeLength + 1);
@@ -115,7 +100,6 @@ const Reply = (props) => {
     });
 
     if (res) {
-      console.log(" Delete reply response::::", res.data);
       if (res.data.data === "delete-successful") {
         dispatch({ type: deleteReplyAction, payload: reply_id });
       } else {
@@ -124,7 +108,6 @@ const Reply = (props) => {
     }
   };
   if (props.data) {
-    console.log("Reply props.data::", props.data);
     let reply = props.data;
     if (!reply.author) return <></>;
     let link;
@@ -145,7 +128,6 @@ const Reply = (props) => {
     return (
       <>
         <div className="comment" key={reply.id}>
-          {/* {" "} */}
           {!reply.to ? (
             <>
               <div className="comment-avatar">

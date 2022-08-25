@@ -1,16 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
 import PostContent from "./PostContent";
 import PostInfo from "./PostInfo";
 import UserInfo from "./UserInfo";
 import { POST_URL } from "../urls";
 import { axiosHandler, getToken } from "../helper";
 import { store } from "../stateManagement/store";
-import {
-  refreshFeedAction,
-  postContainerAction,
-  volumeAction,
-} from "../stateManagement/actions";
+import { volumeAction } from "../stateManagement/actions";
 import { VerifyFunc } from "../customs/others";
 
 let p1;
@@ -20,7 +15,6 @@ let canGoNext = false;
 let shouldHandleScroll = false;
 const Feed = (props) => {
   const [fetching, setFetching] = useState(true);
-  const [error, setError] = useState(false);
   const [postList, setPostList] = useState([]);
   const [overallAudio, setOverallAudio] = useState(true);
 
@@ -28,18 +22,9 @@ const Feed = (props) => {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  const {
-    state: { volumeTrigger },
-  } = useContext(store);
-
-  const {
-    state: { refreshFeed },
-  } = useContext(store);
-  const {
-    state: { postContainer },
-  } = useContext(store);
 
   useEffect(() => {
+    //set volume to on or off
     dispatch({ type: volumeAction, payload: overallAudio });
 
     return () => {};
@@ -52,17 +37,8 @@ const Feed = (props) => {
   }, []);
 
   useEffect(() => {
-    setPostList(postContainer);
-    post = postContainer;
-    console.log("postContainer:::", postContainer);
+    getPostContent(1);
 
-    if (refreshFeed) {
-      getPostContent(1);
-    } else {
-      setFetching(false);
-      shouldHandleScroll = true;
-      canGoNext = true;
-    }
     return () => {};
   }, []);
 
@@ -110,15 +86,14 @@ const Feed = (props) => {
       token,
     }).catch((e) => {
       console.log("Error in Feed::::", e);
-      setError(true);
+
       shouldHandleScroll = true;
       canGoNext = true;
       goneNext = false;
     });
 
     if (res) {
-      console.log(" Feed::::", res.data.results);
-
+      //refresh number of post to 0 if number of posts on page is greater than or equal to 27
       if (post.length >= 0 && post.length <= 27) {
         for (var i in res.data.results) {
           post.push(res.data.results[i]);
@@ -136,7 +111,6 @@ const Feed = (props) => {
 
         scrollToTop();
       }
-      dispatch({ type: postContainerAction, payload: post });
 
       p1 = res.data;
 
@@ -149,11 +123,7 @@ const Feed = (props) => {
       } else {
         shouldHandleScroll = false;
       }
-      dispatch({ type: refreshFeedAction, payload: null });
     }
-
-    console.log("PostList:::", postList);
-    console.log("post:::", post);
 
     setFetching(false);
   };
@@ -233,7 +203,7 @@ const Feed = (props) => {
       <>
         {postList.length > 0 &&
           postList.map((item, key) => (
-            <div id="feed" id={`feed${item.id}`} key={key}>
+            <div id={`feed${item.id}`} key={key}>
               <div className="content-wrapper feed-wrapper">
                 <div className="post-wall">
                   <div className="post" id={"post" + item.id}>

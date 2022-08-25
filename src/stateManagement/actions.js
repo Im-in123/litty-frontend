@@ -1,5 +1,4 @@
 export const userDetailAction = "userDetailAction";
-export const postContainerAction = "postContainerAction";
 export const refreshFeedAction = "refreshFeedAction";
 
 export const postCommentAction = "postCommentAction";

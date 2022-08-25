@@ -17,18 +17,13 @@ const UserProfileUpdate = (props) => {
     user_id: userDetail.user.id,
     is_verified: true,
   });
-  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     if (!userDetail.user.is_verified) {
       window.location.href = "/verify";
     }
   }, []);
-  // <input type="file" style={{display:"none"}} ref={e => profileRef = e} onChange={handleOnChange} />
-  //   <div className="point" onClick={() => profileRef.click()}>
-  //   Change Picture
-  //   <img src={edit} />
-  // </div>
+
   const propicSubmit = async (e) => {
     e.preventDefault();
     let data = new FormData();
@@ -36,7 +31,6 @@ const UserProfileUpdate = (props) => {
     data.append("file_upload", pp.files[0]);
     data.append("user_id", userDetail.user.id);
 
-    setUploading(true);
     const token = await getToken();
     const method1 = "post";
     const result = await axiosHandler({
@@ -45,7 +39,7 @@ const UserProfileUpdate = (props) => {
       token,
       data,
     }).catch((e) => console.log(e));
-    setUploading(false);
+
     if (result) {
       console.log();
 
@@ -58,7 +52,7 @@ const UserProfileUpdate = (props) => {
   const submit = async (e) => {
     e.preventDefault();
     const token = await getToken();
-    console.log("Profile data:::", profileData);
+
     if (userDetail.user.username === "guest") {
       alert("sorry, profile update is disabled for this account!");
       return;
@@ -72,7 +66,7 @@ const UserProfileUpdate = (props) => {
     if (method === "patch") {
       url = PROFILE_URL;
     }
-    console.log("method:::::", method);
+
     const profile = await axiosHandler({
       method,
       url,
@@ -83,7 +77,6 @@ const UserProfileUpdate = (props) => {
       alert(e);
     });
     if (profile) {
-      console.log("profile data:::", profile.data);
       dispatch({ type: userDetailAction, payload: profile.data });
       alert("Updated successfully!");
     }

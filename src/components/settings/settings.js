@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Liked from "./Liked";
-import ProfileUpdate from "./ProfileUpdate";
 import Saved from "./Saved";
 import "./settings.css";
-import UserProfileUpdate from "./UserprofileUpdate";
-
 const Settings = () => {
   const [saved, setSaved] = useState(false);
   const [liked, setLiked] = useState(false);
@@ -14,7 +11,7 @@ const Settings = () => {
   useEffect(() => {
     const hamburgerMenu = document.getElementById("hamburger-icon");
     const link = document.querySelectorAll(".link");
-    const closeBtn = document.getElementById("close");
+    // const closeBtn = document.getElementById("close");
 
     for (let i = 0; i < link.length; i++) {
       link[i].addEventListener("click", function () {

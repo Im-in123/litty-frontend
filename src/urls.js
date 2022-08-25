@@ -6,10 +6,6 @@ export const BASE_URL = "https://litty-server.herokuapp.com/";
 // export const BASE_URL1 ="http://192.168.43.77:8000";
 export const BASE_URL1 = "https://litty-server.herokuapp.com";
 
-// export const BASE_URL2 = "127.0.0.1:8000";
-// export const BASE_URL2 = "192.168.43.77:8000";
-export const BASE_URL2 = "litty-server.herokuapp.com";
-
 // export const CHAT_SOCKET_URL = "http://localhost:9000/";
 export const CHAT_SOCKET_URL = "https://litty-chat-server.herokuapp.com/";
 
@@ -43,7 +39,6 @@ export const POST_DELETE = BASE_URL + "post-delete";
 
 export const COMMENT_LIKE_URL = BASE_URL + "comment-like";
 export const REPLY_LIKE_URL = BASE_URL + "reply-like";
-// export const USER_SAVED_URL = BASE_URL + "user-saved";
 export const NOTIFICATION_COUNT_URL = BASE_URL + "notification-count";
 
 export const COMMENT_DELETE_URL = BASE_URL + "comment-delete";
@@ -59,6 +54,5 @@ export const CHECK_FOLLOW = BASE_URL + "user/check-follow";
 
 export const CHAT_LIST_URL = BASE_URL + "message/chatlist/";
 export const MESSAGE_URL = BASE_URL + "message/message/";
-export const MESSAGE_GROUP_URL = BASE_URL + "message/message-group/";
-export const MESSAGE_GROUP_CHAT_URL = BASE_URL + "message/message-group-chat/";
+
 export const READ_WHOLE_ROOM_URL = BASE_URL + "message/read-whole-room";

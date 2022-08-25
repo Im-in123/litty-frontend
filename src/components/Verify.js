@@ -3,6 +3,8 @@ import { store } from "../stateManagement/store";
 import { SECONDARY_EMAIL_VERIFICATION } from "../urls";
 import { axiosHandler, getToken } from "../helper";
 
+//Sends request for user email verification if user user if not verified
+
 const Verify = (props) => {
   const {
     state: { userDetail },

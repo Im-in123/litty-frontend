@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./notification.css";
 import {
@@ -7,7 +7,6 @@ import {
   LOCAL_CHECK,
   NOTIFICATION_COUNT_URL,
 } from "../../urls";
-import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 import moment from "moment";
 
@@ -23,10 +22,6 @@ const Notitfication = (props) => {
   const [fetching, setFetching] = useState(true);
   const [loading, setLoading] = useState(true);
 
-  const {
-    state: { userDetail },
-    dispatch,
-  } = useContext(store);
   useEffect(() => {
     try {
       window.addEventListener("scroll", autoFetchNotication);
@@ -47,15 +42,10 @@ const Notitfication = (props) => {
 
   const autoFetchNotication = async () => {
     if (shouldHandleScroll) {
-      // console.log("window.innerHeight:::", window.innerHeight);
-      // console.log(" window.scrollY::", window.scrollY);
-      // console.log("document.body.scrollHeight:::", document.body.scrollHeight);
-      // console.log("added::", window.innerHeight + window.scrollY);
       if (
         window.innerHeight + window.scrollY >=
         document.body.scrollHeight - 100
       ) {
-        console.log("reached");
         console.log("finally", canGoNext, goneNext);
         if (canGoNext && !goneNext) {
           goneNext = true;
@@ -93,9 +83,6 @@ const Notitfication = (props) => {
     });
 
     if (result) {
-      console.log("notification results::::", result.data);
-      console.log("notification qs::::", result.data.results);
-
       g_noti = [...g_noti, ...result.data.results];
       setNotification(g_noti);
       p1 = result.data;
@@ -128,7 +115,7 @@ const Notitfication = (props) => {
     });
 
     if (gp) {
-      console.log(" readNotification::::", gp.data);
+      // console.log(" readNotification::::", gp.data);
     }
   };
   if (loading) {
@@ -173,7 +160,7 @@ const Noti = (props) => {
         <div className="user-image">
           <Link to={`/other-profile/` + data.sender.username}>
             <img
-              alt="image"
+              alt="profile pic"
               src={
                 LOCAL_CHECK
                   ? data.sender.user_picture

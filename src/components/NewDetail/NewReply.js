@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-// import "./comment.css";
+
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
 import { LOCAL_CHECK, REPLY_URL, REPLY_LIKE_URL } from "../../urls";
@@ -11,7 +11,6 @@ import { Link } from "react-router-dom";
 import moment from "moment";
 
 const NewReply = (props) => {
-  console.log("Reply props::", props);
   const {
     state: { userDetail },
     dispatch,
@@ -48,7 +47,6 @@ const NewReply = (props) => {
   const SendReplyTo = async (reply_id, who, parent_id) => {
     let placeholderText = "replying to " + who + " ...";
 
-    console.log("sendreplyTo data::::", reply_id, who, parent_id);
     dispatch({
       type: commentInputSetterAction,
       payload: {
@@ -76,7 +74,6 @@ const NewReply = (props) => {
     });
 
     if (result) {
-      console.log("sendreplyLike results", result.data);
       if (result.data.data === "success-added") {
         setIsLiked(true);
         setLikeLength(likeLength + 1);
@@ -103,7 +100,6 @@ const NewReply = (props) => {
     });
 
     if (res) {
-      console.log(" Delete reply response::::", res.data);
       if (res.data.data === "delete-successful") {
         dispatch({ type: deleteReplyAction, payload: reply_id });
       } else {
@@ -112,7 +108,6 @@ const NewReply = (props) => {
     }
   };
   if (props.data) {
-    console.log("Reply props.data::", props.data);
     let reply = props.data;
     if (!reply.author) return <></>;
     let link;

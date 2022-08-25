@@ -1,6 +1,5 @@
 import "../ProfileComp/myprofile.css";
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
 import { axiosHandler, getToken } from "../../helper";
 import { store } from "../../stateManagement/store";
 import { POST_LIKE_URL } from "../../urls";
@@ -19,16 +18,12 @@ let canGoNext = false;
 let shouldHandleScroll = false;
 const Saved = (props) => {
   const [fetching, setFetching] = useState(true);
-  const [loading, setLoading] = useState(true);
 
-  const [error, setError] = useState(false);
   const {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  const {
-    state: { volumeTrigger },
-  } = useContext(store);
+
   const [list, setList] = useState(false);
   const [grid, setGrid] = useState(true);
   const [id, setId] = useState(null);
@@ -67,7 +62,6 @@ const Saved = (props) => {
         window.innerHeight + window.scrollY >=
         document.body.scrollHeight - 100
       ) {
-        console.log("reached");
         console.log("finally", canGoNext, goneNext);
         if (canGoNext && !goneNext) {
           goneNext = true;
@@ -83,7 +77,6 @@ const Saved = (props) => {
     }
   };
   useEffect(() => {
-    console.log("overallAudio:::", overallAudio);
     dispatch({ type: volumeAction, payload: overallAudio });
 
     return () => {};
@@ -91,8 +84,6 @@ const Saved = (props) => {
 
   const getMyPost = async (page = null) => {
     let extra = `keyword=${userDetail.user.username}`;
-
-    setLoading(true);
 
     const token = await getToken();
     let url;
@@ -110,11 +101,9 @@ const Saved = (props) => {
       canGoNext = true;
 
       goneNext = false;
-      setError(true);
     });
 
     if (res) {
-      console.log(" MyLiked::::", res.data);
       if (post.length > 0) {
         for (var i in res.data.results) {
           post.push(res.data.results[i]);
@@ -138,9 +127,6 @@ const Saved = (props) => {
         canGoNext = true;
       }
     }
-    setLoading(false);
-    console.log("LikedList:::", myPost);
-    console.log("liked:::", post);
   };
 
   if (fetching) {
@@ -192,7 +178,7 @@ const Saved = (props) => {
             <>
               {myPost &&
                 myPost.map((item, key) => (
-                  <div id="feed" id={`feed${item.post.id}`} key={key}>
+                  <div id={`feed${item.post.id}`} key={key}>
                     <div className="content-wrapper feed-wrapper">
                       <div className="post-wall">
                         <div className="post" id={"post" + item.post.id}>

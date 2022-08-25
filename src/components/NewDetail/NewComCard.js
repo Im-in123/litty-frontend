@@ -134,15 +134,12 @@ const NewComCard = (props) => {
       e.preventDefault();
       setView("loading...");
 
-      console.log("reply data::::", replyData);
       let data = { post_id: props.post_id, comment_id: comment_id };
-      console.log("reply data1:::", data);
       let url;
       url = REPLY_URL + `?post_id=${props.post_id}&comment_id=${comment_id}`;
       if (next) {
         if (nextReps.next) {
           url = nextReps.next;
-          console.log("nextReps:::", nextReps);
         } else {
           url =
             REPLY_URL + `?post_id=${props.post_id}&comment_id=${comment_id}`;
@@ -165,7 +162,6 @@ const NewComCard = (props) => {
         } else {
           setReplyAvailable(false);
         }
-        console.log("getReply results", result.data.results);
         setReplyLength(null);
         if (replyData.length > 0 && next) {
           let pp = [...replyData, ...result.data.results];
@@ -176,11 +172,10 @@ const NewComCard = (props) => {
       }
     };
     const SendReply = async (comment_id, who, e = null) => {
-      console.log("eeeeee::::", e);
       let placeholderText = "replying to " + who + " ...";
-      //   e.target.style.background = "red";
+
       e.target.style.color = "#ec0313";
-      //   e.target.parentElement.style.background = "#ec0313";
+
       dispatch({
         type: commentInputSetterAction,
         payload: {
@@ -209,7 +204,6 @@ const NewComCard = (props) => {
       });
 
       if (result) {
-        console.log("sendcommentLike results", result.data);
         if (result.data.data === "success-added") {
           setIsLiked(true);
           setLikeLength(likeLength + 1);
@@ -236,7 +230,6 @@ const NewComCard = (props) => {
       });
 
       if (res) {
-        console.log(" Delete comment response::::", res.data);
         if (res.data.data === "delete-successful") {
           dispatch({ type: deleteCommentAction, payload: comment_id });
         } else {

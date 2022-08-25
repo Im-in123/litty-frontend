@@ -15,7 +15,6 @@ const PostCreate = (props) => {
     state: { postTrigger },
   } = useContext(store);
   const [loading, setLoading] = useState(false);
-  const [tagsEdited, setEditedTags] = useState([]);
 
   useEffect(() => {
     tagFunc();
@@ -62,7 +61,6 @@ const PostCreate = (props) => {
       tagnum.textContent = 10 - tags.length;
 
       console.log("removed tags::", tags);
-      setEditedTags(tags);
     });
 
     const sanitizeNewTag = (newTag) => {
@@ -82,7 +80,6 @@ const PostCreate = (props) => {
       tags.push(tagToAdd);
       inputTags.insertAdjacentElement("beforebegin", tag);
       tagnum.textContent = 10 - tags.length;
-      setEditedTags(tags);
     };
 
     const popupList = (tagToCheck) => {
@@ -144,15 +141,9 @@ const PostCreate = (props) => {
     let img_vid = image_video.files;
 
     const formData = new FormData();
-    console.log("tagsEdited:::", tagsEdited);
-    console.log("tags:::", tags);
 
-    console.log("caption:::", postData.post);
-    console.log("author_id:::", userDetail.user.id);
-    console.log("image:::", image_video, img_vid);
     formData.append("author_id", userDetail.user.id);
     formData.append("caption", postData.post);
-    // formData.append("tags", tags);
     for (let i = 0; i < tags.length; i++) {
       formData.append("tags", tags[i]);
     }
@@ -170,7 +161,6 @@ const PostCreate = (props) => {
     const token = await getToken();
     console.log("postcreate data:::", formData);
     const url = POST_URL;
-    console.log("url::::", url);
     const method = "post";
     // return;
     const res = await axiosHandler({
@@ -185,18 +175,15 @@ const PostCreate = (props) => {
       setLoading(false);
     });
     if (res) {
-      console.log("create post data:::", res.data);
       setLoading(false);
       alert("created successfully!");
       setPostData({ post: "" });
       // tags = [];
       try {
         const tagels = document.querySelectorAll(".tag");
-        console.log("tagels::::", tagels);
 
         for (var i in tagels) {
           let ii = tagels[i];
-          console.log("ii:::", ii);
         }
       } catch (error) {
         console.log(error);

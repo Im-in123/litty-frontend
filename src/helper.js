@@ -17,7 +17,6 @@ export const axiosHandler = ({
     let axiosProps = { method: methodType, url, data };
 
     if (token) {
-      // console.log(token, "token");
       axiosProps.headers = { Authorization: `Bearer ${token}` };
     }
     if (extra) {
@@ -67,7 +66,6 @@ const loopObj = (obj) => {
 export const getToken = async (props) => {
   let token = localStorage.getItem(tokenName);
   if (!token) {
-    // alert("no token");
     logout(props);
   }
   token = JSON.parse(token);
@@ -81,8 +79,6 @@ export const getToken = async (props) => {
   if (userProfile) {
     return token.access;
   } else {
-    console.log("token.refresh::", token.refresh);
-    // alert("getting new access with refresh token");
     const getNewAccess = await axiosHandler({
       method: "post",
       url: REFRESH_URL,
@@ -92,21 +88,18 @@ export const getToken = async (props) => {
     }).catch((e) => {
       console.log(e);
       if (e.response) {
+        //Request made and server responded
         console.log("Request made and server responded");
-        console.log("e help response.data:::", e.response.data);
-        console.log("e help response,status:::", e.response.status);
-        console.log("e help response.headers:::", e.response.headers);
+
         if (
           e.response.data.error === "Token is invalid or has expired" ||
           e.response.data.error === "refresh token not found"
         ) {
-          // alert("logout2");
           logout(props);
         }
       } else if (e.request) {
         // The request was made but no response was received
         console.log("e help request:::", e.request);
-        // alert("Slow Network connection");
       }
     });
     if (getNewAccess) {

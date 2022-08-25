@@ -2,14 +2,13 @@ import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./chatpage.css";
 import "./chatStuff/css/chat.css";
-import { UrlParser, uuidv4 } from "../../customs/others";
+import { UrlParser } from "../../customs/others";
 import {
   CHAT_LIST_URL,
   CHAT_SOCKET_URL,
   LOCAL_CHECK,
   MESSAGE_URL,
   OTHER_PROFILE_URL,
-  POST_URL,
   READ_WHOLE_ROOM_URL,
 } from "../../urls";
 import { store } from "../../stateManagement/store";
@@ -33,11 +32,11 @@ const addUserMsgs = (user, data, page, cangn) => {
   all_users_msgs.push(v);
 };
 const updateUserMsgMultiple = (data, user, page, cangn) => {
-  console.log("user multiple::", user);
-  console.log("data multiple::", data);
+  // console.log("user multiple::", user);
+  // console.log("data multiple::", data);
 
   let g = all_users_msgs.filter((item) => item.user === user);
-  console.log("g multiple::", g);
+  // console.log("g multiple::", g);
 
   let h = g[0].msg_set;
   h = [...data.reverse(), ...h];
@@ -45,17 +44,17 @@ const updateUserMsgMultiple = (data, user, page, cangn) => {
   g[0].page = page;
   g[0].canGoNext = cangn;
   const index = all_users_msgs.findIndex((item) => item.user === user);
-  console.log("index::", index);
+  // console.log("index::", index);
 
   if (index !== -1) {
     let b = all_users_msgs.splice(index, 1)[0];
-    console.log("b::", b);
+    // console.log("b::", b);
   }
   all_users_msgs.push(g[0]);
 };
 const addSingleMsg = (data, user) => {
-  console.log("user::", user);
-  console.log("data::", data);
+  // console.log("user::", user);
+  // console.log("data::", data);
 
   let g = all_users_msgs.filter((item) => item.user === user);
 
@@ -140,14 +139,6 @@ const ChatPage = (props) => {
     await getChatList();
 
     await getChatMsgs(other_user_g.id, 1);
-    // document
-    //   .querySelector("input[type='file']")
-    //   .addEventListener("change mouseout", function () {
-    //     var fileinput = document.querySelector(this),
-    //       value = fileinput.value.split(/[\/]/g).pop();
-
-    //     fileinput.siblings("span").text(value);
-    //   });
 
     try {
       el = document.querySelector(".content");
@@ -189,10 +180,10 @@ const ChatPage = (props) => {
     guessKey =
       parseInt(userDetail.user.id) +
       parseInt(activeUser ? activeUser.id : timeout);
-    console.log("guessKey1::", guessKey);
+    // console.log("guessKey1::", guessKey);
     if (!guessKey) return;
     guessKey = guessKey + "getit";
-    console.log("guessKey2::", guessKey);
+    // console.log("guessKey2::", guessKey);
     socketRef.current = io(url, {
       query: { room: guessKey, name: userDetail.user.username },
     });
@@ -203,32 +194,32 @@ const ChatPage = (props) => {
 
     socketRef.current.on("allUsersData", ({ users }) => {
       setUsers(users);
-      console.log("users:", users);
+      // console.log("users:", users);
     });
 
     socketRef.current.on("send message", (message) => {
-      console.log("new msg:::", message);
-      const incomingMessage = {
-        ...message,
-        ownedByCurrentUser: message.senderId === socketRef.current.id,
-      };
-      console.log("incomingMessage::", incomingMessage);
+      // console.log("new msg:::", message);
+      //const incomingMessage = {
+      // ...message,
+      // ownedByCurrentUser: message.senderId === socketRef.current.id,
+      // };
+      // console.log("incomingMessage::", incomingMessage);
 
       setSending(false);
       msgs_g.push(message.data);
 
       setMsg((msg) => [...msg, message.data]);
       addSingleMsg(message.data, other_user_g.username);
-      console.log("all_users_msg:::", all_users_msgs);
+      // console.log("all_users_msg:::", all_users_msgs);
       scrollToBottom();
     });
 
     socketRef.current.on("start typing message", (typingInfo) => {
-      console.log("typing...", typingInfo);
+      // console.log("typing...", typingInfo);
       if (typingInfo.senderId !== socketRef.current.id) {
         setActiveTyping(true);
         updateReadMsg(other_user_g.username);
-        const user = typingInfo.user;
+        // const user = typingInfo.user;
         setMsg((msg) => [...msg, []]);
       }
     });
@@ -237,7 +228,7 @@ const ChatPage = (props) => {
       console.log("stoped typing...", typingInfo);
 
       if (typingInfo.senderId !== socketRef.current.id) {
-        const user = typingInfo.user;
+        //const user = typingInfo.user;
 
         setActiveTyping(false);
         updateReadMsg(other_user_g.username);
@@ -252,7 +243,7 @@ const ChatPage = (props) => {
           setIsOnline(true);
 
           updateReadMsg(other_user_g.username);
-          const user1 = mouseInfo.user;
+          //const user1 = mouseInfo.user;
           setMsg((msg) => [...msg, []]);
         }
       }
@@ -289,12 +280,12 @@ const ChatPage = (props) => {
     readTimeoutTime = false;
     readTimeout = setTimeout(async () => {
       if (sock_temp_name !== userDetail.username) {
-        console.log("changing sock_tem_name::", sock_temp_name);
+        // console.log("changing sock_tem_name::", sock_temp_name);
         // alert("stop");
         await readWholeRoom();
         await getChatList();
       } else {
-        console.log("another big error:::", sock_temp_name);
+        // console.log("another big error:::", sock_temp_name);
         alert("another big error");
       }
       readTimeoutTime = true;
@@ -320,7 +311,7 @@ const ChatPage = (props) => {
     });
 
     if (gp) {
-      console.log(" getOtherProfile in Chat res::::", gp.data);
+      // console.log(" getOtherProfile in Chat res::::", gp.data);
       other_user_g = gp.data.user;
       if (setU) {
         setActiveUser((u) => (u = gp.data.user));
@@ -342,7 +333,7 @@ const ChatPage = (props) => {
     });
 
     if (res) {
-      console.log(" getChatList::::", res.data.results);
+      // console.log(" getChatList::::", res.data.results);
 
       setChatListObj([...res.data.results]);
     }
@@ -365,17 +356,17 @@ const ChatPage = (props) => {
 
           mychat = mychat[0].msg_set;
 
-          console.log("ogchat::", mychat);
+          // console.log("ogchat::", mychat);
 
           let mychat4 = mychat.sort(function (a, b) {
             if (a.id > b.id) return 1;
             if (a.id < b.id) return -1;
             return 0;
           });
-          console.log("c4::", mychat4);
+          // console.log("c4::", mychat4);
 
           setMsg((msg) => [...mychat]);
-          console.log("mychat..::", mychat);
+          // console.log("mychat..::", mychat);
           scrollToBottom();
           setLoadingMore(false);
           setFetchingMsgs(false);
@@ -394,7 +385,7 @@ const ChatPage = (props) => {
           if (mypage) {
             page = mypage + 1;
             shouldGoNext = mychat.canGoNext;
-            console.log("pagehere::", page);
+            // console.log("pagehere::", page);
           }
         } else {
           page = 1;
@@ -425,7 +416,7 @@ const ChatPage = (props) => {
 
     if (res) {
       setFetchingMsgs(false);
-      console.log(" getChatMsg::::", res.data);
+      // console.log(" getChatMsg::::", res.data);
       setLoadingMore(false);
       setMoreMsgs(false);
 
@@ -441,14 +432,14 @@ const ChatPage = (props) => {
             setMoreMsgs(true);
 
             mychat.page += 1;
-            console.log("mychat.page", mychat.page);
+            // console.log("mychat.page", mychat.page);
             updateUserMsgMultiple(
               data.results,
               other_user_g.username,
               mychat.page,
               true
             );
-            console.log("all_users_msgs:::", all_users_msgs, mychat.page);
+            // console.log("all_users_msgs:::", all_users_msgs, mychat.page);
             setMsg((msg) => [...res.data.results, ...msg]);
 
             return;
@@ -461,7 +452,7 @@ const ChatPage = (props) => {
               mychat.page,
               false
             );
-            console.log("all_users_msgs:::", all_users_msgs, mychat.page);
+            // console.log("all_users_msgs:::", all_users_msgs, mychat.page);
             setMsg((msg) => [...res.data.results, ...msg]);
 
             return;
@@ -474,7 +465,7 @@ const ChatPage = (props) => {
       let cgn_ = false;
       if (res.data.next) cgn_ = true;
       addUserMsgs(other_user_g.username, res.data.results, page, cgn_);
-      console.log("all_users_msgs:::", all_users_msgs);
+      // console.log("all_users_msgs:::", all_users_msgs);
       setMsg((msg) => [...res.data.results].reverse());
       setFetchingMsgs(false);
     }
@@ -492,7 +483,7 @@ const ChatPage = (props) => {
     });
 
     if (result) {
-      console.log("createUserchat results::::", result.data);
+      // console.log("createUserchat results::::", result.data);
       // setChatId((c) => (c = result.data));
       chat_id = result.data;
     }
@@ -511,7 +502,7 @@ const ChatPage = (props) => {
     });
 
     if (result) {
-      console.log("readWholeRoom results::::", result.data);
+      // console.log("readWholeRoom results::::", result.data);
     }
   };
   const sendSocketMessage = (data) => {
@@ -544,18 +535,18 @@ const ChatPage = (props) => {
   const sendMessageHandler = async (e) => {
     const token = await getToken();
     const formData = new FormData();
-    console.log("chat_id::", chat_id.id);
+    // console.log("chat_id::", chat_id.id);
     formData.append("message", newMessage);
     formData.append("sender_id", userDetail.user.id);
     formData.append("receiver_id", activeUser.id);
     formData.append("chatlist_id", chat_id.id);
     if (file) {
-      console.log("file::", file);
+      // console.log("file::", file);
       for (let i = 0; i < file.length; i++) {
         formData.append("attachments", file[i]);
       }
     }
-    console.log(activeUser.id, chat_id.id, formData);
+    // console.log(activeUser.id, chat_id.id, formData);
 
     const res = await axiosHandler({
       method: "post",
@@ -569,7 +560,7 @@ const ChatPage = (props) => {
     });
 
     if (res) {
-      console.log(" Send Message results::::", res.data);
+      // console.log(" Send Message results::::", res.data);
       setMessages([res.data, ...messages]);
       return res.data;
     }
@@ -610,7 +601,7 @@ const ChatPage = (props) => {
     event.preventDefault();
     setSending(true);
     scrollToBottom();
-    console.log("sending::", newMessage);
+    // console.log("sending::", newMessage);
     cancelTyping();
     const res = await sendMessageHandler();
     if (!res) return;
@@ -645,7 +636,7 @@ const ChatPage = (props) => {
   }, [isTyping]);
 
   const handleNewMessageChange = (e) => {
-    console.log("onchange::", e.target.value);
+    // console.log("onchange::", e.target.value);
     setNewMessage(e.target.value);
   };
 
@@ -655,7 +646,7 @@ const ChatPage = (props) => {
     setFetchingMsgs(true);
     chat_id = chatlist;
     setMsg([]);
-    console.log("change user::", user);
+    // console.log("change user::", user);
     await getOtherProfile(user.username, false);
     await getChatMsgs(user.id, 1);
     setFile(null);

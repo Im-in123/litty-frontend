@@ -4,7 +4,6 @@ import {
   postCommentAction,
   commentInputSetterAction,
   refreshFeedAction,
-  postContainerAction,
   newReplyReplyAction,
   deleteCommentAction,
   deleteReplyAction,
@@ -48,10 +47,6 @@ export const newReplyReplyState = {
 
 export const refreshFeedState = {
   refreshFeed: true,
-};
-
-export const postContainerState = {
-  postContainer: true,
 };
 
 export const volumeTriggerState = {
@@ -142,17 +137,6 @@ export const refreshFeedReducer = (state, action) => {
     return {
       ...state,
       refreshFeed: action.payload,
-    };
-  } else {
-    return state;
-  }
-};
-
-export const postContainerReducer = (state, action) => {
-  if (action.type === postContainerAction) {
-    return {
-      ...state,
-      postContainer: action.payload,
     };
   } else {
     return state;

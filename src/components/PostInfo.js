@@ -1,9 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { store } from "../stateManagement/store";
-import {
-  CommentTriggerAction,
-  postCommentAction,
-} from "../stateManagement/actions";
+import { postCommentAction } from "../stateManagement/actions";
 import Comment from "./Comment/Comment";
 import { POST_LIKE_URL, SAVED_URL } from "../urls";
 import { axiosHandler, getToken } from "../helper";
@@ -11,16 +8,10 @@ import { Link } from "react-router-dom";
 
 const PostInfo = (props) => {
   const {
-    state: { commentTrigger },
+    state: { userDetail },
     dispatch,
   } = useContext(store);
-  const {
-    state: { postComment },
-  } = useContext(store);
 
-  const {
-    state: { userDetail },
-  } = useContext(store);
   const [likesend, setLikeSend] = useState(false);
   const [plink, setPlink] = useState("");
   const [isSaved, setIsSaved] = useState(false);
@@ -45,13 +36,12 @@ const PostInfo = (props) => {
     return () => {};
   }, []);
   useEffect(() => {
-    checkname();
+    setprofilelink();
     try {
       for (var i in like) {
         let like1 = like[i];
         if (like1.user.username === userDetail.user.username) {
           isliked = like1.user.username;
-
           setActiontype("like");
           setIsLiked1(true);
           break;
@@ -62,11 +52,11 @@ const PostInfo = (props) => {
         }
       }
     } catch (error) {
-      console.log("likeeeeeeeee error:::::::", error);
       isliked = null;
       setActiontype("unlike");
     }
 
+    //check to see if this post in posts saved by user
     for (var g in userDetail.saved) {
       if (userDetail.saved[g] === props.id) {
         setIsSaved(true);
@@ -75,7 +65,7 @@ const PostInfo = (props) => {
     setCommentCount(props.comment_count);
   }, []);
 
-  const checkname = async () => {
+  const setprofilelink = async () => {
     if (userDetail.user.username === props.author.username) {
       setPlink(`/my-profile/`);
     } else {
@@ -148,6 +138,7 @@ const PostInfo = (props) => {
   };
 
   const saveHandler = async (e) => {
+    //Handler for adding and removing post from posts saved by user
     setIsSaved(!isSaved);
 
     let save_data = { post_id: props.id, user_id: userDetail.user.id };
@@ -162,7 +153,6 @@ const PostInfo = (props) => {
     });
 
     if (result) {
-      console.log("Save results::::", result.data);
       let res = result.data;
       if (res.success === "added") {
         setIsSaved(true);
@@ -201,7 +191,7 @@ const PostInfo = (props) => {
             href={"#popup1" + props.id}
             onClick={() => {
               document.documentElement.style.overflow = "hidden";
-
+              //set postcomment to post id
               dispatch({ type: postCommentAction, payload: props.id });
             }}
           >

@@ -22,7 +22,6 @@ const NewVid = (props) => {
 
     video = document.querySelector("#video" + props.id);
 
-    // popPlayBtn.style.display = "none";
     spin.style.display = "none";
     video.addEventListener("timeupdate", timeUpdate);
     if (props.overallAudio) {
@@ -34,29 +33,22 @@ const NewVid = (props) => {
       playPause();
     };
     video.onwaiting = function () {
-      console.log("waiting/buffering");
       togglePopupShow();
       toggleSpin();
     };
     video.onplaying = function () {
-      console.log("playing");
       togglePopupHide();
       toggleSpinHide();
     };
-    video.onseeking = function () {
-      console.log("seeking");
-    };
+    video.onseeking = function () {};
     video.onended = function () {
-      console.log("ended");
       playPause();
     };
     video.onpause = function () {
-      console.log("paused");
       toggleSpinHide();
       togglePopupShow();
     };
     video.onerror = (e) => {
-      console.log("video error:::", e);
       console.log(video.error);
     };
 
@@ -76,7 +68,7 @@ const NewVid = (props) => {
   useEffect(() => {
     try {
       let video = document.querySelector("#video" + props.id);
-      // video.play();
+
       if (volumeTrigger) {
         video.volume = 1;
         setVolume(true);
@@ -144,8 +136,7 @@ const NewVid = (props) => {
   }
   const vol = () => {
     let video = document.querySelector("#video" + props.id);
-    console.log("second video:::", video);
-    console.log("volumetrigger::", volumeTrigger);
+
     try {
       if (!volume) {
         video.volume = 1;

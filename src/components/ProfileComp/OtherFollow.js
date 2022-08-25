@@ -12,15 +12,11 @@ const OtherFollow = (props) => {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  const {
-    state: { updateFollowTrigger },
-  } = useContext(store);
+
   const { username, option } = props.match.params;
-  const [otherUser, setOtherUser] = useState([]);
 
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
-  const [fetching, setFetching] = useState(true);
 
   useEffect(() => {
     let extra = `?keyword=${username}`;
@@ -63,8 +59,6 @@ const OtherFollow = (props) => {
     });
 
     if (gp) {
-      console.log(" otherfollow res::::", gp.data);
-      setOtherUser(gp.data);
       let followerL = gp.data;
 
       if (option === "followers") {
@@ -79,7 +73,7 @@ const OtherFollow = (props) => {
           await checkFollowing(user);
         });
       }
-      console.log("changed userDetail::;", followerL.followers);
+      // console.log("changed userDetail::;", followerL.followers);
       if (option === "following") {
       }
       setFollowers(followerL.followers);
@@ -89,7 +83,6 @@ const OtherFollow = (props) => {
   const followHandler = async (e, id) => {
     const token = await getToken();
     const data = { other_id: id };
-    console.log("before data::::", data);
     e.target.innerHTML = "...";
     const res = await axiosHandler({
       method: "post",
@@ -101,9 +94,7 @@ const OtherFollow = (props) => {
     });
 
     if (res) {
-      console.log("handleFollow:::", res.data);
       const r1 = res.data["data"];
-      console.log("rr2:::::", r1);
 
       if (r1 === "unfollowed") {
         e.target.innerHTML = "Follow";

@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useLayoutEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import "./search.css";
 import {
   BASE_URL1,
   LOCAL_CHECK,
-  POST_URL,
   PROFILE_URL,
   SEARCH_PTV_URL,
-  USER_SEARCH_URL,
 } from "../../urls";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
@@ -16,10 +14,12 @@ let gp1, gu1;
 let g_users = [];
 let g_posts = [];
 let g_all = [];
+
 let goneNextp = false;
 let canGoNextp = true;
 let goneNextu = false;
 let canGoNextu = true;
+
 let goneNext = false;
 let canGoNext = false;
 let shouldHandleScroll = true;
@@ -73,13 +73,13 @@ const Search = (props) => {
 
     return () => {
       window.removeEventListener("scroll", autoFetchSearch);
-      g_all=[]
-      new_users1 = []
+      g_all = [];
+      new_users1 = [];
       new_users2 = [];
-      new_posts1 = []
+      new_posts1 = [];
       new_posts2 = [];
-      gp1=[]
-      gu1=[]
+      gp1 = [];
+      gu1 = [];
       category = "All";
       setMode("all");
     };
@@ -96,9 +96,8 @@ const Search = (props) => {
       } else {
         g_all = [];
         setAll([]);
-        console.log("should be empty g_all:::", g_all);
       }
-      console.log("category::", category);
+
       if (category === "All") {
         await getResultAll(addt);
         shouldHandleScroll = true;
@@ -120,11 +119,8 @@ const Search = (props) => {
         window.innerHeight + window.scrollY >=
         document.body.scrollHeight - 100
       ) {
-        console.log("reached");
         console.log("finally", canGoNext, goneNext);
         shouldHandleScroll = false;
-        // if (shouldHandleScrollp) shouldHandleScrollp = !shouldHandleScrollp;
-        // if (shouldHandleScrollu) shouldHandleScrollu = !shouldHandleScrollu;
 
         await getter(true);
       } else {
@@ -141,7 +137,7 @@ const Search = (props) => {
     await getUsers(addt);
     await getPosts(addt);
     g_all = [...new_users2, ...new_posts2];
-    console.log("g_all:::", g_all);
+
     setAll(g_all);
   };
 
@@ -152,7 +148,6 @@ const Search = (props) => {
     let url;
 
     if (addt !== null) {
-      console.log("addt::", addt);
       url = gp1.next ? gp1.next : null;
     } else {
       url = `${SEARCH_PTV_URL}?page=${currentPagep}&${extra}`;
@@ -164,7 +159,7 @@ const Search = (props) => {
       return;
     }
     const token = await getToken();
-    console.log("url p:::", url);
+
     const result = await axiosHandler({
       method: "get",
       url: url,
@@ -177,11 +172,10 @@ const Search = (props) => {
     if (result) {
       // alert("aye");
 
-      console.log("getposts results::::", result.data);
       g_posts = result.data.results;
-      let total_length = g_posts.length;
-      total_length = Math.ceil(total_length / 2);
-      console.log("total_length:::", total_length);
+      // let total_length = g_posts.length;
+      // total_length = Math.ceil(total_length / 2);
+
       if (!addt) {
         new_posts1 = [];
         new_posts2 = [];
@@ -195,8 +189,6 @@ const Search = (props) => {
           new_posts2.push(ii);
         }
       }
-      console.log("new_posts1::", new_posts1);
-      console.log("new_posts2::", new_posts2);
 
       setPosts(new_posts1);
       setPosts2(new_posts2);
@@ -224,12 +216,11 @@ const Search = (props) => {
     let url;
 
     if (addt !== null) {
-      console.log("addtu::", addt);
       url = gu1.next ? gu1.next : null;
     } else {
       url = `${PROFILE_URL}?page=${currentPageu}&${extra}`;
     }
-    console.log("url u:::", url);
+
     if (!url) {
       console.log("returning in users");
 
@@ -249,11 +240,9 @@ const Search = (props) => {
     });
 
     if (result) {
-      console.log("getUser results::::", result.data);
       g_users = result.data.results;
-      let total_length = g_users.length;
-      total_length = Math.ceil(total_length / 2);
-      console.log("total_length:::", total_length);
+      // let total_length = g_users.length;
+      // total_length = Math.ceil(total_length / 2);
 
       if (!addt) {
         new_users1 = [];
@@ -267,8 +256,6 @@ const Search = (props) => {
           new_users2.push(ii);
         }
       }
-      console.log("new_user1::", new_users1);
-      console.log("new_user2::", new_users2);
 
       for (var o in new_users2) {
         let oo = new_users2[o];

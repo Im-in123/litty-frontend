@@ -60,14 +60,9 @@ const PostContent = (props) => {
         slideIndex = slides.length;
       }
 
-      // console.log("slide.length:", slides.length);
       for (i = 0; i < slides.length; i++) {
         try {
-          // console.log("slide:::", slides[i]);
-          // console.log("childnode:::", slides[i].childNodes);
-          // console.log("children:::", slides[i].children);
           let sf = slides[i].children[1];
-          // console.log("slidefinal:::", sf.lastChild);
           sf.lastChild.pause();
         } catch (error) {}
         slides[i].style.display = "none";
@@ -83,7 +78,6 @@ const PostContent = (props) => {
       if (rv) {
         try {
           let sl = slides[slideIndex - 1].children[1].lastChild;
-          // console.log("second slide video::", sl);
           sl.currentTime = 0;
           sl.play();
           alreadyPlaying = true;
@@ -92,7 +86,6 @@ const PostContent = (props) => {
       if (!visible) {
         try {
           let sl = slides[slideIndex - 1].children[1].lastChild;
-          // console.log("second slide video::", sl);
           if (!sl.paused) sl.pause();
           alreadyPlaying = false;
         } catch (error) {
@@ -110,6 +103,7 @@ const PostContent = (props) => {
   };
 
   const postInView = async () => {
+    //plays post video if post  video is in view
     try {
       // console.log("scrolling");
       const numt = document.querySelector("#feed" + props.id);
@@ -368,7 +362,7 @@ const VideoComp = (props) => {
     };
     video.onerror = (e) => {
       console.log("video error:::", e);
-      console.log(video.error);
+      // console.log(video.error);
       // alert("video error");
       video.pause();
       // video.load();

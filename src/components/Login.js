@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from "react";
 import "./signup.css";
-import { checkAuthState, tokenName } from "../customs/authController";
-import { SIGNUP_URL, LOGIN_URL } from "../urls";
+import { tokenName } from "../customs/authController";
+import { LOGIN_URL } from "../urls";
 import { axiosHandler, errorHandler } from "../helper.js";
 import { Link } from "react-router-dom";
 import visibility from "../assets/visibility.svg";
 import visibility_off from "../assets/visibility_off.svg";
 
 export const loginRequest = async (data, setError, props) => {
-  console.log("LoginRequestData:::::", data);
+  //sends login  credentials to server for authentication
   const result = await axiosHandler({
     method: "post",
     url: LOGIN_URL,
     data: data,
   }).catch((e) => setError(errorHandler(e)));
   if (result) {
-    console.log("Result::::::", result);
+    //add user access and refresh token received from server to browser local storage if user is authenticated
     localStorage.setItem(tokenName, JSON.stringify(result.data));
-
+    //Go to main page
     props.history.push("/");
   }
 };
@@ -36,7 +36,6 @@ const Login = (props) => {
     e.preventDefault();
     setLoading(true);
     setLoginError(null);
-    console.log("SignUpData:::::", loginData);
 
     setLoading(true);
     const result = await axiosHandler({
@@ -50,8 +49,6 @@ const Login = (props) => {
     });
 
     if (result) {
-      console.log("result:::::", result);
-      console.log("signupdata being passed to loginpage:::::::", loginData);
       await loginRequest(loginData, setLoginError, props);
     }
     setLoading(false);
@@ -119,10 +116,10 @@ const Login = (props) => {
               <button type="submit" className="button">
                 {loading ? <span id="loadersignup"></span> : "Login"}
               </button>
+              <p>
+                <Link to="/forgot-password">Forgot password?</Link>
+              </p>
             </form>
-            <p>
-              <Link to="/forgot-password">Forgot password?</Link>
-            </p>
           </div>
 
           <div className="content__submit">

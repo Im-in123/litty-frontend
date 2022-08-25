@@ -47,7 +47,6 @@ const LoadComment = (props) => {
 
   useEffect(() => {
     if (postComment === props.post_id) {
-      console.log("currentComment:::", currentComment);
       if (currentComment) {
         setCommentList([...commentList, currentComment]);
         scrollToBottom(postComment);
@@ -63,9 +62,7 @@ const LoadComment = (props) => {
       try {
         let chatArea = document.getElementById("contenta" + p);
         chatArea.scrollTop = chatArea.scrollHeight;
-      } catch (error) {
-        console.log("scrolltobottom error:::currentcomment");
-      }
+      } catch (error) {}
     }, 300);
   };
 
@@ -117,7 +114,6 @@ const LoadComment = (props) => {
     }
     if (next) {
       url = nextMsgs.next;
-      console.log("nextMsgs:::", nextMsgs);
     } else {
     }
     const token = await getToken();
@@ -134,7 +130,6 @@ const LoadComment = (props) => {
 
     if (result) {
       setNextMsgs((n) => result.data);
-      console.log("getComments data::::", result.data);
 
       if (result.data.next) {
         setMoreCmts(true);

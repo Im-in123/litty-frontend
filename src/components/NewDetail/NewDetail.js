@@ -23,7 +23,7 @@ import NewVid from "./NewVid";
 let post1 = [];
 
 const NewDetail = (props) => {
-  console.log("NewDetail props::", props);
+  // console.log("NewDetail props::", props);
   let post_id;
   let user;
   if (!props.post_id) {
@@ -82,7 +82,7 @@ const NewDetail = (props) => {
   }, [post_id]);
 
   useEffect(() => {
-    console.log("props.closeeee::::", props.close);
+    // console.log("props.closeeee::::", props.close);
     if (props.close) {
       try {
         var i;
@@ -170,7 +170,7 @@ const NewDetail = (props) => {
       tags = tags.filter((tag) => tag !== e.target.textContent.slice(0, -2));
       tagnum.textContent = 10 - tags.length;
 
-      console.log("removed tags::", tags);
+      // console.log("removed tags::", tags);
       setTagsEdited(tags);
     });
 
@@ -202,8 +202,8 @@ const NewDetail = (props) => {
       );
 
       if (usersFiltered.length === 0) return;
-      console.log(usersFiltered);
-      console.log("typing");
+      // console.log(usersFiltered);
+
       const fragment = document.createDocumentFragment();
       usersFiltered.forEach((user) => {
         const li = document.createElement("LI");
@@ -245,7 +245,7 @@ const NewDetail = (props) => {
       if (!e.code !== "Escape") return;
       console.log("pl");
     });
-    console.log("tags::::::", post1.tags);
+    // console.log("tags::::::", post1.tags);
     let tagss = [];
     for (var i in post1.tags) {
       let t = post1.tags[i];
@@ -269,7 +269,7 @@ const NewDetail = (props) => {
     });
 
     if (res) {
-      console.log("getPostDetail  NewDetail::::", res.data);
+      // console.log("getPostDetail  NewDetail::::", res.data);
       post1 = res.data;
       setPost(res.data);
       if (res.data.author.username === userDetail.user.username) {
@@ -316,7 +316,7 @@ const NewDetail = (props) => {
         }
       }
     } catch (error) {
-      console.log("likeeeeeeeee error:::::::", error);
+      console.log("like error:::::::", error);
       isliked = null;
       setActiontype("unlike");
     }
@@ -351,7 +351,7 @@ const NewDetail = (props) => {
     });
 
     if (result) {
-      console.log("SendLike results::::", result.data);
+      // console.log("SendLike results::::", result.data);
       let res = result.data;
       if (res.data === "success-added") {
         setIsLiked(true);
@@ -379,7 +379,7 @@ const NewDetail = (props) => {
     });
 
     if (result) {
-      console.log("Save results::::", result.data);
+      // console.log("Save results::::", result.data);
       let res = result.data;
       if (res.success === "added") {
         setIsSaved(true);
@@ -399,7 +399,7 @@ const NewDetail = (props) => {
     setBtnLoading(true);
     const token = await getToken();
     const data = { post_id: post_id, caption: captionEdit, tags: tagsEdited };
-    console.log("check update data::::", data);
+    // console.log("check update data::::", data);
 
     const res = await axiosHandler({
       method: "patch",
@@ -411,7 +411,7 @@ const NewDetail = (props) => {
     });
 
     if (res) {
-      console.log("submit post editing result:::", res.data.data);
+      // console.log("submit post editing result:::", res.data.data);
       let data = res.data.data;
       setCaption(data.caption);
       setCaptionEdit(data.caption);
@@ -440,9 +440,7 @@ const NewDetail = (props) => {
     });
 
     if (res) {
-      console.log("handleFollow:::", res.data);
       const rr1 = res.data["data"];
-      console.log("rr2:::::", rr1);
 
       if (rr1 === "false") {
         setFollowing(false);
@@ -456,7 +454,6 @@ const NewDetail = (props) => {
     setFollowing(!following);
     const token = await getToken();
     const data = { other_id: id };
-    console.log("before data::::", data);
 
     const res = await axiosHandler({
       method: "post",
@@ -468,9 +465,7 @@ const NewDetail = (props) => {
     });
 
     if (res) {
-      console.log("handleFollow:::", res.data);
       const rr1 = res.data["data"];
-      console.log("rr2:::::", rr1);
 
       if (rr1 === "unfollowed") {
         setFollowing(false);
@@ -494,7 +489,7 @@ const NewDetail = (props) => {
     });
 
     if (res) {
-      console.log(" Delete post response::::", res.data);
+      // console.log(" Delete post response::::", res.data);
       alert("Post deleted!");
       // if (props.refresh === true) {
       //   window.location.href = "/my-profile";
@@ -934,7 +929,7 @@ const ContentSlide = (props) => {
     dots[slideIndex - 1].className += " active-new";
     try {
       let sl = slides[slideIndex - 1].children[1].lastChild;
-      console.log("second slide video::", sl);
+      // console.log("second slide video::", sl);
       sl.play();
     } catch (error) {}
   }
@@ -950,7 +945,7 @@ const ContentSlide = (props) => {
       whole_post_content.push(props.video[i]);
     }
   }
-  console.log("whole_post_content:", whole_post_content);
+  // console.log("whole_post_content:", whole_post_content);
   let showcount = false;
   let count = whole_post_content.length;
   if (count > 1) {
@@ -1086,10 +1081,10 @@ const ContentLoadComment = (props) => {
     return () => {};
   }, [currentComment]);
   useEffect(() => {
-    console.log("props.close 222222");
+    // console.log("props.close 222222");
 
     return () => {
-      console.log("props.close 333333");
+      // console.log("props.close 333333");
       setCommentList([]);
       setCommentData({});
       setFetching(true);
@@ -1134,9 +1129,7 @@ const ContentLoadComment = (props) => {
       try {
         let chatArea = document.getElementById("contenta" + p);
         chatArea.scrollTop = chatArea.scrollHeight;
-      } catch (error) {
-        console.log("scrolltobottom error:::currentcomment");
-      }
+      } catch (error) {}
     }, 300);
   };
 
@@ -1171,7 +1164,7 @@ const ContentLoadComment = (props) => {
     }
     if (next) {
       url = nextMsgs.next;
-      console.log("nextMsgs:::", nextMsgs);
+      // console.log("nextMsgs:::", nextMsgs);
     } else {
     }
     const token = await getToken();
@@ -1187,9 +1180,9 @@ const ContentLoadComment = (props) => {
 
     if (result) {
       setNextMsgs((n) => result.data);
-      console.log("getComments data::::", result.data);
+      // console.log("getComments data::::", result.data);
 
-      console.log("getComments results::::", result.data.results);
+      // console.log("getComments results::::", result.data.results);
       if (result.data.next) {
         setMoreCmts(true);
       } else {
@@ -1225,7 +1218,7 @@ const ContentLoadComment = (props) => {
           author_id: userDetail.user.id,
           type: commentInputSetter.type,
         };
-        console.log("replycomment before send::::", rdata);
+        // console.log("replycomment before send::::", rdata);
         const replyResult = await axiosHandler({
           method: "post",
           url: REPLY_URL,
@@ -1236,7 +1229,7 @@ const ContentLoadComment = (props) => {
           setLoading(false);
         });
         if (replyResult) {
-          console.log("CommentPost results", replyResult.data);
+          // console.log("CommentPost results", replyResult.data);
           setLoading(false);
 
           dispatch({ type: commentInputSetterAction, payload: null });
@@ -1253,7 +1246,7 @@ const ContentLoadComment = (props) => {
           parent_id: commentInputSetter.parent_id,
           type: commentInputSetter.type,
         };
-        console.log("reply-reply before send::::", rrdata);
+        // console.log("reply-reply before send::::", rrdata);
         const replyReplyResult = await axiosHandler({
           method: "post",
           url: REPLY_URL,
@@ -1264,7 +1257,7 @@ const ContentLoadComment = (props) => {
           setLoading(false);
         });
         if (replyReplyResult) {
-          console.log("reply-reply results", replyReplyResult.data);
+          // console.log("reply-reply results", replyReplyResult.data);
           dispatch({ type: commentInputSetterAction, payload: null });
 
           dispatch({
@@ -1283,13 +1276,13 @@ const ContentLoadComment = (props) => {
         post_id: props.id,
         author_id: userDetail.user.id,
       });
-      console.log("comment data::::", commentData);
+      // console.log("comment data::::", commentData);
       let data = {
         ...commentData,
         post_id: props.id,
         author_id: userDetail.user.id,
       };
-      console.log("comment data1:::", data);
+      // console.log("comment data1:::", data);
       const result = await axiosHandler({
         method: "post",
         url: COMMENT_URL,
@@ -1302,7 +1295,7 @@ const ContentLoadComment = (props) => {
       });
 
       if (result) {
-        console.log("CommentPost results", result.data);
+        // console.log("CommentPost results", result.data);
         setLoading(false);
         setCurrentComment(result.data);
         setCommentData({ post_id: props.id });

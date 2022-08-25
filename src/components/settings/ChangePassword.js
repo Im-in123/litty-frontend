@@ -21,7 +21,7 @@ const ChangePassword = (props) => {
         return;
       }
       const token = await getToken();
-      console.log("pass data:::", passdata);
+
       const url = CHANGE_PASSWORD_URL;
       const method = "post";
       const res = await axiosHandler({
@@ -34,7 +34,6 @@ const ChangePassword = (props) => {
         console.log(e);
       });
       if (res) {
-        console.log("res data:::", res.data);
         alert(res.data.success);
         //   alert("Password Updated successfully!")
       }
@@ -52,7 +51,6 @@ const ChangePassword = (props) => {
   };
 
   const showpassword = (e) => {
-    console.log("show password");
     let vv = document.querySelectorAll(".vv");
     let shide = document.getElementById("shide");
     if (sh) {
@@ -80,7 +78,7 @@ const ChangePassword = (props) => {
             name="signupForm"
             id="signupForm"
           >
-            <img src="" id="signupLogo" />
+            <img src="" id="signupLogo" alt="signup logo" />
 
             <h2 className="formTitle">Change Password</h2>
 

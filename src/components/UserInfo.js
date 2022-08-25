@@ -1,7 +1,7 @@
 import React, { useEffect, useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { store } from "../stateManagement/store";
-import { POST_DELETE, LOCAL_CHECK, UPDATE_FOLLOW, CHECK_FOLLOW } from "../urls";
+import { POST_DELETE, LOCAL_CHECK, UPDATE_FOLLOW } from "../urls";
 import { axiosHandler, getToken } from "../helper";
 import { checkAllFollowAction } from "../stateManagement/actions";
 
@@ -19,7 +19,7 @@ const UserInfo = (props) => {
   let check = checkAllFollow;
 
   useEffect(async () => {
-    await checkname();
+    await setprofilelink();
     const dropdowns = document.querySelectorAll(".dropdown-edit");
     for (let dropdown of dropdowns) {
       disclosure({
@@ -29,12 +29,12 @@ const UserInfo = (props) => {
     }
 
     return () => {};
-  }, [props.data]);
+  }, []);
 
   useEffect(() => {
     if (!props.data) return;
+    //check  to see if user follows props.data.username
     for (var i in checkAllFollow) {
-      // console.log("checkAllFollow:::", checkAllFollow);
       let ii = check[i];
       if (ii.user === props.data.username) {
         if (ii.status === "yes") {
@@ -49,6 +49,7 @@ const UserInfo = (props) => {
 
     return () => {};
   }, [checkAllFollow]);
+
   function disclosure(params) {
     const el = params.el;
     const btn = el.querySelector(params.btn || "summary");
@@ -82,7 +83,7 @@ const UserInfo = (props) => {
     };
   }
 
-  const checkname = async () => {
+  const setprofilelink = async () => {
     if (props.data) {
       if (userDetail.user.username === props.data.username) {
         setPlink(`/my-profile/`);
@@ -94,6 +95,7 @@ const UserInfo = (props) => {
   };
 
   const followHandler = async (id) => {
+    // For following or unfollowing user
     setFollowing(!following);
     const token = await getToken();
     const data = { other_id: id };
@@ -108,9 +110,7 @@ const UserInfo = (props) => {
     });
 
     if (res) {
-      console.log("handleFollow:::", res.data);
       const rr1 = res.data["data"];
-      console.log("rr2:::::", rr1);
 
       if (rr1 === "unfollowed") {
         setFollowing(false);
@@ -258,7 +258,7 @@ const UserInfo = (props) => {
                 )}
 
                 <li>
-                  <a href="#">share</a>
+                  <a href="####">share</a>
                 </li>
 
                 {userDetail.user.username === props.data.username && (
@@ -268,13 +268,13 @@ const UserInfo = (props) => {
                       handleDelete(props.id);
                     }}
                   >
-                    <a href="#">Delete</a>
+                    <a href="######">Delete</a>
                   </li>
                 )}
 
                 {userDetail.user.username !== props.data.username && (
                   <li>
-                    <a href="#">Block posts from this user</a>
+                    <a href="#####">Block posts from this user</a>
                   </li>
                 )}
               </div>

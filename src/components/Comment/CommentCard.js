@@ -2,15 +2,12 @@ import React, { useState, useContext, useEffect } from "react";
 import "./comment.css";
 import { store } from "../../stateManagement/store";
 import { axiosHandler, getToken } from "../../helper";
-import { UrlParser } from "../../customs/others";
+
 import {
-  BASE_URL,
-  BASE_URL1,
   COMMENT_URL,
   LOCAL_CHECK,
   REPLY_URL,
   COMMENT_LIKE_URL,
-  COMMENT_DELETE_URL,
 } from "../../urls";
 import {
   CommentTriggerAction,
@@ -63,7 +60,6 @@ const CommentCard = (props) => {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  // console.log("commentCard props::::", props);
   const {
     state: { commentTrigger },
   } = useContext(store);
@@ -89,10 +85,7 @@ const CommentCard = (props) => {
   } = useContext(store);
 
   useEffect(() => {
-    console.log("newReplyReply:::", newReplyReply);
     if (newReplyReply) {
-      console.log("newReplyReply postcomment::", newReplyReply.postcomment);
-      console.log("pid::", pid);
       if (pid === newReplyReply.postcomment) {
         setReplyData([...replyData, newReplyReply]);
         props.setCommentCount(props.commentCount + 1);
@@ -104,11 +97,6 @@ const CommentCard = (props) => {
 
   useEffect(() => {
     if (commentTrigger) {
-      console.log(
-        "Comment reply trigger postcomment::",
-        commentTrigger.postcomment
-      );
-      console.log("pid::", pid);
       if (pid === commentTrigger.postcomment) {
         setReplyData([...replyData, commentTrigger]);
         props.setCommentCount(props.commentCount + 1);
@@ -180,30 +168,24 @@ const CommentCard = (props) => {
       e.preventDefault();
       setView("loading...");
 
-      console.log("reply data::::", replyData);
       let data = { post_id: props.post_id, comment_id: comment_id };
-      console.log("reply data1:::", data);
       let url;
       url = REPLY_URL + `?post_id=${props.post_id}&comment_id=${comment_id}`;
       if (next) {
         if (nextReps.next) {
           url = nextReps.next;
-          console.log("nextReps:::", nextReps);
         } else {
           url =
             REPLY_URL + `?post_id=${props.post_id}&comment_id=${comment_id}`;
         }
       }
-      console.log("url reply:::", url, next);
       const token = await getToken();
       const result = await axiosHandler({
         method: "get",
         url: url,
         token,
         data: data,
-      }).catch((e) => {
-        console.log("getReply error::::", e.response.data);
-      });
+      }).catch((e) => {});
 
       if (result) {
         setNextReps((r) => result.data);
@@ -212,7 +194,6 @@ const CommentCard = (props) => {
         } else {
           setReplyAvailable(false);
         }
-        console.log("getReply results", result.data.results);
         setReplyLength(null);
         if (replyData.length > 0 && next) {
           let pp = [...replyData, ...result.data.results];
@@ -251,7 +232,6 @@ const CommentCard = (props) => {
       });
 
       if (result) {
-        console.log("sendcommentLike results", result.data);
         if (result.data.data === "success-added") {
           setIsLiked(true);
           setLikeLength(likeLength + 1);
@@ -278,7 +258,6 @@ const CommentCard = (props) => {
       });
 
       if (res) {
-        console.log(" Delete comment response::::", res.data);
         if (res.data.data === "delete-successful") {
           dispatch({ type: deleteCommentAction, payload: comment_id });
         } else {

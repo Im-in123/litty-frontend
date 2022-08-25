@@ -30,17 +30,12 @@ const CommentComp = (props) => {
   let pcont = "";
 
   useEffect(() => {
-    // if(postComment===props.post_id){
-
     try {
       setPlaceholder(commentInputSetter.placeholder);
       pcont = document.getElementById(
         "placeholder" + commentInputSetter.postComment
       );
-      // pcont.style.background="yellow"
-      // dispatch({type:commentInputSetterAction,payload:null})
     } catch (error) {
-      // console.log(error)
       setPlaceholder("Write a comment ...");
     }
     // }
@@ -67,7 +62,6 @@ const CommentComp = (props) => {
           author_id: props.author_id,
           type: commentInputSetter.type,
         };
-        console.log("replycomment before send::::", rdata);
         const replyResult = await axiosHandler({
           method: "post",
           url: REPLY_URL,
@@ -78,9 +72,7 @@ const CommentComp = (props) => {
           setLoading(false);
         });
         if (replyResult) {
-          console.log("CommentPost results", replyResult.data);
           setLoading(false);
-          // props.setCurrentReply(replyResult.data);
 
           dispatch({ type: commentInputSetterAction, payload: null });
 
@@ -96,7 +88,6 @@ const CommentComp = (props) => {
           parent_id: commentInputSetter.parent_id,
           type: commentInputSetter.type,
         };
-        console.log("reply-reply before send::::", rrdata);
         const replyReplyResult = await axiosHandler({
           method: "post",
           url: REPLY_URL,
@@ -107,8 +98,6 @@ const CommentComp = (props) => {
           setLoading(false);
         });
         if (replyReplyResult) {
-          console.log("reply-reply results", replyReplyResult.data);
-          //   props.setCurrentReplyReply(replyReplyResult.data);
           dispatch({ type: commentInputSetterAction, payload: null });
 
           dispatch({
@@ -133,7 +122,6 @@ const CommentComp = (props) => {
         post_id: postComment,
         author_id: props.author_id,
       };
-      console.log("comment data1:::", data);
       const result = await axiosHandler({
         method: "post",
         url: COMMENT_URL,
@@ -141,12 +129,10 @@ const CommentComp = (props) => {
         data: data,
       }).catch((e) => {
         alert("An error occured,counldn't post comment, try agian!");
-        console.log("CommentPost error::::", e.response.data);
         setLoading(false);
       });
 
       if (result) {
-        console.log("CommentPost results", result.data);
         setLoading(false);
         props.setCurrentComment(result.data);
         setCommentData({ post_id: props.id });

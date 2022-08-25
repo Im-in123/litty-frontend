@@ -16,8 +16,6 @@ import {
   newReplyReplyReducer,
   refreshFeedReducer,
   refreshFeedState,
-  postContainerReducer,
-  postContainerState,
   volumeTriggerState,
   volumeReducer,
   slideTriggerState,
@@ -47,7 +45,6 @@ const combinedReducers = reduceReducers(
   newReplyReplyReducer,
 
   refreshFeedReducer,
-  postContainerReducer,
   volumeReducer,
   slideReducer,
   checkAllFollowReducer,
@@ -62,9 +59,7 @@ const initialState = {
   ...delCommentState,
   ...delReplyState,
   ...newReplyReplyState,
-
   ...refreshFeedState,
-  ...postContainerState,
   ...volumeTriggerState,
   ...slideTriggerState,
   ...checkAllFollowState,

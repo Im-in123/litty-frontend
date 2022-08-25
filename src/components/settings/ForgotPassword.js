@@ -12,7 +12,6 @@ const ForgotPassword = () => {
   } = useContext(store);
 
   const [fdata, setFdata] = useState("");
-  const [fetching, setFetching] = useState(false);
   const [retry, setRetry] = useState(false);
 
   const onChange = (e) => {
@@ -25,9 +24,7 @@ const ForgotPassword = () => {
   let timoutvar;
   const submit = async (e) => {
     e.preventDefault();
-    setFetching(true);
 
-    console.log("fdata:::", fdata);
     const url = FORGOT_PASSWORD_URL;
     const method = "post";
     const res = await axiosHandler({
@@ -39,7 +36,6 @@ const ForgotPassword = () => {
       console.log(e.response.data.error);
     });
     if (res) {
-      console.log("res data:::", res.data);
       alert(res.data.success);
       let conti = document.getElementById("conti");
       conti.innerHTML =

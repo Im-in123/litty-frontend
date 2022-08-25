@@ -12,9 +12,7 @@ const MyFollow = (props) => {
     state: { userDetail },
     dispatch,
   } = useContext(store);
-  const {
-    state: { updateFollowTrigger },
-  } = useContext(store);
+
   const option = props.match.params.option;
   const [followers, setFollowers] = useState([]);
   const [following, setFollowing] = useState([]);
@@ -30,7 +28,7 @@ const MyFollow = (props) => {
     }
     if (option === "following") {
     }
-    console.log("changed userDetail::;", followerL.followers);
+    // console.log("changed userDetail::;", followerL.followers);
     if (option === "following") {
     }
     setFollowers(userDetail.followers);
@@ -53,7 +51,6 @@ const MyFollow = (props) => {
   const followHandler = async (e, id) => {
     const token = await getToken();
     const data = { other_id: id };
-    console.log("before data::::", data);
     e.target.innerHTML = "...";
     const res = await axiosHandler({
       method: "post",
@@ -65,9 +62,7 @@ const MyFollow = (props) => {
     });
 
     if (res) {
-      console.log("handleFollow:::", res.data);
       const r1 = res.data["data"];
-      console.log("rr2:::::", r1);
 
       if (r1 === "unfollowed") {
         e.target.innerHTML = "Follow";

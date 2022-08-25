@@ -3,10 +3,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import { axiosHandler, getToken } from "../../helper";
 import { store } from "../../stateManagement/store";
-import { UrlParser, uuidv4 } from "../../customs/others";
+import { uuidv4 } from "../../customs/others";
 import {
-  BASE_URL,
-  BASE_URL1,
   POST_URL,
   OTHER_PROFILE_URL,
   UPDATE_FOLLOW,
@@ -26,7 +24,6 @@ import {
 import { fetchMyProfile } from "../../customs/authController";
 
 let post = [];
-let otherUser = [];
 
 let p1;
 let goneNext = false;
@@ -35,7 +32,6 @@ let shouldHandleScroll = false;
 let o_name;
 const OtherProfile = (props) => {
   const [fetching, setFetching] = useState(true);
-  const [followFetching, setFollowFetching] = useState(true);
   const [close, setClose] = useState(false);
   const [id, setId] = useState(null);
   const [user, setUser] = useState(null);
@@ -46,10 +42,6 @@ const OtherProfile = (props) => {
   const {
     state: { userDetail },
     dispatch,
-  } = useContext(store);
-
-  const {
-    state: { volumeTrigger },
   } = useContext(store);
 
   const [otherUser, setOtherUser] = useState("");
@@ -85,27 +77,13 @@ const OtherProfile = (props) => {
       p1 = [];
     };
   }, []);
-  // function atEnd() {
-  //   var c = [
-  //     document.scrollingElement.scrollHeight,
-  //     document.body.scrollHeight,
-  //     document.body.offsetHeight,
-  //   ].sort(function (a, b) {
-  //     return b - a;
-  //   }); // select longest candidate for scrollable length
-  //   return window.innerHeight + window.scrollY + 2 >= c[0]; // compare with scroll position + some give
-  // }
-  // function scrolling() {
-  //   if (atEnd()) console.log("is at end");
-  // }
-  // window.addEventListener("scroll", scrolling, { passive: true });
+
   const autoFetchOtherProfile = async () => {
     if (shouldHandleScroll) {
       if (
         window.innerHeight + window.scrollY >=
         document.body.scrollHeight - 100
       ) {
-        console.log("reached");
         console.log("finally", canGoNext, goneNext);
         if (canGoNext && !goneNext) {
           goneNext = true;
@@ -138,7 +116,6 @@ const OtherProfile = (props) => {
     });
 
     if (gp) {
-      console.log(" getOtherProfile res::::", gp.data);
       setOtherUser(gp.data);
       setFollowers(gp.data.followers.length);
       setFollowing(gp.data.following.length);
@@ -181,7 +158,6 @@ const OtherProfile = (props) => {
     });
 
     if (res) {
-      console.log(" MyPost::::", res.data);
       if (post.length > 0) {
         for (var i in res.data.results) {
           post.push(res.data.results[i]);
@@ -206,14 +182,12 @@ const OtherProfile = (props) => {
         canGoNext = true;
       }
     }
-    console.log("post:::", post);
   };
 
   const checkFollowHandler = async (other) => {
     setFollowLoading(true);
     const token = await getToken();
     const data = { other_id: other.user.id };
-    console.log("check followbefore data::::", data);
 
     const res = await axiosHandler({
       method: "post",
@@ -228,9 +202,7 @@ const OtherProfile = (props) => {
     if (res) {
       setFollowLoading(false);
 
-      console.log("handleFollow:::", res.data);
       const rr1 = res.data["data"];
-      console.log("rr2:::::", rr1);
 
       if (rr1 === "false") {
         setIsFollowing(false);
@@ -246,7 +218,6 @@ const OtherProfile = (props) => {
     setFollowLoading(true);
     const token = await getToken();
     const data = { other_id: otherUser.user.id };
-    console.log("before data::::", data);
 
     const res = await axiosHandler({
       method: "post",
@@ -261,9 +232,7 @@ const OtherProfile = (props) => {
     if (res) {
       setFollowLoading(false);
 
-      console.log("handleFollow:::", res.data);
       const r1 = res.data["data"];
-      console.log("rr2:::::", r1);
 
       if (r1 === "unfollowed") {
         setIsFollowing(false);
@@ -484,7 +453,7 @@ const OtherProfile = (props) => {
             <>
               {myPost &&
                 myPost.map((item, key) => (
-                  <div id="feed" id={`feed${item.id}`} key={key}>
+                  <div id={`feed${item.id}`} key={key}>
                     <div className="content-wrapper feed-wrapper">
                       <div className="post-wall">
                         <div className="post" id={"post" + item.id}>
@@ -547,17 +516,10 @@ const OtherProfile = (props) => {
               </>
             )}
           </div>
-          {/* <div className="load-more-post">
-            <span>{p1 && p1.next ? "Loading more..." : ""}</span>
-          </div> */}
+
           <div className="load-more-post">
             <span>{end ? "No more posts!" : "Loading more..."}</span>
           </div>
-          {/* <div className="load-more-post">
-            <span>
-              {myPost.length < 1 || !p1?.next ? "No more posts!" : ""}
-            </span>
-          </div> */}
         </div>
       </div>
       <div id="popup1" className="overlay overlay-back">
