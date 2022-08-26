@@ -1,7 +1,8 @@
-A Social media website frontend written in React Js.
-View live at https://littylit.netlify.app/
+# A Social media website frontend written in React Js. \
 
-git clone --- this repository .\
+## View live at https://littylit.netlify.app/
+
+git clone --- this repository \
 cd into the repository .\
 npm install \
 npm start
