@@ -15,7 +15,7 @@ const Header = (props) => {
   let itval;
   useEffect(() => {
     getNotification();
-    // autoNotification();
+    autoNotification();
     return () => {
       clearInterval(itval);
     };
@@ -26,7 +26,7 @@ const Header = (props) => {
 
     itval = setInterval(() => {
       getNotification();
-    }, 50000);
+    }, 100000);
   };
   const getNotification = async () => {
     if (!userDetail) return;
